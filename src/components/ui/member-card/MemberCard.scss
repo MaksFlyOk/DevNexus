@@ -1,0 +1,13 @@
+@import '@bootstrap';
+@import '@styles/mixins';
+
+.userCardHeader {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  margin-bottom: map-get($spacers, 2);
+}
+
+.userName {
+  @include text-reduction-mixin;
+}

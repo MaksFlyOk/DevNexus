@@ -1,27 +1,14 @@
-import { useNavigate } from 'react-router-dom'
+import { useTypedSelectorBoardViewState } from '@hooks/redux-hooks'
+import { Layout } from '@layout'
 
-const Home = () => {
-	const navigate = useNavigate()
+export const Home = () => {
+  const { boardView } = useTypedSelectorBoardViewState(
+    state => state.boardViewState
+  )
 
-	return (
-		<>
-			<h1>Home</h1>
-			<button
-				type='button'
-				className='btn btn-info me-1'
-				onClick={() => navigate('/profile')}
-			>
-				Profile
-			</button>
-			<button
-				type='button'
-				className='btn btn-danger'
-				onClick={() => navigate('/pypypypypypy')}
-			>
-				NotFound
-			</button>
-		</>
-	)
+  return (
+    <Layout groupsData={} membersData={} userData={}>
+      <h1>{boardView}</h1>
+    </Layout>
+  )
 }
-
-export default Home

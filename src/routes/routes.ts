@@ -1,15 +1,14 @@
-import Home from '../components/screens/home/Home.jsx'
-import Profile from '../components/screens/profile/Profile.jsx'
+import { Home, Profile } from '@screens'
 
 export const ROUTES = [
-	{
-		path: '/',
-		component: Home,
-		isAuth: true,
-	},
-	{
-		path: '/profile',
-		component: Profile,
-		isAuth: true,
-	},
+  {
+    path: '/',
+    component: Home,
+    isAuth: true
+  },
+  {
+    path: '/profile',
+    component: Profile,
+    isAuth: true
+  }
 ]

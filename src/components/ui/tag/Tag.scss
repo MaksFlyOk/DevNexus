@@ -1,0 +1,5 @@
+@import '@styles/mixins';
+
+.tagText {
+  @include text-reduction-mixin;
+}

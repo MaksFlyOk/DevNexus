@@ -1,0 +1,17 @@
+@import '@bootstrap';
+@import '@styles/mixins';
+
+.userDataContainer {
+  display: grid;
+  grid-template-columns: 90px 2fr;
+  align-items: center;
+  gap: map-get($spacers, 3);
+}
+
+.userNameText {
+  @include text-reduction-mixin;
+}
+
+.userDataContainer:hover {
+  cursor: pointer;
+}
