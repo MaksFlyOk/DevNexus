@@ -1,0 +1,25 @@
+@import '/node_modules/bootstrap/scss/functions';
+@import '/node_modules/bootstrap/scss/variables';
+
+$theme-colors-custom: (
+  'primary': $primary,
+  'secondary': $secondary,
+  'success': $success,
+  'info': $info,
+  'warning': $warning,
+  'danger': $danger,
+  'light': $light,
+  'dark': $dark
+);
+
+$theme-colors: map-merge($theme-colors, $theme-colors-custom);
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  overflow: -moz-scrollbars-none;
+}
+
+@import '/node_modules/bootstrap/scss/bootstrap.scss';
