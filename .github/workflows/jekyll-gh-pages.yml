@@ -8,13 +8,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Build static files
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
         id: build
         run: |
           npm i
           npm run build
 
-      - name: Upload static files as artifact
+      - name: Upload
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
