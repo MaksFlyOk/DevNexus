@@ -7,7 +7,7 @@ const Router = () => {
   const { auth } = useTypedSelector(state => state.authState)
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.VITE_APP_BASE_URL}>
       <Routes>
         {ROUTES.map(route => {
           if (route.isAuth && !auth) {
