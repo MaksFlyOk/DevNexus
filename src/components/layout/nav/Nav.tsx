@@ -1,21 +1,38 @@
-import { useActionsBoardViewState } from '@hooks/redux-hooks'
-import { UserType } from '@types'
-import { CircleImg } from '@ui'
+import { useGetuser } from '@hooks/queries'
+import { useActions } from '@hooks/redux-hooks'
+import { CircleImg, Spinner } from '@ui'
 import { useNavigate } from 'react-router-dom'
 import './Nav.scss'
 
-export const Nav = ({ img, name }: UserType) => {
+export const Nav = () => {
   const navigate = useNavigate()
 
-  const { setBoardViewState } = useActionsBoardViewState()
+  const { setBoardViewState } = useActions()
+
+  const { isPending, isError, data: userData } = useGetuser()
 
   return (
     <>
       <div className='col-3 border-top border-end border-2 border-primary bg-light-subtle d-flex align-items-center'>
-        <div className='userDataContainer' onClick={() => navigate('/profile')}>
-          <CircleImg img={img} alt='User img' />
-          <h2 className='userNameText'>{name}</h2>
-        </div>
+        {isPending ? (
+          <div className='d-flex w-100 justify-content-center py-3'>
+            <Spinner />
+          </div>
+        ) : isError ? (
+          <div className='d-flex w-100 justify-content-center py-3'>
+            <h1>
+              <span className='badge text-bg-danger'>Error</span>
+            </h1>
+          </div>
+        ) : (
+          <div
+            className='userDataContainer'
+            onClick={() => navigate('/profile')}
+          >
+            <CircleImg img={userData.img} alt='User img' />
+            <h2 className='userNameText'>{userData.name}</h2>
+          </div>
+        )}
       </div>
       <div className='col px-4 d-flex align-items-center justify-content-between'>
         <div className='d-flex gap-2'>

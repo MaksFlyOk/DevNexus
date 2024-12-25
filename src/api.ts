@@ -2,11 +2,11 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 
 export const $axios = axios.create({
-  baseURL: import.meta.env.API_URL,
+  baseURL: import.meta.env.VITE_APP_API_URL,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: Cookies.get(import.meta.env.TOKEN)
-      ? `Bearer ${Cookies.get(import.meta.env.TOKEN)}`
+    Authorization: localStorage.getItem(import.meta.env.TOKEN)
+      ? `Bearer ${localStorage.getItem(import.meta.env.TOKEN)}`
       : ''
   }
 })
@@ -14,7 +14,7 @@ export const $axios = axios.create({
 $axios.interceptors.request.use(
   function (config) {
     if (Cookies.get(import.meta.env.TOKEN)) {
-      config.headers.Authorization = `Bearer ${Cookies.get(
+      config.headers.Authorization = `Bearer ${localStorage.getItem(
         import.meta.env.TOKEN
       )}`
     }

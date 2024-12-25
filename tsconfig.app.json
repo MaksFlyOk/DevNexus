@@ -40,6 +40,7 @@
     "paths": {
       "@styles/*": ["src/assets/styles/*"],
       "@images/*": ["src/assets/images/*"],
+      "@mocks/*": ["src/assets/mocks/*"],
       "@layout/*": ["src/components/layout/*"],
       "@layout": ["src/components/layout/index.ts"],
       "@screens/*": ["src/components/screens/*"],
@@ -60,6 +61,6 @@
       "@bootstrap": ["node_modules/bootstrap/scss/bootstrap.scss"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "src/redux/slices/kanbanState.ts"],
   "exclude": ["node_modules", "dist", ".idea", "public"]
 }

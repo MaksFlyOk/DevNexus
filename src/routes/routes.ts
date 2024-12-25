@@ -1,4 +1,4 @@
-import { Home, Profile } from '@screens'
+import { Auth, Home, Landing, Profile } from '@screens'
 
 export const ROUTES = [
   {
@@ -10,5 +10,15 @@ export const ROUTES = [
     path: '/profile',
     component: Profile,
     isAuth: true
+  },
+  {
+    path: '/landing',
+    component: Landing,
+    isAuth: false
+  },
+  {
+    path: '/auth',
+    component: Auth,
+    isAuth: false
   }
 ]

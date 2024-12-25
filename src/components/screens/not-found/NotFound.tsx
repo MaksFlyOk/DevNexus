@@ -8,7 +8,7 @@ export const NotFound = () => {
       <button
         type='button'
         className='btn btn-success'
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/landing')}
       >
         Go Home
       </button>

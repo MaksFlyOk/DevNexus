@@ -1,12 +1,13 @@
-import { BoardViewStateActions } from '@redux/slices'
+import { AuthStateActions, BoardViewStateActions } from '@redux/slices'
 import { bindActionCreators } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 
 const allActions = {
-  ...BoardViewStateActions
+  ...BoardViewStateActions,
+  ...AuthStateActions
 }
 
-export const useActionsBoardViewState = () => {
+export const useActions = () => {
   const dispatch = useDispatch()
 
   return bindActionCreators(allActions, dispatch)
