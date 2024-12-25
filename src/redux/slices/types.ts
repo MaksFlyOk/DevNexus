@@ -1,5 +1,11 @@
+export type BoardViewType = 'kanban' | 'timeline' | 'table'
+
 export interface BoardViewStateType {
-  boardView: 'kanban' | 'timeline' | 'table'
+  boardView: BoardViewType
 }
 
-export type BoardViewType = 'kanban' | 'timeline' | 'table'
+export type AuthType = boolean
+
+export interface AuthStateType {
+  auth: AuthType
+}

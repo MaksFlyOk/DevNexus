@@ -9,11 +9,15 @@ export const MemberCard = ({ name, img, tags }: MemberType) => {
         <div>
           <CircleImg img={img} alt={name + ' img'} />
         </div>
-        <h5 className='userName'>user-name</h5>
+        <h5 className='userName'>{name}</h5>
       </div>
       <div className='d-flex flex-wrap gap-2'>
         {tags.map((tag, iter) => (
-          <Tag tagText={tag.tagText} color={tag.color} key={'Tag ' + iter} />
+          <Tag
+            tagText={tag.tagText}
+            color={tag.color}
+            key={name + ' tag ' + iter}
+          />
         ))}
       </div>
     </div>

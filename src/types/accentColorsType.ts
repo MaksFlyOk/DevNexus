@@ -11,3 +11,19 @@ export enum AccentColorsTextBgType {
   text_bg_warning = 'text-bg-warning',
   text_bg_info = 'text-bg-info'
 }
+
+export enum AccentColorsBorderType {
+  border_success = 'border-success',
+  border_danger = 'border-danger',
+  border_warning = 'border-warning',
+  border_info = 'border-info'
+}
+
+export enum AccentColorsTextType {
+  text_success = 'text-success',
+  text_danger = 'text-danger',
+  text_warning = 'text-warning',
+  text_info = 'text-info'
+}
+
+export type AccentColorsType = 'green' | 'red' | 'yellow' | 'blue'

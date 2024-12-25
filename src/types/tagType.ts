@@ -1,6 +1,6 @@
-import { AccentColorsEnumType } from '@types'
+import { AccentColorsType } from '@types'
 
 export interface TagType {
   tagText: string
-  color: AccentColorsEnumType
+  color: AccentColorsType
 }

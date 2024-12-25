@@ -1,11 +1,15 @@
-import { AccentColorsEnumType, AccentColorsTextBgType } from '@types'
+import {
+  AccentColorsEnumType,
+  AccentColorsTextBgType,
+  AccentColorsType
+} from '@types'
 
 type ColorConvertObjType = {
   [key in AccentColorsEnumType]: AccentColorsTextBgType
 }
 
-export function convertBadgeColor(
-  color: AccentColorsEnumType
+export function convertBgColor(
+  color: AccentColorsType
 ): AccentColorsTextBgType {
   const colorConvertObj: ColorConvertObjType = {
     [AccentColorsEnumType.green]: AccentColorsTextBgType.text_bg_success,

@@ -1,21 +1,13 @@
 import { Nav } from '@layout/nav'
-import { GroupType, MemberType, UserType } from '@types'
 import { GroupList, Logo, MemberList } from '@ui'
 import { FC, ReactElement } from 'react'
 
 interface LayoutProps {
-  groupsData: GroupType[]
-  membersData: MemberType[]
-  userData: UserType
+  membersListId: number
   children?: ReactElement
 }
 
-export const Layout: FC<LayoutProps> = ({
-  children,
-  groupsData,
-  membersData,
-  userData
-}) => {
+export const Layout: FC<LayoutProps> = ({ children, membersListId }) => {
   return (
     <div className='container-fluid vh-100'>
       <div
@@ -23,21 +15,21 @@ export const Layout: FC<LayoutProps> = ({
         style={{ height: 'calc(100vh - 95px)' }}
       >
         <div className='col-1 h-100 overflow-y-scroll border-end border-2 border-primary bg-light-subtle'>
-          <div className='sticky-top bg-light-subtle pt-3 pb-3 border-bottom border-2 border-primary'>
+          <div className='sticky-top bg-light-subtle py-3 border-bottom border-2 border-primary'>
             <Logo />
           </div>
-          <GroupList groupListData={groupsData} />
+          <GroupList />
         </div>
         <div className='col-2 h-100 overflow-y-scroll border-end border-2 border-primary bg-light-subtle'>
-          <MemberList memberListData={membersData} />
+          <MemberList memberListId={membersListId} />
         </div>
-        <div className='col px-4 py-3'>{children}</div>
+        <div className='col h-100 w-75 px-4 py-3'>{children}</div>
       </div>
       <div
         className='row z-1 position-relative'
         style={{ height: 'calc(100vh - (100vh - 95px))' }}
       >
-        <Nav img={userData.img} name={userData.name} />
+        <Nav />
       </div>
     </div>
   )

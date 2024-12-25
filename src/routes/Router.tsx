@@ -1,15 +1,16 @@
+import { useTypedSelector } from '@hooks/index.ts'
 import { NotFound } from '@screens'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ROUTES } from './routes.ts'
 
 const Router = () => {
-  const isAuth = true // Заглушка, т.к. пока нету сессии авторизации
+  const { auth } = useTypedSelector(state => state.authState)
 
   return (
     <BrowserRouter>
       <Routes>
         {ROUTES.map(route => {
-          if (route.isAuth && !isAuth) {
+          if (route.isAuth && !auth) {
             return
           }
 

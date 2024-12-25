@@ -1,9 +1,10 @@
-import { BoardViewStateReducer } from '@redux/slices'
+import { AuthStateReducer, BoardViewStateReducer } from '@redux/slices'
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
   reducer: {
-    boardViewState: BoardViewStateReducer
+    boardViewState: BoardViewStateReducer,
+    authState: AuthStateReducer
   }
 })
 
