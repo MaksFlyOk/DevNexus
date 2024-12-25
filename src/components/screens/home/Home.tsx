@@ -7,7 +7,7 @@ export const Home = () => {
   )
 
   return (
-    <Layout groupsData={[]} membersData={[]} userData={{name: 'Test'}}>
+    <Layout groupsData={} membersData={} userData={}>
       <h1>{boardView}</h1>
     </Layout>
   )
