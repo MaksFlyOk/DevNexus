@@ -1,12 +1,13 @@
 import { $axios } from '@axios'
 import { useActions, useTypedSelector } from '@hooks/redux-hooks'
 import { useMutation } from '@tanstack/react-query'
+import { AuthMutationParamsType } from '@types'
 import { Field } from '@ui/field'
 import { Spinner } from '@ui/spinner'
 import { checkToken } from '@utils/checkToken'
 import { setToken } from '@utils/setToken'
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 export const Auth = () => {
@@ -20,7 +21,7 @@ export const Auth = () => {
     handleSubmit,
     formState: { errors },
     reset
-  } = useForm({
+  } = useForm<AuthMutationParamsType>({
     mode: 'onChange'
   })
 
@@ -32,7 +33,7 @@ export const Auth = () => {
 
   const { mutateAsync, isPending, error } = useMutation({
     mutationKey: ['auth'],
-    mutationFn: async ({ name, email, password }) => {
+    mutationFn: async ({ name, email, password }: AuthMutationParamsType) => {
       if (!email) {
         const { data } = await $axios.post('/token/', {
           username: name,
@@ -63,7 +64,7 @@ export const Auth = () => {
     }
   })
 
-  const onSubmit = data => {
+  const onSubmit: SubmitHandler<AuthMutationParamsType> = data => {
     mutateAsync(data)
   }
 

@@ -9,7 +9,7 @@ type ColorConvertObjType = {
 }
 
 export function convertBgColor(
-  color: AccentColorsType
+  color: AccentColorsType | undefined
 ): AccentColorsTextBgType {
   const colorConvertObj: ColorConvertObjType = {
     [AccentColorsEnumType.green]: AccentColorsTextBgType.text_bg_success,
@@ -18,5 +18,9 @@ export function convertBgColor(
     [AccentColorsEnumType.blue]: AccentColorsTextBgType.text_bg_info
   }
 
-  return colorConvertObj[color]
+  if (color) {
+    return colorConvertObj[color]
+  }
+
+  return colorConvertObj['blue']
 }
