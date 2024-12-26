@@ -5,8 +5,8 @@ import { KanbanCard } from '../kanbal-card'
 
 interface KanbanColumnProps {
   columnName: ColumnType['name']
-  columnColor: ColumnType['color']
-  tasks: TaskType[]
+  columnColor: ColumnType['color'] | undefined
+  tasks: TaskType[] | undefined
   moveTask: (task: TaskType, columnName: TaskType['column']) => void
 }
 
@@ -49,7 +49,7 @@ export function KanbanColumn({
           >
             <div>
               <h4>{columnName}</h4>
-              <h6>Sum: {tasks.length}</h6>
+              <h6>Sum: {tasks?.length}</h6>
             </div>
             <button
               type='button'
@@ -61,7 +61,7 @@ export function KanbanColumn({
           </div>
         </div>
         <div className='d-flex flex-column pt-3 pb-2 px-2 gap-3'>
-          {tasks.map(task => (
+          {tasks?.map(task => (
             <KanbanCard key={task.name} task={task} color={columnColor} />
           ))}
         </div>

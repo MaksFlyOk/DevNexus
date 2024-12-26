@@ -9,7 +9,7 @@ type ColorConvertObjType = {
 }
 
 export function convertBorderColor(
-  color: AccentColorsType
+  color: AccentColorsType | undefined
 ): AccentColorsBorderType {
   const colorConvertObj: ColorConvertObjType = {
     [AccentColorsEnumType.green]: AccentColorsBorderType.border_success,
@@ -18,5 +18,9 @@ export function convertBorderColor(
     [AccentColorsEnumType.blue]: AccentColorsBorderType.border_info
   }
 
-  return colorConvertObj[color]
+  if (color) {
+    return colorConvertObj[color]
+  }
+
+  return colorConvertObj['blue']
 }

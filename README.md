@@ -1,1 +1,3 @@
-# Tinkoff project
+# T-bank project
+
+[Live demo](https://maksflyok.github.io/DevNexus/)
