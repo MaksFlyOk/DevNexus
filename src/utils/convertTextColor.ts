@@ -9,7 +9,7 @@ type ColorConvertObjType = {
 }
 
 export function convertTextColor(
-  color: AccentColorsType
+  color: AccentColorsType | undefined
 ): AccentColorsTextType {
   const colorConvertObj: ColorConvertObjType = {
     [AccentColorsEnumType.green]: AccentColorsTextType.text_success,
@@ -18,5 +18,9 @@ export function convertTextColor(
     [AccentColorsEnumType.blue]: AccentColorsTextType.text_info
   }
 
-  return colorConvertObj[color]
+  if (color) {
+    return colorConvertObj[color]
+  }
+
+  return colorConvertObj['blue']
 }

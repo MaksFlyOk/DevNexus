@@ -4,41 +4,44 @@ import { useCallback, useReducer } from 'react'
 type Action =
   | {
       type: 'move-ticket'
-      payload: { newState: TaskType['column']; ticket: TaskType }
+      payload: { newColumn: TaskType['column']; task: TaskType }
     }
   | { type: 'set-initial'; payload: BoardType }
 const initialState = { tasks: {} }
 
 type TasksState = {
-  tasks: Record<string, TaskType[]>
+  tasks: Record<string, TaskType[] | undefined>
 }
 const reducer = (state: TasksState, action: Action): TasksState => {
   const { type } = action
   switch (type) {
     case 'move-ticket': {
       const { payload } = action
+
       return payload.newColumn === payload.task.column
         ? state
         : {
             ...state,
             tasks: {
               ...state.tasks,
-              [payload.task.column]: state.tasks[payload.task.column].filter(
-                task => task.name !== payload.task.name
-              ),
+              [payload.task.column]:
+                state.tasks[payload.task.column]?.filter(
+                  task => task.name !== payload.task.name
+                ) || [],
               [payload.newColumn]: [
-                ...state.tasks[payload.newColumn],
+                ...(state.tasks[payload.newColumn] || []),
                 { ...payload.task, column: payload.newColumn }
               ]
             }
           }
     }
-    case 'set-initial':
-      const newBoard = {}
+    case 'set-initial': {
+      const newBoard: TasksState = { tasks: {} }
       action.payload.columns.forEach(
-        column => (newBoard[column.name] = column.tasks)
+        column => (newBoard.tasks[column.name] = column.tasks)
       )
-      return { tasks: newBoard }
+      return newBoard
+    }
   }
 }
 export const useKanbanState = () => {

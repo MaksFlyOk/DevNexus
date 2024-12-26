@@ -6,7 +6,7 @@ import { useDrag } from 'react-dnd'
 
 interface KanbanCardProps {
   task: TaskType
-  color: ColumnType['color']
+  color: ColumnType['color'] | undefined
 }
 
 export const KanbanCard = ({ task, color }: KanbanCardProps) => {

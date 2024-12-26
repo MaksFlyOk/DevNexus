@@ -1,3 +1,19 @@
+import { AuthMutationParamsType } from '@types'
+import { UseFormRegister } from 'react-hook-form'
+
+type FieldTypesType = 'text' | 'password' | 'email'
+
+interface FieldPropsType {
+  register: UseFormRegister<AuthMutationParamsType>
+  name: 'password' | 'email' | 'name'
+  label: string
+  placeholder: string
+  error: string | undefined
+  options: object
+  disabled: boolean
+  type: FieldTypesType
+}
+
 export const Field = ({
   register,
   name,
@@ -6,9 +22,8 @@ export const Field = ({
   error,
   options,
   disabled,
-  type,
-  ...rest
-}) => {
+  type
+}: FieldPropsType) => {
   return (
     <div className='mb-3'>
       <label htmlFor={'validationServer_' + name} className='form-label'>
@@ -16,7 +31,6 @@ export const Field = ({
       </label>
       <input
         {...register(name, options)}
-        {...rest}
         type={type}
         disabled={disabled}
         className={error ? 'form-control is-invalid' : 'form-control is-valid'}

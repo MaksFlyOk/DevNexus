@@ -1,4 +1,5 @@
 export * from './accentColorsType'
+export * from './authType'
 export * from './boardType'
 export * from './groupType'
 export * from './memberType'
