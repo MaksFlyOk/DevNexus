@@ -1,13 +1,19 @@
 import { ColumnType, TaskType } from '@types'
+import { Modal } from '@ui'
+import { AddGroupBoardModal } from '@ui/add-group-board-modal'
 import { convertBgColor } from '@utils/convertBgColor'
+import { useState } from 'react'
 import { useDrop } from 'react-dnd'
-import { KanbanCard } from '../kanbal-card'
+import { KanbanCard } from '../kanban-card'
 
 interface KanbanColumnProps {
   columnName: ColumnType['name']
   columnColor: ColumnType['color'] | undefined
   tasks: TaskType[] | undefined
-  moveTask: (task: TaskType, columnName: TaskType['column']) => void
+  moveTask: (movedTask: {
+    task: TaskType
+    columnName: TaskType['column']
+  }) => void
 }
 
 export function KanbanColumn({
@@ -16,15 +22,14 @@ export function KanbanColumn({
   moveTask,
   tasks
 }: KanbanColumnProps) {
-  const [{ isOver, canDrop }, drop] = useDrop<
+  const [{ isOver }, drop] = useDrop<
     TaskType,
     void,
     { canDrop: boolean; isOver: boolean }
   >(() => ({
     accept: 'task',
     drop: task => {
-      console.log(task, canDrop, isOver, columnName)
-      moveTask(task, columnName)
+      moveTask({ task, columnName })
     },
     collect: monitor => ({
       isOver: monitor.isOver(),
@@ -32,8 +37,13 @@ export function KanbanColumn({
     })
   }))
 
+  const [isShow, setIsShow] = useState(false)
+
   return (
     <div ref={drop} className='col-4 overflow-y-scroll rounded-4'>
+      <Modal isShow={isShow} setIsShow={setIsShow}>
+        <AddGroupBoardModal setIsShow={setIsShow} />
+      </Modal>
       <div
         className={
           'rounded-4 ' +
@@ -54,7 +64,7 @@ export function KanbanColumn({
             <button
               type='button'
               className='btn btn-outline-dark'
-              onClick={() => console.log('add')}
+              onClick={() => setIsShow(true)}
             >
               +
             </button>

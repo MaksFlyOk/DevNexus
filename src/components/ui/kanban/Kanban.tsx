@@ -1,49 +1,44 @@
-import { useGetBoard } from '@hooks/queries/useGetBoard'
-import { useKanbanState } from '@redux/slices'
+import { useActions, useTypedSelector } from '@hooks/redux-hooks'
+import { useSetInitialBoardData } from '@hooks/useSetInitialBoardData'
+import { BoardType } from '@types'
 import { Spinner } from '@ui/spinner'
-import { useEffect } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import withScrolling from 'react-dnd-scrolling'
 import { KanbanColumn } from './kanban-column'
 
-export const Kanban = () => {
-  const { isPending, isError, data: boardData } = useGetBoard()
-  const { state, moveTicket, setInitial } = useKanbanState()
+export const Kanban = ({ boardData }: { boardData: BoardType }) => {
+  const { moveTask } = useActions()
+  const { columns } = useTypedSelector(state => state.boardState)
 
-  useEffect(() => {
-    if (boardData) {
-      setInitial(boardData)
-    }
-  }, [boardData])
+  const ScrollingComponent = withScrolling('div')
+
+  useSetInitialBoardData(boardData)
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className='overflow-x-scroll d-flex flex-row gap-3 h-100 p-2'>
-        {isPending || !state || Object.keys(state).length == 0 ? (
+      <ScrollingComponent className='overflow-x-scroll d-flex flex-row gap-3 h-100 p-2'>
+        {!columns || columns.length == 0 ? (
           <div className='d-flex w-100 h-100 justify-content-center align-items-center py-3'>
             <Spinner />
           </div>
-        ) : isError ? (
-          <div className='d-flex w-100 h-100 justify-content-center align-items-center py-3'>
-            <h1>
-              <span className='badge text-bg-danger'>Error</span>
-            </h1>
-          </div>
         ) : (
-          Object.keys(state.tasks).map(columnName => (
+          columns.map(column => (
             <KanbanColumn
-              tasks={state.tasks[columnName]}
-              columnColor={
-                boardData.columns.find(column => column.name === columnName)
-                  ?.color
+              tasks={column.tasks}
+              columnColor={column.color}
+              key={column.name}
+              moveTask={movedTask =>
+                moveTask({
+                  task: movedTask.task,
+                  newColumn: movedTask.columnName
+                })
               }
-              key={columnName}
-              moveTask={moveTicket}
-              columnName={columnName}
+              columnName={column.name}
             />
           ))
         )}
-      </div>
+      </ScrollingComponent>
     </DndProvider>
   )
 }

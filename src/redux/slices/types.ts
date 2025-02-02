@@ -1,4 +1,4 @@
-export type BoardViewType = 'kanban' | 'timeline' | 'table'
+export type BoardViewType = 'kanban' | 'list' | 'table'
 
 export interface BoardViewStateType {
   boardView: BoardViewType

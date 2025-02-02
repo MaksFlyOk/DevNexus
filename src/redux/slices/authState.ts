@@ -19,4 +19,4 @@ export const AuthStateSlice = createSlice({
 
 export const AuthStateActions = AuthStateSlice.actions
 export const AuthStateReducer = AuthStateSlice.reducer
-export const AuthState = (state: RootState) => state.boardViewState
+export const AuthState = (state: RootState) => state.authState

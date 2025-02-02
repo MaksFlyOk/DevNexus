@@ -2,7 +2,13 @@ import { MemberType } from '@types'
 import { CircleImg, Tag } from '@ui'
 import './MemberCard.scss'
 
-export const MemberCard = ({ name, img, tags }: MemberType) => {
+interface MemberCardProps {
+  name: string
+  img?: string
+  tags: MemberType['tags']
+}
+
+export const MemberCard = ({ name, img, tags }: MemberCardProps) => {
   return (
     <div className='card p-2 my-2'>
       <div className='userCardHeader'>

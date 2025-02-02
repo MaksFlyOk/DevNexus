@@ -1,18 +1,14 @@
-import { $axios } from '@axios'
-import { useActions, useTypedSelector } from '@hooks/redux-hooks'
-import { useMutation } from '@tanstack/react-query'
+import { useTypedSelector } from '@hooks/redux-hooks'
 import { AuthMutationParamsType } from '@types'
 import { Field } from '@ui/field'
 import { Spinner } from '@ui/spinner'
-import { checkToken } from '@utils/checkToken'
-import { setToken } from '@utils/setToken'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { AuthMutate } from './AuthMutate'
 
 export const Auth = () => {
   const [authOrRegState, setAuthOrRegState] = useState('login')
-  const { setAuthState } = useActions()
   const { auth } = useTypedSelector(state => state.authState)
   const navigate = useNavigate()
 
@@ -25,44 +21,13 @@ export const Auth = () => {
     mode: 'onChange'
   })
 
+  const { mutateAsync, isPending, error } = AuthMutate(reset, setAuthOrRegState)
+
   useEffect(() => {
     if (auth) {
       navigate('/')
     }
   }, [auth])
-
-  const { mutateAsync, isPending, error } = useMutation({
-    mutationKey: ['auth'],
-    mutationFn: async ({ name, email, password }: AuthMutationParamsType) => {
-      if (!email) {
-        const { data } = await $axios.post('/token/', {
-          username: name,
-          password
-        })
-        console.log(data)
-
-        setToken(data)
-      } else {
-        await $axios.post('/v1/user/registration/', {
-          username: name,
-          email,
-          password
-        })
-
-        reset()
-      }
-    },
-    onError: () => {
-      reset()
-    },
-    onSuccess: () => {
-      if (checkToken()) setAuthState(true)
-
-      setAuthOrRegState(prev =>
-        prev === 'registration' ? 'login' : 'registration'
-      )
-    }
-  })
 
   const onSubmit: SubmitHandler<AuthMutationParamsType> = data => {
     mutateAsync(data)

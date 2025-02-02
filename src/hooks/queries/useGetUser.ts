@@ -2,7 +2,7 @@ import userService from '@services/userService'
 import { QueryObserverResult, useQuery } from '@tanstack/react-query'
 import { UserType } from '@types'
 
-export const useGetuser = (): QueryObserverResult<UserType> => {
+export const useGetUser = (): QueryObserverResult<UserType> => {
   return useQuery<UserType>({
     queryKey: [`get user`],
     queryFn: async () => {

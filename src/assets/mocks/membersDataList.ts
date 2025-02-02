@@ -2,6 +2,7 @@ import { MemberType } from '@types'
 
 export const membersDataList: MemberType[] = [
   {
+    id: 0,
     name: 'Иван Иванов',
     tags: [
       { tagText: 'разработчик', color: 'green' },
@@ -11,6 +12,7 @@ export const membersDataList: MemberType[] = [
     ]
   },
   {
+    id: 1,
     name: 'Анна Петрова',
     tags: [
       { tagText: 'дизайнер', color: 'green' },
@@ -20,6 +22,7 @@ export const membersDataList: MemberType[] = [
     ]
   },
   {
+    id: 2,
     name: 'Дмитрий Смирнов',
     tags: [
       { tagText: 'менеджер', color: 'green' },
@@ -29,6 +32,7 @@ export const membersDataList: MemberType[] = [
     ]
   },
   {
+    id: 3,
     name: 'Елена Кузнецова',
     tags: [
       { tagText: 'аналитик', color: 'green' },
@@ -38,6 +42,7 @@ export const membersDataList: MemberType[] = [
     ]
   },
   {
+    id: 4,
     name: 'Алексей Соколов',
     tags: [
       { tagText: 'тестировщик', color: 'green' },
@@ -47,6 +52,7 @@ export const membersDataList: MemberType[] = [
     ]
   },
   {
+    id: 5,
     name: 'Мария Федорова',
     tags: [
       { tagText: 'маркетолог', color: 'green' },
@@ -56,6 +62,7 @@ export const membersDataList: MemberType[] = [
     ]
   },
   {
+    id: 6,
     name: 'Сергей Лебедев',
     tags: [
       { tagText: 'системный администратор', color: 'green' },
@@ -65,6 +72,7 @@ export const membersDataList: MemberType[] = [
     ]
   },
   {
+    id: 7,
     name: 'Ольга Морозова',
     tags: [
       { tagText: 'HR', color: 'green' },
@@ -74,6 +82,7 @@ export const membersDataList: MemberType[] = [
     ]
   },
   {
+    id: 8,
     name: 'Павел Николаев',
     tags: [
       { tagText: 'финансист', color: 'green' },
@@ -83,6 +92,7 @@ export const membersDataList: MemberType[] = [
     ]
   },
   {
+    id: 9,
     name: 'Юлия Васильева',
     tags: [
       { tagText: 'копирайтер', color: 'green' },

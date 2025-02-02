@@ -1,18 +1,54 @@
-import { useGetuser } from '@hooks/queries'
-import { useActions } from '@hooks/redux-hooks'
-import { CircleImg, Spinner } from '@ui'
+import { useGetUser } from '@hooks/queries'
+import { useActions, useTypedSelector } from '@hooks/redux-hooks'
+import { AccentColorsType } from '@types'
+import { CircleImg, Modal, Spinner } from '@ui'
+import { useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import './Nav.scss'
+import { AddNewColumnModal } from './add-new-colomn-modal'
+
+export type AddNewColumnParamsType = {
+  name: string
+  color: AccentColorsType
+}
 
 export const Nav = () => {
   const navigate = useNavigate()
 
-  const { setBoardViewState } = useActions()
+  const { setBoardViewState, addColumn } = useActions()
+  const { groupId } = useTypedSelector(state => state.groupState)
 
-  const { isPending, isError, data: userData } = useGetuser()
+  const { isPending, isError, data: userData } = useGetUser()
+
+  const [isShow, setIsShow] = useState(false)
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm<AddNewColumnParamsType>({
+    mode: 'onChange'
+  })
+
+  const onSubmit: SubmitHandler<AddNewColumnParamsType> = data => {
+    addColumn(data)
+    setIsShow(false)
+    reset()
+  }
 
   return (
     <>
+      <Modal isShow={isShow} setIsShow={setIsShow}>
+        <AddNewColumnModal
+          register={register}
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
+          errors={errors}
+          setIsShow={setIsShow}
+        />
+      </Modal>
       <div className='col-3 border-top border-end border-2 border-primary bg-light-subtle d-flex align-items-center'>
         {isPending ? (
           <div className='d-flex w-100 justify-content-center py-3'>
@@ -39,6 +75,7 @@ export const Nav = () => {
           <button
             type='button'
             className='btn btn-primary btn-lg'
+            disabled={groupId === undefined}
             onClick={() => setBoardViewState('kanban')}
           >
             Kanban
@@ -46,13 +83,15 @@ export const Nav = () => {
           <button
             type='button'
             className='btn btn-primary btn-lg'
-            onClick={() => setBoardViewState('timeline')}
+            disabled={groupId === undefined}
+            onClick={() => setBoardViewState('list')}
           >
-            Timeline
+            List
           </button>
           <button
             type='button'
             className='btn btn-primary btn-lg'
+            disabled={groupId === undefined}
             onClick={() => setBoardViewState('table')}
           >
             Table
@@ -65,6 +104,7 @@ export const Nav = () => {
               className='btn btn-secondary btn-lg dropdown-toggle'
               data-bs-toggle='dropdown'
               aria-expanded='false'
+              disabled={groupId === undefined}
             >
               Фильтры
             </button>
@@ -84,7 +124,12 @@ export const Nav = () => {
           </div>
         </div>
         <div>
-          <button type='button' className='btn btn-outline-light btn-lg'>
+          <button
+            type='button'
+            className='btn btn-outline-light btn-lg'
+            disabled={groupId === undefined}
+            onClick={() => setIsShow(true)}
+          >
             Добавить колонку
           </button>
         </div>

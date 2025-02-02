@@ -1,7 +1,11 @@
 import { useGetGroups } from '@hooks/queries'
-import { CircleImg, Spinner } from '@ui'
+import { useActions, useTypedSelector } from '@hooks/redux-hooks'
+import DefaultCircleImg from '@images/DefaultCircleImg.svg'
+import { Spinner } from '@ui'
 
 export const GroupList = () => {
+  const { setGroupId } = useActions()
+  const { groupId } = useTypedSelector(state => state.groupState)
   const { isPending, isError, data: groupListData } = useGetGroups()
 
   return (
@@ -16,11 +20,25 @@ export const GroupList = () => {
         </div>
       ) : (
         groupListData.map((group, iter: number) => (
-          <CircleImg
-            img={group?.img}
-            alt={'Group img ' + iter}
+          <button
             key={'Group img ' + iter}
-          />
+            type='button'
+            className={`btn rounded-circle p-0 ${
+              group.id === groupId ? 'border-primary border-3' : ''
+            }`}
+            onClick={() =>
+              setGroupId(group.id === groupId ? undefined : group.id)
+            }
+          >
+            <div className='d-flex justify-content-center rounded-circle'>
+              <img
+                draggable={false}
+                className='w-100'
+                src={group?.img ? group?.img : DefaultCircleImg}
+                alt={'Group image ' + group.id}
+              />
+            </div>
+          </button>
         ))
       )}
     </div>

@@ -1,4 +1,5 @@
 export * from './authState'
+export * from './boardState'
 export * from './boardViewState'
-export * from './kanbanState'
+export * from './groupState'
 export * from './types'

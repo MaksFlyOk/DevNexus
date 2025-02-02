@@ -4,12 +4,11 @@ import { convertBorderColor } from '@utils/convertBorderColor'
 import { convertTextColor } from '@utils/convertTextColor'
 import { useDrag } from 'react-dnd'
 
-interface KanbanCardProps {
+interface ListItemProps {
   task: TaskType
   color: ColumnType['color'] | undefined
 }
-
-export const KanbanCard = ({ task, color }: KanbanCardProps) => {
+export const ListItem = ({ task, color }: ListItemProps) => {
   const [{ isDragging }, drag] = useDrag<
     TaskType,
     void,
@@ -26,13 +25,16 @@ export const KanbanCard = ({ task, color }: KanbanCardProps) => {
   return (
     <div
       ref={drag}
-      className={
-        'rounded-3 border border-2 p-2 ' +
-        convertBorderColor(color) +
-        `${isDragging ? ' bg-dark' : ''}`
-      }
+      className={`p-2 rounded-3 border border-2 ${convertBorderColor(color)} ${
+        isDragging ? ' bg-dark' : ''
+      }`}
     >
-      <h4 className='fw-bold'>{task?.name}</h4>
+      <div className='d-flex justify-content-between'>
+        <h4 className='fw-bold'>{task?.name}</h4>
+        <h6 className={'fw-bold pe-1 ' + convertTextColor(color)}>
+          {task.date}
+        </h6>
+      </div>
       <h5 className='pb-1'>{task?.worker}</h5>
       <div className='d-flex flex-wrap gap-2 pb-2'>
         {task?.tags?.map((tag, iter) => (
@@ -43,10 +45,7 @@ export const KanbanCard = ({ task, color }: KanbanCardProps) => {
           />
         ))}
       </div>
-      <p className='decription'>{task?.description}</p>
-      <div className='d-flex flex-row justify-content-end'>
-        <h6 className={'fw-bold ' + convertTextColor(color)}>{task.date}</h6>
-      </div>
+      <p className='description'>{task?.description}</p>
     </div>
   )
 }

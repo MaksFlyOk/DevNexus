@@ -5,7 +5,7 @@ export const boardData: BoardType = {
     {
       name: 'К выполнению',
       color: 'red',
-      sum: 8,
+      sum: 4, // !! Убрать
       tasks: [
         {
           name: 'Разработка дизайна главной страницы',
@@ -81,7 +81,7 @@ export const boardData: BoardType = {
     {
       name: 'В процессе',
       color: 'blue',
-      sum: 8,
+      sum: 5,
       tasks: [
         {
           name: 'Разработка API',
@@ -318,7 +318,7 @@ export const boardData: BoardType = {
     {
       name: 'Выполнено',
       color: 'yellow',
-      sum: 8,
+      sum: 7,
       tasks: [
         {
           name: 'Развертывание функции',
