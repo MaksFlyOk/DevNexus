@@ -1,11 +1,16 @@
-import { TagType } from '@types'
+import { AccentColorsType } from '@types'
 import { convertBgColor } from '@utils/convertBgColor'
 import './Tag.scss'
 
-export const Tag = ({ tagText, color }: TagType) => {
+interface TagProps {
+  tagName: string
+  color: AccentColorsType
+}
+
+export const Tag = ({ tagName, color }: TagProps) => {
   return (
-    <span className={'badge mw-100 ' + convertBgColor(color) + ' tagText'}>
-      {tagText}
+    <span className={'badge mw-100 ' + convertBgColor(color) + ' tagName'}>
+      {tagName}
     </span>
   )
 }

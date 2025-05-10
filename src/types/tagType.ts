@@ -1,6 +1,7 @@
 import { AccentColorsType } from '@types'
 
 export interface TagType {
-  tagText: string
+  name: string
   color: AccentColorsType
+  code?: string
 }

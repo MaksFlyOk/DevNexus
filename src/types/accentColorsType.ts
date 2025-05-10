@@ -12,6 +12,13 @@ export enum AccentColorsTextBgType {
   text_bg_info = 'text-bg-info'
 }
 
+export enum AccentColorsTableBgType {
+  table_success = 'table-success',
+  table_danger = 'table-danger',
+  table_warning = 'table-warning',
+  table_info = 'table-info'
+}
+
 export enum AccentColorsBorderType {
   border_success = 'border-success',
   border_danger = 'border-danger',

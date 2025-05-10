@@ -2,21 +2,23 @@ import { AccentColorsType } from './accentColorsType'
 import { TagType } from './tagType'
 
 export interface BoardType {
-  columns: ColumnType[]
+  columns: Array<ColumnType>
 }
 
 export interface ColumnType {
-  name: string
+  code: number
   color: AccentColorsType
-  sum: number
+  name: string
   tasks: TaskType[]
 }
 
 export interface TaskType {
-  name: string
+  assignee: string
+  code?: string
   column: ColumnType['name']
-  worker: string
   description: string
-  date: string
+  start_date: string
+  end_date: string
   tags: TagType[]
+  title: string
 }

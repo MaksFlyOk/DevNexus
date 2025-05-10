@@ -1,94 +1,48 @@
-import { MemberType } from '@types'
+import { UserType } from '@types'
 
-export const membersDataList: MemberType[] = [
+export const membersDataList: UserType[] = [
   {
-    name: 'Иван Иванов',
-    tags: [
-      { tagText: 'разработчик', color: 'green' },
-      { tagText: 'фронтенд', color: 'red' },
-      { tagText: 'JavaScript', color: 'yellow' },
-      { tagText: 'React', color: 'blue' }
-    ]
+    email: 'all.random@devnexus.com',
+    username: 'Все совпадения случайны'
   },
   {
-    name: 'Анна Петрова',
-    tags: [
-      { tagText: 'дизайнер', color: 'green' },
-      { tagText: 'UX/UI', color: 'red' },
-      { tagText: 'Figma', color: 'yellow' },
-      { tagText: 'Adobe', color: 'blue' }
-    ]
+    email: 'i.ivanov@devnexus.com',
+    username: 'Иван Иванов'
   },
   {
-    name: 'Дмитрий Смирнов',
-    tags: [
-      { tagText: 'менеджер', color: 'green' },
-      { tagText: 'проекты', color: 'red' },
-      { tagText: 'Agile', color: 'yellow' },
-      { tagText: 'Scrum', color: 'blue' }
-    ]
+    email: 'a.petorva@devnexus.com',
+    username: 'Анна Петрова'
   },
   {
-    name: 'Елена Кузнецова',
-    tags: [
-      { tagText: 'аналитик', color: 'green' },
-      { tagText: 'данные', color: 'red' },
-      { tagText: 'SQL', color: 'yellow' },
-      { tagText: 'Python', color: 'blue' }
-    ]
+    email: 'd.smiron@devnexus.com',
+    username: 'Дмитрий Смирнов'
   },
   {
-    name: 'Алексей Соколов',
-    tags: [
-      { tagText: 'тестировщик', color: 'green' },
-      { tagText: 'QA', color: 'red' },
-      { tagText: 'Selenium', color: 'yellow' },
-      { tagText: 'JIRA', color: 'blue' }
-    ]
+    email: 'e.kuznecova@devnexus.com',
+    username: 'Елена Кузнецова'
   },
   {
-    name: 'Мария Федорова',
-    tags: [
-      { tagText: 'маркетолог', color: 'green' },
-      { tagText: 'SEO', color: 'red' },
-      { tagText: 'Google Analytics', color: 'yellow' },
-      { tagText: 'социальные сети', color: 'blue' }
-    ]
+    email: 'a.sokolov@devnexus.com',
+    username: 'Алексей Соколов'
   },
   {
-    name: 'Сергей Лебедев',
-    tags: [
-      { tagText: 'системный администратор', color: 'green' },
-      { tagText: 'IT', color: 'red' },
-      { tagText: 'Linux', color: 'yellow' },
-      { tagText: 'сети', color: 'blue' }
-    ]
+    email: 'm.fedorova@devnexus.com',
+    username: 'Мария Федорова'
   },
   {
-    name: 'Ольга Морозова',
-    tags: [
-      { tagText: 'HR', color: 'green' },
-      { tagText: 'рекрутинг', color: 'red' },
-      { tagText: 'обучение', color: 'yellow' },
-      { tagText: 'корпоративная культура', color: 'blue' }
-    ]
+    email: 's.lebedev@devnexus.com',
+    username: 'Сергей Лебедев'
   },
   {
-    name: 'Павел Николаев',
-    tags: [
-      { tagText: 'финансист', color: 'green' },
-      { tagText: 'бухгалтерия', color: 'red' },
-      { tagText: 'Excel', color: 'yellow' },
-      { tagText: 'отчеты', color: 'blue' }
-    ]
+    email: '0.morozova@devnexus.com',
+    username: 'Ольга Морозова'
   },
   {
-    name: 'Юлия Васильева',
-    tags: [
-      { tagText: 'копирайтер', color: 'green' },
-      { tagText: 'контент', color: 'red' },
-      { tagText: 'блоги', color: 'yellow' },
-      { tagText: 'статьи', color: 'blue' }
-    ]
+    email: 'p.nikovaev@devnexus.com',
+    username: 'Павел Николаев'
+  },
+  {
+    email: 'u.vasileva@devnexus.com',
+    username: 'Юлия Васильева'
   }
 ]

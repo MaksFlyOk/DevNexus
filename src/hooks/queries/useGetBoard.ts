@@ -1,13 +1,19 @@
-import boardService from '@services/boardService'
+import groupService from '@services/groupService'
 import { QueryObserverResult, useQuery } from '@tanstack/react-query'
-import { BoardType } from '@types'
+import { GroupType } from '@types'
 
-export const useGetBoard = (): QueryObserverResult<BoardType> => {
-  return useQuery<BoardType>({
-    queryKey: [`get board`],
+type GroupIdType = string | undefined
+
+export const useGetGroup = (
+  groupId: GroupIdType
+): QueryObserverResult<GroupType> => {
+  return useQuery<GroupType>({
+    queryKey: [`get board`, groupId],
     queryFn: async () => {
-      const response = await boardService.getBoard()
+      const response = await groupService.getGroup(groupId)
+
       return response.data
-    }
+    },
+    enabled: groupId === undefined ? false : true
   })
 }

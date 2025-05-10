@@ -1,4 +1,5 @@
 import { Auth, Home, Landing, Profile } from '@screens'
+import { CurrentUserProfile } from '@screens/current-user-profile'
 
 export const ROUTES = [
   {
@@ -9,6 +10,11 @@ export const ROUTES = [
   {
     path: '/profile',
     component: Profile,
+    isAuth: true
+  },
+  {
+    path: '/user-profile/:id',
+    component: CurrentUserProfile,
     isAuth: true
   },
   {

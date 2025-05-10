@@ -1,20 +1,20 @@
-import { $axios } from '@axios'
-import { useActions, useTypedSelector } from '@hooks/redux-hooks'
-import { useMutation } from '@tanstack/react-query'
+import { useTypedSelector } from '@hooks/redux-hooks'
+import useWindowDimensions from '@hooks/useWindowDimensions'
 import { AuthMutationParamsType } from '@types'
 import { Field } from '@ui/field'
 import { Spinner } from '@ui/spinner'
-import { checkToken } from '@utils/checkToken'
-import { setToken } from '@utils/setToken'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { AuthMutate } from './AuthMutate'
 
 export const Auth = () => {
-  const [authOrRegState, setAuthOrRegState] = useState('login')
-  const { setAuthState } = useActions()
   const { auth } = useTypedSelector(state => state.authState)
+
   const navigate = useNavigate()
+  const { width } = useWindowDimensions()
+
+  const [authOrRegState, setAuthOrRegState] = useState('login')
 
   const {
     register,
@@ -25,52 +25,21 @@ export const Auth = () => {
     mode: 'onChange'
   })
 
+  const { mutateAsync, isPending, error } = AuthMutate(reset, setAuthOrRegState)
+
   useEffect(() => {
     if (auth) {
       navigate('/')
     }
   }, [auth])
 
-  const { mutateAsync, isPending, error } = useMutation({
-    mutationKey: ['auth'],
-    mutationFn: async ({ name, email, password }: AuthMutationParamsType) => {
-      if (!email) {
-        const { data } = await $axios.post('/token/', {
-          username: name,
-          password
-        })
-        console.log(data)
-
-        setToken(data)
-      } else {
-        await $axios.post('/v1/user/registration/', {
-          username: name,
-          email,
-          password
-        })
-
-        reset()
-      }
-    },
-    onError: () => {
-      reset()
-    },
-    onSuccess: () => {
-      if (checkToken()) setAuthState(true)
-
-      setAuthOrRegState(prev =>
-        prev === 'registration' ? 'login' : 'registration'
-      )
-    }
-  })
-
   const onSubmit: SubmitHandler<AuthMutationParamsType> = data => {
     mutateAsync(data)
   }
 
   return (
-    <div className='container-fluid d-flex justify-content-center vh-100'>
-      <div className='col-6 d-flex align-items-center'>
+    <div className='container-fluid container-xxl d-flex justify-content-center vh-100'>
+      <div className='col-md-6 col-10 d-flex align-items-center'>
         <div className='row w-100 m-0 d-flex'>
           <h1 className='text-center'>
             {authOrRegState === 'login' ? 'Авторизация' : 'Регистрация'}
@@ -102,11 +71,9 @@ export const Auth = () => {
                   }}
                 />
                 <div
-                  style={
-                    authOrRegState === 'login'
-                      ? { display: 'none' }
-                      : { display: 'block' }
-                  }
+                  className={`${
+                    authOrRegState === 'login' ? 'd-none' : 'd-block'
+                  }`}
                 >
                   <Field
                     register={register}
@@ -139,7 +106,9 @@ export const Auth = () => {
                   }}
                 />
                 <div
-                  className='btn-group mb-3 w-100'
+                  className={`${
+                    width <= 576 ? 'btn-group-vertical' : 'btn-group'
+                  } mb-3 w-100`}
                   role='group'
                   aria-label='AuthOrRegGroup'
                 >

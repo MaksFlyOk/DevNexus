@@ -3,9 +3,13 @@
 
 .userCardHeader {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  display: flex;
+  gap: map-get($spacers, 3);
   align-items: center;
-  margin-bottom: map-get($spacers, 2);
+
+  > div > img {
+    width: clamp(30px, 5vw, 100px) !important;
+  }
 }
 
 .userName {

@@ -3,3 +3,14 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+@mixin text-reduction-mixin-line-clamp($line-clamp: 2, $break-word: false) {
+  display: -webkit-box;
+  @if $break-word {
+    word-break: break-word !important;
+  }
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line-clamp;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

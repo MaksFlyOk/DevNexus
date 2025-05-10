@@ -1,6 +1,11 @@
 @import '/node_modules/bootstrap/scss/functions';
 @import '/node_modules/bootstrap/scss/variables';
 
+body {
+  padding-right: 0px !important;
+  overflow: auto !important;
+}
+
 $theme-colors-custom: (
   'primary': $primary,
   'secondary': $secondary,

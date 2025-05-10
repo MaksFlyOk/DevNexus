@@ -1,36 +1,58 @@
-import { Nav } from '@layout/nav'
-import { GroupList, Logo, MemberList } from '@ui'
-import { FC, ReactElement } from 'react'
+import { useGetUser } from '@hooks/queries'
+import { useActions, useTypedSelector } from '@hooks/redux-hooks'
+import useWindowDimensions from '@hooks/useWindowDimensions'
+import { GroupType } from '@types'
+import { checkToken } from '@utils/checkToken'
+import { FC, ReactElement, useEffect } from 'react'
+import { WindowDimensionsView } from '../dev'
+import './Layout.scss'
+import { SidebarMode } from './side-bar-mode'
 
 interface LayoutProps {
-  membersListId: number
-  children?: ReactElement
+  children: ReactElement
+  isGroupPending: boolean
+  isGroupError: boolean
+  groupData: GroupType | undefined
 }
 
-export const Layout: FC<LayoutProps> = ({ children, membersListId }) => {
+export const Layout: FC<LayoutProps> = ({
+  children,
+  isGroupPending,
+  isGroupError,
+  groupData
+}) => {
+  const { setAuthState } = useActions()
+
+  const { auth } = useTypedSelector(state => state.authState)
+
+  const { width } = useWindowDimensions()
+
+  const { isPending, isError, data } = useGetUser()
+
+  useEffect(() => {
+    if (!checkToken()) {
+      setAuthState(false)
+    }
+  }, [auth, isPending])
+
   return (
-    <div className='container-fluid vh-100'>
-      <div
-        className='row z-0 position-relative'
-        style={{ height: 'calc(100vh - 95px)' }}
+    <div
+      className={`${
+        width <= 1440 ? 'container-fluid' : 'layout-container'
+      } vh-100`}
+    >
+      <WindowDimensionsView />
+      <SidebarMode
+        isUserPending={isPending}
+        isUserError={isError}
+        userData={data}
+        isGroupPending={isGroupPending}
+        isGroupError={isGroupError}
+        groupData={groupData}
+        sideBarMode={width <= 1200}
       >
-        <div className='col-1 h-100 overflow-y-scroll border-end border-2 border-primary bg-light-subtle'>
-          <div className='sticky-top bg-light-subtle py-3 border-bottom border-2 border-primary'>
-            <Logo />
-          </div>
-          <GroupList />
-        </div>
-        <div className='col-2 h-100 overflow-y-scroll border-end border-2 border-primary bg-light-subtle'>
-          <MemberList memberListId={membersListId} />
-        </div>
-        <div className='col h-100 w-75 px-4 py-3'>{children}</div>
-      </div>
-      <div
-        className='row z-1 position-relative'
-        style={{ height: 'calc(100vh - (100vh - 95px))' }}
-      >
-        <Nav />
-      </div>
+        {children}
+      </SidebarMode>
     </div>
   )
 }

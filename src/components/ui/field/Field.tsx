@@ -1,29 +1,33 @@
-import { AuthMutationParamsType } from '@types'
-import { UseFormRegister } from 'react-hook-form'
+import { useEffect, useState } from 'react'
+import { FieldValues, Path, UseFormRegister } from 'react-hook-form'
 
-type FieldTypesType = 'text' | 'password' | 'email'
-
-interface FieldPropsType {
-  register: UseFormRegister<AuthMutationParamsType>
-  name: 'password' | 'email' | 'name'
+interface FieldPropsType<TFieldValues extends FieldValues> {
+  register: UseFormRegister<TFieldValues>
+  name: Path<TFieldValues>
   label: string
-  placeholder: string
+  placeholder?: string
   error: string | undefined
-  options: object
-  disabled: boolean
-  type: FieldTypesType
+  options?: object
+  disabled?: boolean
+  type: string
 }
 
-export const Field = ({
+export const Field = <TFieldValues extends FieldValues>({
   register,
   name,
   label,
   placeholder,
   error,
   options,
-  disabled,
+  disabled = false,
   type
-}: FieldPropsType) => {
+}: FieldPropsType<TFieldValues>) => {
+  const [isInputStart, setIsInputStart] = useState(false)
+
+  useEffect(() => {
+    if (!isInputStart) setIsInputStart(prev => !prev)
+  }, [error])
+
   return (
     <div className='mb-3'>
       <label htmlFor={'validationServer_' + name} className='form-label'>
@@ -33,7 +37,13 @@ export const Field = ({
         {...register(name, options)}
         type={type}
         disabled={disabled}
-        className={error ? 'form-control is-invalid' : 'form-control is-valid'}
+        className={
+          isInputStart
+            ? error
+              ? 'form-control is-invalid'
+              : 'form-control is-valid'
+            : 'form-control'
+        }
         id={'validationServer_' + name}
         placeholder={placeholder}
         aria-describedby={'validationServer_' + name}

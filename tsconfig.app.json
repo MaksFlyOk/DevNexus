@@ -1,41 +1,33 @@
 {
   "compilerOptions": {
-    // Базовые опции
-    "esModuleInterop": true, // Помогает устранить некоторые противоречия между CommonJS и ES-модулями
-    "skipLibCheck": true, // Пропускает проверку типов файлов .d.ts.
-    "target": "ES2020", // Версия JS
-    "allowJs": true, // Позволяет импортировать файлы .js
-    "resolveJsonModule": true, // Позволяет импортировать файлы .json
-    "moduleDetection": "force", // Эта опция заставляет TypeScript рассматривать все файлы как модули
-    "isolatedModules": true, // Установка isolatedModules флага сообщает TypeScript, что нужно предупредить вас, если вы пишете определенный код, который не может быть правильно интерпретирован процессом транспиляции одного файла.
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "ES2020",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
 
-    // Строгость
     "strict": true,
-    "noUncheckedIndexedAccess": true, // Запрещает обращаться к массиву или объекту, не проверив предварительно, определён ли он
+    "noUncheckedIndexedAccess": true,
 
-    // Транспиляция
-    "moduleResolution": "Bundler", // Указывает TypeScript, как разрешать модули
-    "module": "ESNext", // Указывает TypeScript, какой синтаксис модуля использовать
-    "noEmit": true, // Не создавайте выходные файлы компилятора, такие как исходный код JavaScript, исходные карты или объявления
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+    "noEmit": true,
 
-    // Типы
-    "lib": ["ES2020", "DOM", "DOM.Iterable"], //  Указывает TypeScript, какие встроенные типы включить. dom и dom.iterable предоставляют типы для window, document и т. д.
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
 
-    // Other
-    "useDefineForClassFields": true, // Этот флаг используется как часть перехода на будущую стандартную версию полей классов
-    "allowImportingTsExtensions": true, // Позволяет файлам TypeScript импортировать друг друга с расширением, специфичным для TypeScript, например .ts, .mts, или .tsx
-    "jsx": "react-jsx", // Управляет тем, как конструкции JSX выдаются в файлах JavaScript
-    "noUnusedLocals": true, // Сообщать об ошибках, связанных с неиспользуемыми локальными переменными
-    "noUnusedParameters": true, // Сообщайте об ошибках, связанных с неиспользуемыми параметрами в функциях
-    "noFallthroughCasesInSwitch": true, // Сообщать об ошибках для случаев провала в операторах switch. Гарантирует, что любой непустой случай внутри оператора switch включает либо break, return, либо throw. Это означает, что вы случайно не отправите ошибку провала случая
-    "noUncheckedSideEffectImports": true, // Если noUncheckedSideEffectImports этот параметр включен, TypeScript выдаст ошибку, если не сможет найти исходный файл для импорта побочного эффекта
-    "allowUnreachableCode": true, // Эти предупреждения касаются только кода, который предположительно недоступен из-за использования синтаксиса JavaScript
-    "noImplicitAny": true, // Включение noImplicitAnyTypeScript выдаст ошибку всякий раз, когда он должен был бы вывести any
+    "useDefineForClassFields": true,
+    "allowImportingTsExtensions": true,
+    "jsx": "react-jsx",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "allowUnreachableCode": true,
+    "noImplicitAny": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
-    // Info
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo", // Этот параметр позволяет указать файл для хранения информации об инкрементальной компиляции как части составных проектов, что позволяет быстрее создавать более крупные кодовые базы TypeScript
-
-    // Alias
     "baseUrl": ".",
     "paths": {
       "@styles/*": ["src/assets/styles/*"],
@@ -61,6 +53,6 @@
       "@bootstrap": ["node_modules/bootstrap/scss/bootstrap.scss"]
     }
   },
-  "include": ["src", "src/redux/slices/kanbanState.ts"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist", ".idea", "public"]
 }

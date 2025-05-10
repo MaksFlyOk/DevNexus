@@ -1,20 +1,21 @@
+import { useGetGroup } from '@hooks/queries'
 import { useTypedSelector } from '@hooks/redux-hooks'
 import { Layout } from '@layout/Layout'
-import { Kanban } from '@ui/kanban'
-import { Table } from '@ui/table'
+import { BoardView } from './board-view'
 
 export const Home = () => {
-  const { boardView } = useTypedSelector(state => state.boardViewState)
+  const { groupId } = useTypedSelector(state => state.groupState)
+
+  const { data, isPending, isError } = useGetGroup(groupId)
 
   return (
-    <Layout membersListId={1}>
-      {boardView === 'kanban' ? (
-        <Kanban />
-      ) : boardView === 'table' ? (
-        <Table />
-      ) : (
-        <h1>boardView</h1>
-      )}
+    <Layout isGroupPending={isPending} isGroupError={isError} groupData={data}>
+      <BoardView
+        groupId={groupId}
+        isPending={isPending}
+        isError={isError}
+        data={data}
+      />
     </Layout>
   )
 }
