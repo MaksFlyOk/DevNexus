@@ -8,8 +8,6 @@ yarn.lock
 pnpm-debug.log*
 lerna-debug.log*
 
-.env
-
 node_modules
 dist
 dist-ssr
@@ -17,7 +15,6 @@ dist-ssr
 
 # Editor directories and files
 .vscode/*
-.VSCodeCounter
 !.vscode/extensions.json
 .idea
 .DS_Store
