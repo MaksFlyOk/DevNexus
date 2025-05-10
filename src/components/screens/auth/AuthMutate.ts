@@ -30,6 +30,8 @@ export const AuthMutate = (
 
         reset()
       }
+
+      return name
     },
     onError: () => {
       reset()

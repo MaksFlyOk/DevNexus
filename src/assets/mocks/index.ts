@@ -1,3 +1,3 @@
-export * from './groupsDataList'
+export * from './groupData'
 export * from './membersDataList'
 export * from './userData'

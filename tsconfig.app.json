@@ -53,6 +53,6 @@
       "@bootstrap": ["node_modules/bootstrap/scss/bootstrap.scss"]
     }
   },
-  "include": ["src", "src/redux/slices/boardState.ts"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist", ".idea", "public"]
 }

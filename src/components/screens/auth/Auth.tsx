@@ -1,4 +1,5 @@
 import { useTypedSelector } from '@hooks/redux-hooks'
+import useWindowDimensions from '@hooks/useWindowDimensions'
 import { AuthMutationParamsType } from '@types'
 import { Field } from '@ui/field'
 import { Spinner } from '@ui/spinner'
@@ -8,9 +9,12 @@ import { useNavigate } from 'react-router-dom'
 import { AuthMutate } from './AuthMutate'
 
 export const Auth = () => {
-  const [authOrRegState, setAuthOrRegState] = useState('login')
   const { auth } = useTypedSelector(state => state.authState)
+
   const navigate = useNavigate()
+  const { width } = useWindowDimensions()
+
+  const [authOrRegState, setAuthOrRegState] = useState('login')
 
   const {
     register,
@@ -34,8 +38,8 @@ export const Auth = () => {
   }
 
   return (
-    <div className='container-fluid d-flex justify-content-center vh-100'>
-      <div className='col-6 d-flex align-items-center'>
+    <div className='container-fluid container-xxl d-flex justify-content-center vh-100'>
+      <div className='col-md-6 col-10 d-flex align-items-center'>
         <div className='row w-100 m-0 d-flex'>
           <h1 className='text-center'>
             {authOrRegState === 'login' ? 'Авторизация' : 'Регистрация'}
@@ -67,11 +71,9 @@ export const Auth = () => {
                   }}
                 />
                 <div
-                  style={
-                    authOrRegState === 'login'
-                      ? { display: 'none' }
-                      : { display: 'block' }
-                  }
+                  className={`${
+                    authOrRegState === 'login' ? 'd-none' : 'd-block'
+                  }`}
                 >
                   <Field
                     register={register}
@@ -104,7 +106,9 @@ export const Auth = () => {
                   }}
                 />
                 <div
-                  className='btn-group mb-3 w-100'
+                  className={`${
+                    width <= 576 ? 'btn-group-vertical' : 'btn-group'
+                  } mb-3 w-100`}
                   role='group'
                   aria-label='AuthOrRegGroup'
                 >

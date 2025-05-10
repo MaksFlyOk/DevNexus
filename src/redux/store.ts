@@ -5,13 +5,15 @@ import {
   GroupStateReducer
 } from '@redux/slices'
 import { configureStore } from '@reduxjs/toolkit'
+import { userListStateReducer } from './slices/userListSate'
 
 export const store = configureStore({
   reducer: {
     boardViewState: BoardViewStateReducer,
     authState: AuthStateReducer,
     groupState: GroupStateReducer,
-    boardState: BoardStateReducer
+    boardState: BoardStateReducer,
+    userListState: userListStateReducer
   }
 })
 

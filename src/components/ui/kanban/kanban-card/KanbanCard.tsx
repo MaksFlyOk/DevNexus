@@ -2,7 +2,9 @@ import { ColumnType, TaskType } from '@types'
 import { Tag } from '@ui/tag'
 import { convertBorderColor } from '@utils/convertBorderColor'
 import { convertTextColor } from '@utils/convertTextColor'
+import { dateISOtoLocalString } from '@utils/dateISOtoLocalString'
 import { useDrag } from 'react-dnd'
+import './KanbanCard.scss'
 
 interface KanbanCardProps {
   task: TaskType
@@ -26,26 +28,29 @@ export const KanbanCard = ({ task, color }: KanbanCardProps) => {
   return (
     <div
       ref={drag}
+      onClick={() => console.log('card', task?.code, 'click')}
       className={
         'rounded-3 border border-2 p-2 ' +
         convertBorderColor(color) +
         `${isDragging ? ' bg-dark' : ''}`
       }
     >
-      <h4 className='fw-bold'>{task?.name}</h4>
-      <h5 className='pb-1'>{task?.worker}</h5>
+      <h5 className='fw-bold task-name'>{task?.title}</h5>
+      <h5 className='pb-1'>{task?.assignee}</h5>
       <div className='d-flex flex-wrap gap-2 pb-2'>
         {task?.tags?.map((tag, iter) => (
           <Tag
-            tagText={tag.tagText}
+            tagName={tag.name}
             color={tag.color}
-            key={task.name + ' tag ' + iter}
+            key={task.title + ' tag ' + iter}
           />
         ))}
       </div>
       <p className='description'>{task?.description}</p>
       <div className='d-flex flex-row justify-content-end'>
-        <h6 className={'fw-bold ' + convertTextColor(color)}>{task.date}</h6>
+        <h6 className={'fw-bold ' + convertTextColor(color)}>
+          {dateISOtoLocalString(task.end_date)}
+        </h6>
       </div>
     </div>
   )

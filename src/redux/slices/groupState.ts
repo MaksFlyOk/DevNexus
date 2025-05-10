@@ -1,7 +1,7 @@
 import { RootState } from '@redux'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-type GroupStateType = { groupId: number | undefined }
+type GroupStateType = { groupId: string | undefined }
 
 const initialState: GroupStateType = {
   groupId: undefined

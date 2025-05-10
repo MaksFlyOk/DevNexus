@@ -1,5 +1,8 @@
 import { useParams } from 'react-router-dom'
 
+{
+  /* TODO */
+}
 export const CurrentUserProfile = () => {
   const params = useParams()
 

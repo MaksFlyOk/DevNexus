@@ -1,100 +1,89 @@
-import { UserType } from '@types'
+import { UserProfileType } from '@types'
 
-export const userData: UserType = {
-  name: 'Грейс',
-  email: 'grays@example.com',
-  about: 'Привет, я Грейс! Это моя страница пользователя.',
-  tasks: [
+export const userData: UserProfileType = {
+  user: {
+    username: 'Грейс',
+    email: 'grays@example.com'
+  },
+  groups: [
     {
-      name: 'К выполнению',
-      color: 'red',
-      sum: 1,
-      tasks: [
+      id: 1,
+      group_uuid: 'hWF6BiZ8pqkakpNhDfZcTo',
+      name: 'group1',
+      icon: null,
+      cards: [
         {
-          name: 'Оптимизация производительности',
+          code: '000001',
+          title: 'Оптимизация производительности',
           column: 'К выполнению',
-          worker: 'Грейс',
+          assignee: 'Грейс',
           description: 'Оптимизировать производительность приложения.',
-          date: '2023-10-18',
+          start_date: '2023-10-10',
+          end_date: '2023-10-18',
           tags: [
             {
-              tagText: 'Оптимизация',
+              name: 'Оптимизация',
               color: 'blue'
             },
             {
-              tagText: 'Средний приоритет',
+              name: 'Средний приоритет',
               color: 'yellow'
             }
           ]
-        }
-      ]
-    },
-    {
-      name: 'В процессе',
-      color: 'blue',
-      sum: 1,
-      tasks: [
+        },
         {
-          name: 'Разработка новой функции',
+          code: '000002',
+          title: 'Разработка новой функции',
           column: 'В процессе',
-          worker: 'Грейс',
+          assignee: 'Грейс',
           description: 'Разработать новую функцию для приложения.',
-          date: '2023-10-22',
+          start_date: '2023-10-11',
+          end_date: '2023-10-22',
           tags: [
             {
-              tagText: 'Разработка',
+              name: 'Разработка',
               color: 'green'
             },
             {
-              tagText: 'Высокий приоритет',
+              name: 'Высокий приоритет',
               color: 'red'
             }
           ]
-        }
-      ]
-    },
-    {
-      name: 'На проверке',
-      color: 'green',
-      sum: 1,
-      tasks: [
+        },
         {
-          name: 'Проверка документации',
+          code: '000003',
+          title: 'Проверка документации',
           column: 'На проверке',
-          worker: 'Грейс',
+          assignee: 'Грейс',
           description: 'Проверить обновленную документацию.',
-          date: '2023-10-27',
+          start_date: '2023-10-25',
+          end_date: '2023-10-27',
           tags: [
             {
-              tagText: 'Документация',
+              name: 'Документация',
               color: 'blue'
             },
             {
-              tagText: 'Низкий приоритет',
+              name: 'Низкий приоритет',
               color: 'green'
             }
           ]
-        }
-      ]
-    },
-    {
-      name: 'Выполнено',
-      color: 'yellow',
-      sum: 1,
-      tasks: [
+        },
         {
-          name: 'Развертывание функции',
+          code: '000004',
+          title: 'Развертывание функции',
           column: 'Выполнено',
-          worker: 'Грейс',
+          assignee: 'Грейс',
           description: 'Развернуть новую функцию в рабочей среде.',
-          date: '2023-10-30',
+          start_date: '2023-10-30',
+          end_date: '2023-10-30',
           tags: [
             {
-              tagText: 'Развертывание',
+              name: 'Развертывание',
               color: 'blue'
             },
             {
-              tagText: 'Высокий приоритет',
+              name: 'Высокий приоритет',
               color: 'red'
             }
           ]

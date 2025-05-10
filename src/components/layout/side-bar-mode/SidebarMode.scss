@@ -1,0 +1,23 @@
+.main-container-without-sidebar {
+  height: calc(100vh - 107px);
+}
+
+.nav-container-without-sidebar {
+  height: calc(100vh - (100vh - 95px));
+}
+
+.main-container-with-sidebar {
+  height: calc(100vh - 95px);
+}
+
+.sidebar-main {
+  height: calc(100vh - 175px);
+}
+
+.sidebar-profile {
+  height: calc(100vh - (100vh - 95px));
+}
+
+.nav-container-with-sidebar {
+  height: calc(100vh - (100vh - 95px));
+}

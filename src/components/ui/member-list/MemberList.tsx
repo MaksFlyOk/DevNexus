@@ -1,23 +1,31 @@
-import { useGetMembers } from '@hooks/queries'
-import { MemberCard, Spinner } from '@ui'
-import { SetStateAction, useState } from 'react'
+import { $axios } from '@axios'
+import { useActions, useTypedSelector } from '@hooks/redux-hooks'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { GroupType } from '@types'
+import { MemberCard, Modal, Spinner } from '@ui'
+import { SetStateAction, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { AddUserGroupModal } from './AddUserGroupModal'
+import './MemberList.scss'
 import { useMembersSearch } from './useMembersSearch'
 
-interface MemberListDataProps {
-  memberListId: number
+interface MemberListProps {
+  isGroupPending: boolean
+  isGroupError: boolean
+  groupData: GroupType | undefined
 }
 
-export const MemberList = ({ memberListId }: MemberListDataProps) => {
-  const {
-    isPending,
-    isError,
-    data: memberListData
-  } = useGetMembers(memberListId)
-
+export const MemberList = ({
+  isGroupPending,
+  isGroupError,
+  groupData
+}: MemberListProps) => {
+  const { setInitialMemberListState } = useActions()
+  const [isShow, setIsShow] = useState(false)
   const navigate = useNavigate()
-
+  const queryClient = useQueryClient()
   const [inputValue, setInputValue] = useState('')
+  const { groupId } = useTypedSelector(state => state.groupState)
 
   const searchMembersFunction = useMembersSearch()
 
@@ -27,10 +35,29 @@ export const MemberList = ({ memberListId }: MemberListDataProps) => {
     setInputValue(event.target.value)
   }
 
+  useEffect(() => {
+    if (!isGroupPending && groupData) {
+      setInitialMemberListState(groupData.members)
+    }
+  }, [isGroupPending, groupData])
+
+  const { mutateAsync, isPending: mutateIsPending } = useMutation({
+    mutationFn: async (name: string) => {
+      await $axios.put(`/v1/group/${groupId}/add_member/`, { username: name })
+    },
+    onSettled: () => queryClient.invalidateQueries({ queryKey: [`get user`] })
+  })
+
   return (
     <div className='row'>
-      <div className='sticky-top pt-3 bg-light-subtle'>
-        <h4 className='mb-2'>Участники</h4>
+      <Modal isShow={isShow} setIsShow={setIsShow}>
+        <AddUserGroupModal
+          setIsShow={setIsShow}
+          addUserMutation={mutateAsync}
+        />
+      </Modal>
+      <div className='sticky-top pt-3 bg-light-subtle px-2'>
+        <h4 className='mb-2 px-1'>Участники</h4>
         <form action='' className='mb-3'>
           <div className='input-group'>
             <input
@@ -38,46 +65,65 @@ export const MemberList = ({ memberListId }: MemberListDataProps) => {
               type='text'
               placeholder='Найти участника'
               aria-label='Поле "Найти участника"'
-              disabled={isPending}
+              disabled={isGroupPending || isGroupError}
               value={inputValue}
               onChange={handleInputChange}
               id='autoSizingInputGroup'
             />
-            <div
-              className='cross input-group-text pointer-event'
-              style={{ cursor: 'pointer' }}
-              onClick={() => setInputValue('')}
-            >
-              <span aria-hidden='true'>&#65794;</span>
+            <div className='cross input-group-text'>
+              <button
+                className='clear-member-search-input'
+                type='button'
+                onClick={() => setInputValue('')}
+              >
+                &#65794;
+              </button>
             </div>
           </div>
         </form>
       </div>
       <div>
-        {isPending ? (
+        {isGroupPending ? (
           <Spinner />
-        ) : isError ? (
+        ) : isGroupError ? (
           <div className='d-flex justify-content-center py-3'>
             <h1>
               <span className='badge text-bg-danger'>Error</span>
             </h1>
           </div>
-        ) : inputValue === '' ? (
-          memberListData.map((member, iter: number) => (
-            <div
-              style={{ cursor: 'pointer' }}
-              onClick={() => navigate(`/user-profile/${member.id}`)}
-              key={'User card ' + iter}
-            >
-              <MemberCard
-                name={member.name}
-                img={member.img}
-                tags={member.tags}
-              />
-            </div>
-          ))
         ) : (
-          searchMembersFunction(inputValue, memberListData)
+          <>
+            <button
+              type='button'
+              className='btn btn-primary w-100'
+              disabled={mutateIsPending}
+              onClick={() => setIsShow(true)}
+            >
+              {mutateIsPending ? <Spinner /> : <p className='h1'>+</p>}
+            </button>
+            {inputValue === '' ? (
+              <>
+                {groupData?.members.map((member, iter: number) => (
+                  <div
+                    className='user-card-pointer'
+                    onClick={() => navigate(`/user-profile/${member.username}`)}
+                    key={'User card ' + iter}
+                  >
+                    <MemberCard
+                      name={
+                        groupData.admin.username === member.username &&
+                        groupData.admin.email === member.email
+                          ? `${member.username} {Admin}`
+                          : member.username
+                      }
+                    />
+                  </div>
+                ))}
+              </>
+            ) : (
+              searchMembersFunction(inputValue, groupData?.members)
+            )}
+          </>
         )}
       </div>
     </div>

@@ -1,9 +1,17 @@
-import { BoardType } from './boardType'
+import { TaskType } from './boardType'
 
-export interface UserType {
-  name: string
-  img?: string
+export type UserType = {
+  username: string
   email: string
-  about: string
-  tasks: BoardType['columns']
+}
+
+export interface UserProfileType {
+  user: UserType
+  groups: Array<{
+    name: string
+    id: number
+    group_uuid: string
+    icon?: string | null
+    cards: Array<TaskType>
+  }>
 }

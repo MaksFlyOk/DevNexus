@@ -5,10 +5,10 @@ interface FieldPropsType<TFieldValues extends FieldValues> {
   register: UseFormRegister<TFieldValues>
   name: Path<TFieldValues>
   label: string
-  placeholder: string
+  placeholder?: string
   error: string | undefined
-  options: object
-  disabled: boolean
+  options?: object
+  disabled?: boolean
   type: string
 }
 
@@ -19,7 +19,7 @@ export const Field = <TFieldValues extends FieldValues>({
   placeholder,
   error,
   options,
-  disabled,
+  disabled = false,
   type
 }: FieldPropsType<TFieldValues>) => {
   const [isInputStart, setIsInputStart] = useState(false)

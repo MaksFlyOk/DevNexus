@@ -41,18 +41,19 @@ export const Profile = () => {
             <div className='card'>
               <div className='card-header d-flex align-items-center'>
                 <div style={{ width: 120 }}>
-                  <CircleImg img={userData.img} alt='User img' />
+                  <CircleImg alt='User img' />
                 </div>
                 <div>
-                  <h2 className='ps-2'>{userData.name}</h2>
-                  <p className='ps-2'>{userData.about}</p>
+                  <h2 className='ps-2'>{userData.user.username}</h2>
+                  {/* DEPRECATED */}
+                  <p className='ps-2'>{`{Depricated} about`}</p>
                 </div>
               </div>
               <div className='card-body px-5'>
                 <div className='d-flex justify-content-between pb-4'>
                   <div>
                     <h5 className='text-secondary'>Ваше имя</h5>
-                    <h4>{userData.name}</h4>
+                    <h4>{userData.user.username}</h4>
                   </div>
                   <button type='button' className='btn btn-outline-light'>
                     Изменить
@@ -61,8 +62,7 @@ export const Profile = () => {
                 <div className='d-flex justify-content-between pb-4'>
                   <div>
                     <h5 className='text-secondary'>Ваш email</h5>
-                    {/* !! Скрытие Email должно происходить на сервере */}
-                    <h4>{hideEmailInfo(userData.email)}</h4>
+                    <h4>{hideEmailInfo(userData.user.username)}</h4>
                   </div>
                   <button type='button' className='btn btn-outline-light'>
                     Изменить
@@ -86,7 +86,7 @@ export const Profile = () => {
                 <h2 className='ps-2'>Задачи</h2>
               </div>
               <div className='card-body px-5'>
-                <UserTasksList tasks={userData.tasks} />
+                <UserTasksList groups={userData.groups} />
               </div>
             </div>
           </div>

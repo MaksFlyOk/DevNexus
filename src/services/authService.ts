@@ -2,11 +2,16 @@ import { $axios } from '@axios'
 import { AuthMutationParamsType, TokensType } from '@types'
 import { AxiosResponse } from 'axios'
 
+// TODO
+
 interface UserData {
   id: number
   username: string
   email: string
 }
+
+const ENDPOINT_AUTHORIZATION = '/token/'
+const ENDPOINT_REGISTRATION = '/v1/user/registration/'
 
 class AuthService {
   async auth(
@@ -18,7 +23,7 @@ class AuthService {
         data: { access: 'access', refresh: 'refresh' }
       } as AxiosResponse<TokensType>
     }
-    return await $axios.post<TokensType>('/token/', {
+    return await $axios.post<TokensType>(ENDPOINT_AUTHORIZATION, {
       username,
       password
     })
@@ -38,7 +43,7 @@ class AuthService {
         }
       } as AxiosResponse<UserData>
     }
-    return await $axios.post<UserData>('/v1/user/registration/', {
+    return await $axios.post<UserData>(ENDPOINT_REGISTRATION, {
       username,
       email,
       password

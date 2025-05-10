@@ -18,5 +18,6 @@ export const isDeepEqual = (
       }
     }
   }
+
   return false
 }

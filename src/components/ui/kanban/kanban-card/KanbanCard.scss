@@ -1,9 +1,9 @@
 @import '@styles/mixins';
 
+.task-name {
+  @include text-reduction-mixin-line-clamp(2, true);
+}
+
 .description {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  @include text-reduction-mixin-line-clamp(4, true);
 }

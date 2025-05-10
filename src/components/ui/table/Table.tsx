@@ -1,41 +1,69 @@
-import { BoardType } from '@types'
+import { useActions, useTypedSelector } from '@hooks/redux-hooks'
+import { useIsFetching, useQueryClient } from '@tanstack/react-query'
+import { GroupType } from '@types'
+import { Spinner } from '@ui/spinner'
+import { isEqual } from 'lodash'
+import { useEffect } from 'react'
+import { TableGroup } from './table-group/TableGroup'
 
-export const Table = ({ boardData }: { boardData: BoardType }) => {
+// TODO
+
+interface TableProps {
+  boardData: GroupType
+}
+
+export const Table = ({ boardData }: TableProps) => {
+  const { setInitialBoardState, setIsBoardLoading } = useActions()
+
+  const { board, boardId } = useTypedSelector(state => state.boardState)
+  const { groupId } = useTypedSelector(state => state.groupState)
+
+  const queryClient = useQueryClient()
+
+  const invalidateBoardData = useIsFetching({ queryKey: ['get board'] })
+
+  useEffect(() => {
+    if (boardData.group_uuid !== boardId) {
+      setInitialBoardState(boardData)
+    }
+
+    if (!isEqual(boardData.board, board)) {
+      queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
+      setIsBoardLoading({ state: true })
+    }
+  }, [boardData, boardId, board])
+
+  useEffect(() => {
+    if (!invalidateBoardData) {
+      setIsBoardLoading({ state: false })
+    }
+  }, [invalidateBoardData])
+
   return (
-    <div className='overflow-x-scroll p-2'>
-      <table className='table table-hover table-responsive'>
-        <thead>
-          <tr>
-            <th scope='col'>#</th>
-            <th scope='col'>Задача</th>
-            <th scope='col'>Исполнитель</th>
-            <th scope='col'>Дедлайн</th>
-            <th scope='col'>Описание</th>
-            <th scope='col'>Теги</th>
-            <th scope='col'>Статус</th>
-            <th scope='col'>Дата создания</th>
-          </tr>
-        </thead>
-        <tbody className='table-group-divider'>
-          <tr className='table-danger'>
-            <th scope='row'>1</th>
-            <td>Markвфыыыыыыыыыыыыыыыыыы</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope='row'>2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope='row'>3</th>
-            <td colSpan={2}>Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </table>
+    <div className='overflow-x-scroll p-2 h-100'>
+      {!board ? (
+        <div className='d-flex w-100 h-100 justify-content-center align-items-center py-3'>
+          <Spinner />
+        </div>
+      ) : board.columns?.length === 0 ? (
+        <div className='h-100 w-100 d-flex justify-content-center align-items-center'>
+          <p className='h1 text-white-50'>Здесь пока пусто</p>
+        </div>
+      ) : (
+        <table className='table table-hover table-striped'>
+          <tbody className='table-group-divider'>
+            {board.columns?.map(column => (
+              <TableGroup
+                tasks={column.tasks}
+                group_uuid={boardData.group_uuid}
+                key={column.name + boardData.id}
+                groupName={column.name}
+                groupColor={column.color}
+              />
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   )
 }

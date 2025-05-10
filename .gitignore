@@ -15,6 +15,7 @@ dist-ssr
 
 # Editor directories and files
 .vscode/*
+.VSCodeCounter
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -23,3 +24,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+api_docs.md
+idea.md

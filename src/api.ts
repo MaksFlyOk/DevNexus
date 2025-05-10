@@ -1,3 +1,4 @@
+import { clearTokens } from '@utils/clearTokens'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
@@ -11,16 +12,82 @@ export const $axios = axios.create({
   }
 })
 
+const refreshAccessToken = async () => {
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_APP_API_URL}token/refresh/`,
+      { refresh: Cookies.get(import.meta.env.VITE_APP_TOKEN) },
+      {
+        withCredentials: true
+      }
+    )
+    return response.data.access
+  } catch (error) {
+    console.error(error)
+
+    throw new Error(`Failed to refresh access token\n`)
+  }
+}
+
 $axios.interceptors.request.use(
-  function (config) {
-    if (Cookies.get(import.meta.env.TOKEN)) {
-      config.headers.Authorization = `Bearer ${localStorage.getItem(
-        import.meta.env.TOKEN
-      )}`
+  async config => {
+    const accessToken = localStorage.getItem(import.meta.env.VITE_APP_TOKEN)
+
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`
+
+      try {
+        // Verify refresh token
+        await axios.post(
+          `${import.meta.env.VITE_APP_API_URL}token/verify/`,
+          { token: Cookies.get(import.meta.env.VITE_APP_TOKEN) },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            }
+          }
+        )
+      } catch (error) {
+        if (error) {
+          clearTokens()
+          console.error(error)
+        } else {
+          const newAccessToken = await refreshAccessToken()
+
+          localStorage.setItem(import.meta.env.VITE_APP_TOKEN, newAccessToken)
+
+          config.headers.Authorization = `Bearer ${newAccessToken}`
+        }
+      }
     }
+
     return config
   },
-  function (error) {
+  error => {
+    return Promise.reject(error)
+  }
+)
+
+$axios.interceptors.response.use(
+  response => {
+    return response
+  },
+  async error => {
+    const originalRequest = error.config
+
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true
+      const newAccessToken = await refreshAccessToken()
+
+      localStorage.setItem(import.meta.env.VITE_APP_TOKEN, newAccessToken)
+
+      axios.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${newAccessToken}`
+
+      return $axios(originalRequest)
+    }
+
     return Promise.reject(error)
   }
 )

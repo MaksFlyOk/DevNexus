@@ -2,6 +2,7 @@ import { ColumnType, TaskType } from '@types'
 import { Tag } from '@ui/tag'
 import { convertBorderColor } from '@utils/convertBorderColor'
 import { convertTextColor } from '@utils/convertTextColor'
+import { dateISOtoLocalString } from '@utils/dateISOtoLocalString'
 import { useDrag } from 'react-dnd'
 
 interface ListItemProps {
@@ -30,22 +31,24 @@ export const ListItem = ({ task, color }: ListItemProps) => {
       }`}
     >
       <div className='d-flex justify-content-between'>
-        <h4 className='fw-bold'>{task?.name}</h4>
-        <h6 className={'fw-bold pe-1 ' + convertTextColor(color)}>
-          {task.date}
-        </h6>
+        <h4 className='fw-bold'>{task?.title}</h4>
       </div>
-      <h5 className='pb-1'>{task?.worker}</h5>
+      <h5 className='pb-1'>{task?.assignee}</h5>
       <div className='d-flex flex-wrap gap-2 pb-2'>
         {task?.tags?.map((tag, iter) => (
           <Tag
-            tagText={tag.tagText}
+            tagName={tag.name}
             color={tag.color}
-            key={task.name + ' tag ' + iter}
+            key={task.title + ' tag ' + iter}
           />
         ))}
       </div>
       <p className='description'>{task?.description}</p>
+      <div className='d-flex flex-row justify-content-end'>
+        <h6 className={'fw-bold ' + convertTextColor(color)}>
+          {dateISOtoLocalString(task.end_date)}
+        </h6>
+      </div>
     </div>
   )
 }

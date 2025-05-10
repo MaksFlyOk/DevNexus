@@ -1,44 +1,87 @@
 import { useActions, useTypedSelector } from '@hooks/redux-hooks'
-import { useSetInitialBoardData } from '@hooks/useSetInitialBoardData'
-import { BoardType } from '@types'
+import { useIsFetching, useQueryClient } from '@tanstack/react-query'
+import { GroupType } from '@types'
 import { Spinner } from '@ui/spinner'
+import { isEqual } from 'lodash'
+import { useEffect, useRef } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import withScrolling from 'react-dnd-scrolling'
+import { useDndScrolling } from 'react-dnd-scrolling'
 import { KanbanColumn } from './kanban-column'
 
-export const Kanban = ({ boardData }: { boardData: BoardType }) => {
-  const { moveTask } = useActions()
-  const { columns } = useTypedSelector(state => state.boardState)
+interface KanbanProps {
+  boardData: GroupType
+}
 
-  const ScrollingComponent = withScrolling('div')
+const KanbanInner = ({ boardData }: KanbanProps) => {
+  const { moveTask, setInitialBoardState, setIsBoardLoading } = useActions()
 
-  useSetInitialBoardData(boardData)
+  const { board, boardId } = useTypedSelector(state => state.boardState)
+  const { groupId } = useTypedSelector(state => state.groupState)
+
+  const queryClient = useQueryClient()
+
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  const invalidateBoardData = useIsFetching({ queryKey: ['get board'] })
+
+  useDndScrolling(scrollRef)
+
+  useEffect(() => {
+    if (boardData.group_uuid !== boardId) {
+      setInitialBoardState(boardData)
+    }
+
+    if (!isEqual(boardData.board, board)) {
+      queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
+      setIsBoardLoading({ state: true })
+    }
+  }, [boardData, boardId, board])
+
+  useEffect(() => {
+    if (!invalidateBoardData) {
+      setIsBoardLoading({ state: false })
+    }
+  }, [invalidateBoardData])
 
   return (
+    <div
+      ref={scrollRef}
+      style={{ scrollSnapType: 'x mandatory' }}
+      className='overflow-x-scroll d-flex flex-row gap-3 h-100 p-2'
+    >
+      {!board ? (
+        <div className='d-flex w-100 h-100 justify-content-center align-items-center py-3'>
+          <Spinner />
+        </div>
+      ) : board.columns?.length === 0 ? (
+        <div className='h-100 w-100 d-flex justify-content-center align-items-center'>
+          <p className='h1 text-white-50'>Здесь пока пусто</p>
+        </div>
+      ) : (
+        board.columns?.map(column => (
+          <KanbanColumn
+            tasks={column.tasks}
+            group_uuid={boardData.group_uuid}
+            key={column.name + boardData.id}
+            moveTask={movedTask =>
+              moveTask({
+                task: movedTask.task,
+                newColumn: movedTask.columnName
+              })
+            }
+            columnName={column.name}
+            columnColor={column.color}
+          />
+        ))
+      )}
+    </div>
+  )
+}
+export const Kanban = ({ boardData }: KanbanProps) => {
+  return (
     <DndProvider backend={HTML5Backend}>
-      <ScrollingComponent className='overflow-x-scroll d-flex flex-row gap-3 h-100 p-2'>
-        {!columns || columns.length == 0 ? (
-          <div className='d-flex w-100 h-100 justify-content-center align-items-center py-3'>
-            <Spinner />
-          </div>
-        ) : (
-          columns.map(column => (
-            <KanbanColumn
-              tasks={column.tasks}
-              columnColor={column.color}
-              key={column.name}
-              moveTask={movedTask =>
-                moveTask({
-                  task: movedTask.task,
-                  newColumn: movedTask.columnName
-                })
-              }
-              columnName={column.name}
-            />
-          ))
-        )}
-      </ScrollingComponent>
+      <KanbanInner boardData={boardData} />
     </DndProvider>
   )
 }
