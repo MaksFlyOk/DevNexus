@@ -5,6 +5,7 @@ import { Field } from '@ui/field'
 import { Spinner } from '@ui/spinner'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { AuthMutate } from './AuthMutate'
 
@@ -21,6 +22,7 @@ export const Auth = () => {
     handleSubmit,
     formState: { errors },
     reset
+  } = useForm<AuthMutationParamsType>({
   } = useForm<AuthMutationParamsType>({
     mode: 'onChange'
   })
