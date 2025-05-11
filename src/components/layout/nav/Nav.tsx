@@ -1,7 +1,6 @@
+import { useAddColumnGroup } from '@hooks/mutations'
 import { useActions, useTypedSelector } from '@hooks/redux-hooks'
 import useWindowDimensions from '@hooks/useWindowDimensions'
-import groupService from '@services/groupService'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { AccentColorsType, UserProfileType } from '@types'
 import { Modal } from '@ui'
 import { UserProfileCard } from '@ui/user-profile-card'
@@ -30,12 +29,9 @@ export const Nav = ({
   isUserError,
   userData
 }: NavProps) => {
-  const { addColumn, resetToStableState, setIsBoardLoading } = useActions()
+  const { addColumn } = useActions()
 
   const { groupId } = useTypedSelector(state => state.groupState)
-  const { boardId } = useTypedSelector(state => state.boardState)
-
-  const queryClient = useQueryClient()
 
   const { width } = useWindowDimensions()
 
@@ -50,28 +46,7 @@ export const Nav = ({
     mode: 'onChange'
   })
 
-  // SERVICE
-  const { mutateAsync } = useMutation({
-    mutationFn: ({
-      name,
-      color
-    }: {
-      name: string
-      color: AccentColorsType
-    }) => {
-      setIsBoardLoading({ state: true })
-      return groupService.createColumn(boardId, {
-        name,
-        color
-      })
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
-    },
-    onError: () => {
-      resetToStableState()
-    }
-  })
+  const { mutateAsync } = useAddColumnGroup()
 
   const onSubmit: SubmitHandler<AddNewColumnParamsType> = data => {
     addColumn(data)

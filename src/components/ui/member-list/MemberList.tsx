@@ -1,13 +1,12 @@
-import { $axios } from '@axios'
-import { useActions, useTypedSelector } from '@hooks/redux-hooks'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useAddMemberGroup } from '@hooks/mutations'
+import { useActions } from '@hooks/redux-hooks'
+import { useMembersSearch } from '@hooks/useMembersSearch'
 import { GroupType } from '@types'
 import { MemberCard, Modal, Spinner } from '@ui'
 import { SetStateAction, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AddUserGroupModal } from './AddUserGroupModal'
 import './MemberList.scss'
-import { useMembersSearch } from './useMembersSearch'
 
 interface MemberListProps {
   isGroupPending: boolean
@@ -23,9 +22,7 @@ export const MemberList = ({
   const { setInitialMemberListState } = useActions()
   const [isShow, setIsShow] = useState(false)
   const navigate = useNavigate()
-  const queryClient = useQueryClient()
   const [inputValue, setInputValue] = useState('')
-  const { groupId } = useTypedSelector(state => state.groupState)
 
   const searchMembersFunction = useMembersSearch()
 
@@ -41,12 +38,7 @@ export const MemberList = ({
     }
   }, [isGroupPending, groupData])
 
-  const { mutateAsync, isPending: mutateIsPending } = useMutation({
-    mutationFn: async (name: string) => {
-      await $axios.put(`/v1/group/${groupId}/add_member/`, { username: name })
-    },
-    onSettled: () => queryClient.invalidateQueries({ queryKey: [`get user`] })
-  })
+  const { mutateAsync, isPending: mutateIsPending } = useAddMemberGroup()
 
   return (
     <div className='row'>

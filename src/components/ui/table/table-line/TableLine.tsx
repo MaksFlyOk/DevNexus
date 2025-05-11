@@ -1,6 +1,5 @@
-import { $axios } from '@axios'
+import { useMoveCard } from '@hooks/mutations'
 import { useActions, useTypedSelector } from '@hooks/redux-hooks'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { AccentColorsType, TaskType } from '@types'
 import { Tag } from '@ui/tag'
 import { dateISOtoLocalString } from '@utils/dateISOtoLocalString'
@@ -19,14 +18,9 @@ export type ChangeColumnValuesType = {
 }
 
 export const TableLine = ({ line, iterLine, groupColor }: TableLineProps) => {
-  const { resetToStableState, moveTask } = useActions()
+  const { moveTask } = useActions()
 
-  const { boardId, minimizeColumnsInfo } = useTypedSelector(
-    state => state.boardState
-  )
-  const { groupId } = useTypedSelector(state => state.groupState)
-
-  const queryClient = useQueryClient()
+  const { minimizeColumnsInfo } = useTypedSelector(state => state.boardState)
 
   const {
     handleSubmit,
@@ -38,30 +32,12 @@ export const TableLine = ({ line, iterLine, groupColor }: TableLineProps) => {
     mode: 'onChange'
   })
 
-  const { mutate } = useMutation<
-    unknown,
-    unknown,
-    { task: TaskType; groupName: TaskType['column'] },
-    unknown
-  >({
-    mutationFn: data => {
-      return $axios.put(`/v1/group/${boardId}/card/${data.task.code}/`, {
-        ...data.task,
-        column: data.groupName
-      })
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
-    },
-    onError: () => {
-      resetToStableState()
-    }
-  })
+  const { mutateAsync } = useMoveCard()
 
   const onSubmit: SubmitHandler<ChangeColumnValuesType> = data => {
     console.log(data)
     moveTask({ task: line, newColumn: data.column })
-    mutate({ task: line, groupName: data.column })
+    mutateAsync({ task: line, column: data.column })
 
     reset()
   }

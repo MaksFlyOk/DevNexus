@@ -1,8 +1,7 @@
-import { $axios } from '@axios'
+import { useAddCardColumnGroup } from '@hooks/mutations'
 import { useGetAllTaskTags } from '@hooks/queries'
 import { useActions, useTypedSelector } from '@hooks/redux-hooks'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { TagType, TaskType } from '@types'
+import { TagType } from '@types'
 import { Field } from '@ui/field'
 import { FieldTextaria } from '@ui/field-textaria'
 import { Spinner } from '@ui/spinner'
@@ -41,13 +40,9 @@ export const AddNewTaskBoardModal = ({
   } = useForm<AddNewTaskParamsType>({
     mode: 'onChange'
   })
-  const { addTask, resetToStableState, setIsBoardLoading } = useActions()
+  const { addTask } = useActions()
 
-  const { boardId } = useTypedSelector(state => state.boardState)
   const { memberList } = useTypedSelector(state => state.userListState)
-  const { groupId } = useTypedSelector(state => state.groupState)
-
-  const queryClient = useQueryClient()
 
   const {
     data: taskTagList,
@@ -55,18 +50,7 @@ export const AddNewTaskBoardModal = ({
     isPending: taskTagListIsPending
   } = useGetAllTaskTags(group_uuid)
 
-  const { mutate } = useMutation<unknown, unknown, TaskType, unknown>({
-    mutationFn: data => {
-      setIsBoardLoading({ state: true })
-      return $axios.post(`/v1/group/${boardId}/card/create/`, data)
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
-    },
-    onError: () => {
-      resetToStableState()
-    }
-  })
+  const { mutateAsync } = useAddCardColumnGroup()
 
   const onSubmit: SubmitHandler<AddNewTaskParamsType> = data => {
     // TODO
@@ -82,14 +66,14 @@ export const AddNewTaskBoardModal = ({
       tags: data.tags
     })
 
-    mutate({
+    mutateAsync({
       title: data.name,
       description: data.description,
       column: columnName,
       assignee: data.assignee,
       start_date: start_date,
       end_date: data.end_date,
-      tags: data.tags.map(tag => {
+      tags: data.tags?.map(tag => {
         return { name: tag.name, color: tag.color }
       })
     })

@@ -1,6 +1,4 @@
-import { $axios } from '@axios'
-import { useActions } from '@hooks/redux-hooks'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useDeleteGroup } from '@hooks/mutations'
 import { GroupType } from '@types'
 import { CircleImg } from '@ui/circle-img'
 import { MemberList } from '@ui/member-list'
@@ -20,21 +18,13 @@ export const BoardInfoModal = ({
   isGroupPending,
   groupData
 }: AddGroupBoardModalProps) => {
-  const { setGroupId } = useActions()
-  const queryClient = useQueryClient()
+  const [danger, setDanger] = useState(false)
 
-  const { mutateAsync, isPending } = useMutation({
-    mutationFn: () => {
-      return $axios.delete(`v1/group/${groupData?.group_uuid}/`)
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['get user'] })
+  const { mutateAsync, isPending } = useDeleteGroup({
+    optionFunction: () => {
       setIsShow(false)
-      setGroupId(undefined)
     }
   })
-
-  const [danger, setDanger] = useState(false)
 
   return (
     <div className='modal-dialog modal-lg'>

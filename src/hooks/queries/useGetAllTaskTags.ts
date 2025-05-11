@@ -1,4 +1,4 @@
-import taskTagService from '@services/taskTagService'
+import groupService from '@services/groupService'
 import { QueryObserverResult, useQuery } from '@tanstack/react-query'
 import { TagType } from '@types'
 
@@ -8,7 +8,7 @@ export const useGetAllTaskTags = (
   return useQuery<TagType[]>({
     queryKey: [`get all task tags`],
     queryFn: async () => {
-      const response = await taskTagService.getAllTaskTags(group_uuid)
+      const response = await groupService.getAllCardTagGroup(group_uuid)
       return response.data
     }
   })

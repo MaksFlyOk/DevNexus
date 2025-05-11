@@ -72,26 +72,28 @@ $axios.interceptors.request.use(
   }
 )
 
-// $axios.interceptors.response.use(
-//   response => {
-//     return response
-//   },
-//   async error => {
-//     const originalRequest = error.config
+$axios.interceptors.response.use(
+  response => {
+    return response
+  },
+  async error => {
+    if (import.meta.env.VITE_APP_IS_MOCKUP === 'false') {
+      const originalRequest = error.config
 
-//     if (error.response.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true
-//       const newAccessToken = await refreshAccessToken()
+      if (error.response.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true
+        const newAccessToken = await refreshAccessToken()
 
-//       localStorage.setItem(import.meta.env.VITE_APP_TOKEN, newAccessToken)
+        localStorage.setItem(import.meta.env.VITE_APP_TOKEN, newAccessToken)
 
-//       axios.defaults.headers.common[
-//         'Authorization'
-//       ] = `Bearer ${newAccessToken}`
+        axios.defaults.headers.common[
+          'Authorization'
+        ] = `Bearer ${newAccessToken}`
 
-//       return $axios(originalRequest)
-//     }
+        return $axios(originalRequest)
+      }
 
-//     return Promise.reject(error)
-//   }
-// )
+      return Promise.reject(error)
+    }
+  }
+)

@@ -1,7 +1,6 @@
-import { $axios } from '@axios'
+import { useAddGroup } from '@hooks/mutations'
 import { useActions, useTypedSelector } from '@hooks/redux-hooks'
 import DefaultCircleImg from '@images/DefaultCircleImg.svg'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { UserProfileType } from '@types'
 import { Modal, Spinner } from '@ui'
 import { useState } from 'react'
@@ -19,22 +18,12 @@ export const GroupList = ({
   userData
 }: GroupListProps) => {
   const { setGroupId } = useActions()
-  const queryClient = useQueryClient()
+
   const { groupId } = useTypedSelector(state => state.groupState)
+
   const [isShow, setIsShow] = useState(false)
 
-  // TODO
-  const { mutateAsync, isPending: mutateIsPending } = useMutation<
-    unknown,
-    unknown,
-    string,
-    unknown
-  >({
-    mutationFn: async name => {
-      await $axios.post('/v1/group/', { name })
-    },
-    onSettled: () => queryClient.invalidateQueries({ queryKey: [`get user`] })
-  })
+  const { mutateAsync, isPending: mutateIsPending } = useAddGroup()
 
   return (
     <div className='d-flex flex-column py-3 gap-1'>

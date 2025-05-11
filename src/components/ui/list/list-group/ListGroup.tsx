@@ -1,6 +1,4 @@
-import { $axios } from '@axios'
-import { useActions, useTypedSelector } from '@hooks/redux-hooks'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMoveCard } from '@hooks/mutations'
 import { ColumnType, TaskType } from '@types'
 import { AddNewTaskBoardModal } from '@ui/add-new-task-board-modal'
 import { Modal } from '@ui/modal'
@@ -34,30 +32,7 @@ export const ListGroup = ({
   setIsShowGroup,
   moveTask
 }: ListGroupProps) => {
-  const { boardId } = useTypedSelector(state => state.boardState)
-  const { groupId } = useTypedSelector(state => state.groupState)
-  const { resetToStableState } = useActions()
-  const queryClient = useQueryClient()
-
-  const { mutate } = useMutation<
-    unknown,
-    unknown,
-    { task: TaskType; columnName: TaskType['column'] },
-    unknown
-  >({
-    mutationFn: data => {
-      return $axios.put(`/v1/group/${boardId}/card/${data.task.code}/`, {
-        ...data.task,
-        column: data.columnName
-      })
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
-    },
-    onError: () => {
-      resetToStableState()
-    }
-  })
+  const { mutateAsync } = useMoveCard()
 
   const [{ isOver }, drop] = useDrop<
     TaskType,
@@ -67,7 +42,7 @@ export const ListGroup = ({
     accept: 'task',
     drop: task => {
       moveTask({ task, columnName: groupName })
-      mutate({ task, columnName: groupName })
+      mutateAsync({ task, column: groupName })
     },
     collect: monitor => ({
       isOver: monitor.isOver(),

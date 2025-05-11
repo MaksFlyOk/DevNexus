@@ -1,6 +1,4 @@
-import { $axios } from '@axios'
-import { useTypedSelector } from '@hooks/redux-hooks'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useAddCardTagGroup } from '@hooks/mutations'
 import { AccentColorsType } from '@types'
 import { Spinner } from '@ui/spinner'
 import { useState } from 'react'
@@ -16,25 +14,13 @@ export const AddNewCardTagForm = ({
   newTagName,
   setSearchTerm
 }: AddNewCardTagFormProps) => {
-  const queryClient = useQueryClient()
-  const { groupId } = useTypedSelector(state => state.groupState)
   const [newTagColor, setNewTagColor] = useState<AccentColorsType>('green')
 
-  // TODO
-  const { mutateAsync, isPending } = useMutation<
-    unknown,
-    unknown,
-    { name: string; color: AccentColorsType },
-    unknown
-  >({
-    mutationFn: async data => {
-      await $axios.post(`v1/group/${groupId}/cardtag/create/`, data)
-    },
-    onSuccess: () => {
+  const { mutateAsync, isPending } = useAddCardTagGroup({
+    optionFunction: () => {
       setIsOpen(false)
       setNewTagColor('green')
       setSearchTerm('')
-      queryClient.invalidateQueries({ queryKey: [`get all task tags`] })
     }
   })
 
