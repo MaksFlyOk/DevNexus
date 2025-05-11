@@ -12,6 +12,8 @@ export const $axios = axios.create({
   }
 })
 
+// TODO
+
 const refreshAccessToken = async () => {
   try {
     const response = await axios.post(
@@ -33,30 +35,32 @@ $axios.interceptors.request.use(
   async config => {
     const accessToken = localStorage.getItem(import.meta.env.VITE_APP_TOKEN)
 
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`
+    if (import.meta.env.VITE_APP_IS_MOCKUP === 'false') {
+      if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`
 
-      try {
-        // Verify refresh token
-        await axios.post(
-          `${import.meta.env.VITE_APP_API_URL}token/verify/`,
-          { token: Cookies.get(import.meta.env.VITE_APP_TOKEN) },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`
+        try {
+          // Verify refresh token
+          await axios.post(
+            `${import.meta.env.VITE_APP_API_URL}token/verify/`,
+            { token: Cookies.get(import.meta.env.VITE_APP_TOKEN) },
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`
+              }
             }
+          )
+        } catch (error) {
+          if (error) {
+            clearTokens()
+            console.error(error)
+          } else {
+            const newAccessToken = await refreshAccessToken()
+
+            localStorage.setItem(import.meta.env.VITE_APP_TOKEN, newAccessToken)
+
+            config.headers.Authorization = `Bearer ${newAccessToken}`
           }
-        )
-      } catch (error) {
-        if (error) {
-          clearTokens()
-          console.error(error)
-        } else {
-          const newAccessToken = await refreshAccessToken()
-
-          localStorage.setItem(import.meta.env.VITE_APP_TOKEN, newAccessToken)
-
-          config.headers.Authorization = `Bearer ${newAccessToken}`
         }
       }
     }
@@ -68,26 +72,26 @@ $axios.interceptors.request.use(
   }
 )
 
-$axios.interceptors.response.use(
-  response => {
-    return response
-  },
-  async error => {
-    const originalRequest = error.config
+// $axios.interceptors.response.use(
+//   response => {
+//     return response
+//   },
+//   async error => {
+//     const originalRequest = error.config
 
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true
-      const newAccessToken = await refreshAccessToken()
+//     if (error.response.status === 401 && !originalRequest._retry) {
+//       originalRequest._retry = true
+//       const newAccessToken = await refreshAccessToken()
 
-      localStorage.setItem(import.meta.env.VITE_APP_TOKEN, newAccessToken)
+//       localStorage.setItem(import.meta.env.VITE_APP_TOKEN, newAccessToken)
 
-      axios.defaults.headers.common[
-        'Authorization'
-      ] = `Bearer ${newAccessToken}`
+//       axios.defaults.headers.common[
+//         'Authorization'
+//       ] = `Bearer ${newAccessToken}`
 
-      return $axios(originalRequest)
-    }
+//       return $axios(originalRequest)
+//     }
 
-    return Promise.reject(error)
-  }
-)
+//     return Promise.reject(error)
+//   }
+// )

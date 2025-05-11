@@ -14,7 +14,7 @@ export interface ColumnType {
 
 export interface TaskType {
   assignee: string
-  code?: string
+  code: string
   column: ColumnType['name']
   description: string
   start_date: string

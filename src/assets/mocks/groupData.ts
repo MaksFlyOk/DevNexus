@@ -2,7 +2,7 @@ import { GroupType } from '@types'
 
 export const groupData: GroupType = {
   id: 1,
-  group_uuid: 'UUID',
+  group_uuid: 'f81e7af3-fcf4-4cdd-b3a3-14a8087aa191',
   name: 'Основная группа',
   icon: null,
   members: [
@@ -64,6 +64,7 @@ export const groupData: GroupType = {
         color: 'red',
         tasks: [
           {
+            code: '000001',
             title: 'Разработка дизайна главной страницы',
             column: 'К выполнению',
             assignee: 'Алиса',
@@ -83,6 +84,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000002',
             title: 'Создание макета',
             column: 'К выполнению',
             assignee: 'Чарли',
@@ -101,6 +103,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000003',
             title: 'Исправление багов',
             column: 'К выполнению',
             assignee: 'Фрэнк',
@@ -119,6 +122,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000004',
             title: 'Оптимизация производительности',
             column: 'К выполнению',
             assignee: 'Грейс',
@@ -144,6 +148,7 @@ export const groupData: GroupType = {
         color: 'blue',
         tasks: [
           {
+            code: '000005',
             title: 'Разработка API',
             column: 'В процессе',
             assignee: 'Чарли',
@@ -162,6 +167,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000006',
             title: 'Тестирование интерфейса',
             column: 'В процессе',
             assignee: 'Дэвид',
@@ -181,6 +187,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000007',
             title: 'Разработка новой функции',
             column: 'В процессе',
             assignee: 'Грейс',
@@ -199,6 +206,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000008',
             title: 'Написание блога',
             column: 'В процессе',
             assignee: 'Хейди',
@@ -217,6 +225,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000009',
             title: 'Обновление документации',
             column: 'В процессе',
             assignee: 'Джон',
@@ -242,6 +251,7 @@ export const groupData: GroupType = {
         color: 'green',
         tasks: [
           {
+            code: '000010',
             title: 'Проверка кода',
             column: 'На проверке',
             assignee: 'Ева',
@@ -260,6 +270,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000011',
             title: 'Проверка дизайна',
             column: 'На проверке',
             assignee: 'Фрэнк',
@@ -278,6 +289,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000012',
             title: 'Проверка документации',
             column: 'На проверке',
             assignee: 'Грейс',
@@ -296,6 +308,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000013',
             title: 'Проверка макета',
             column: 'На проверке',
             assignee: 'Хейди',
@@ -314,6 +327,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000014',
             title: 'Проверка блога',
             column: 'На проверке',
             assignee: 'Иван',
@@ -332,6 +346,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000015',
             title: 'Проверка API',
             column: 'На проверке',
             assignee: 'Джон',
@@ -351,6 +366,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000016',
             title: 'Проверка интерфейса',
             column: 'На проверке',
             assignee: 'Алиса',
@@ -370,6 +386,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000017',
             title: 'Проверка оптимизации',
             column: 'На проверке',
             assignee: 'Боб',
@@ -395,6 +412,7 @@ export const groupData: GroupType = {
         color: 'yellow',
         tasks: [
           {
+            code: '000018',
             title: 'Развертывание функции',
             column: 'Выполнено',
             assignee: 'Грейс',
@@ -413,6 +431,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000019',
             title: 'Мониторинг производительности',
             column: 'Выполнено',
             assignee: 'Хейди',
@@ -432,6 +451,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000019',
             title: 'Обновление базы данных',
             column: 'Выполнено',
             assignee: 'Иван',
@@ -450,6 +470,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000020',
             title: 'Обновление интерфейса',
             column: 'Выполнено',
             assignee: 'Джон',
@@ -468,6 +489,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000021',
             title: 'Обновление API',
             column: 'Выполнено',
             assignee: 'Алиса',
@@ -486,6 +508,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000022',
             title: 'Обновление макета',
             column: 'Выполнено',
             assignee: 'Чарли',
@@ -504,6 +527,7 @@ export const groupData: GroupType = {
             ]
           },
           {
+            code: '000023',
             title: 'Обновление блога',
             column: 'Выполнено',
             assignee: 'Дэвид',

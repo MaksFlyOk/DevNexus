@@ -1,17 +1,19 @@
-import { $axios } from '@axios'
 import { useActions, useTypedSelector } from '@hooks/redux-hooks'
 import useWindowDimensions from '@hooks/useWindowDimensions'
+import groupService from '@services/groupService'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { AccentColorsType, UserProfileType } from '@types'
 import { Modal } from '@ui'
 import { UserProfileCard } from '@ui/user-profile-card'
+import { handleAdaptiveButton } from '@utils/handleAdaptiveButton'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import './Nav.scss'
 import { AddNewColumnModal } from './add-new-colomn-modal'
+import { BoardViewButtonsGroup } from './BoardViewButtonsGroup'
+import './Nav.scss'
 
 interface NavProps {
-  minimazeMode?: boolean
+  minimizeMode?: boolean
   isUserPending?: boolean
   isUserError?: boolean
   userData?: UserProfileType | undefined
@@ -22,22 +24,13 @@ export type AddNewColumnParamsType = {
   color: AccentColorsType
 }
 
-const handelAdaptiveButton = (width: number): string => {
-  return width <= 576 ? 'btn-sm' : width >= 1200 ? 'btn-lg' : ''
-}
-
 export const Nav = ({
-  minimazeMode = false,
+  minimizeMode = false,
   isUserPending,
   isUserError,
   userData
 }: NavProps) => {
-  const {
-    setBoardViewState,
-    addColumn,
-    resetToStableState,
-    setIsBoardLoading
-  } = useActions()
+  const { addColumn, resetToStableState, setIsBoardLoading } = useActions()
 
   const { groupId } = useTypedSelector(state => state.groupState)
   const { boardId } = useTypedSelector(state => state.boardState)
@@ -58,10 +51,16 @@ export const Nav = ({
   })
 
   // SERVICE
-  const { mutate } = useMutation({
-    mutationFn: ({ name, color }: { name: string; color: string }) => {
+  const { mutateAsync } = useMutation({
+    mutationFn: ({
+      name,
+      color
+    }: {
+      name: string
+      color: AccentColorsType
+    }) => {
       setIsBoardLoading({ state: true })
-      return $axios.post(`/v1/group/${boardId}/column/create/`, {
+      return groupService.createColumn(boardId, {
         name,
         color
       })
@@ -76,12 +75,13 @@ export const Nav = ({
 
   const onSubmit: SubmitHandler<AddNewColumnParamsType> = data => {
     addColumn(data)
-    mutate({ name: data.name, color: data.color })
+    mutateAsync(data)
+
     setIsShow(false)
+
     reset()
   }
 
-  // Decompose to components
   return (
     <>
       <Modal isShow={isShow} setIsShow={setIsShow}>
@@ -93,7 +93,7 @@ export const Nav = ({
           setIsShow={setIsShow}
         />
       </Modal>
-      {minimazeMode ? (
+      {minimizeMode ? (
         <div className='col-3 border-top border-end border-2 bg-light-subtle border-primary py-2 px-2'>
           <UserProfileCard
             isPending={isUserPending}
@@ -103,10 +103,10 @@ export const Nav = ({
         </div>
       ) : null}
       <div className='col px-4 d-flex align-items-center gap-2 justify-content-center justify-content-sm-between flex-wrap'>
-        {minimazeMode ? null : (
+        {minimizeMode ? null : (
           <div>
             <a
-              className={`btn btn-light ${handelAdaptiveButton(width)}`}
+              className={`btn btn-light ${handleAdaptiveButton(width)}`}
               data-bs-toggle='offcanvas'
               href='#sidebar'
               role='button'
@@ -116,71 +116,12 @@ export const Nav = ({
             </a>
           </div>
         )}
-        {minimazeMode ? (
-          <div className='d-flex gap-2'>
-            <button
-              type='button'
-              className='btn btn-primary btn-lg'
-              disabled={groupId === undefined}
-              onClick={() => setBoardViewState('kanban')}
-            >
-              Kanban
-            </button>
-            <button
-              type='button'
-              className='btn btn-primary btn-lg'
-              disabled={groupId === undefined}
-              onClick={() => setBoardViewState('list')}
-            >
-              List
-            </button>
-            <button
-              type='button'
-              className='btn btn-primary btn-lg'
-              disabled={groupId === undefined}
-              onClick={() => setBoardViewState('table')}
-            >
-              Table
-            </button>
-          </div>
-        ) : (
-          <div className='dropup-center'>
-            <button
-              type='button'
-              className={`btn btn-primary ${handelAdaptiveButton(width)}`}
-              data-bs-toggle='dropdown'
-              aria-expanded='false'
-              disabled={groupId === undefined}
-            >
-              View
-            </button>
-            <ul className='dropdown-menu'>
-              <li
-                className='dropdown-item'
-                onClick={() => setBoardViewState('kanban')}
-              >
-                Kanban
-              </li>
-              <li
-                className='dropdown-item'
-                onClick={() => setBoardViewState('list')}
-              >
-                List
-              </li>
-              <li
-                className='dropdown-item'
-                onClick={() => setBoardViewState('table')}
-              >
-                Table
-              </li>
-            </ul>
-          </div>
-        )}
+        <BoardViewButtonsGroup minimizeMode={minimizeMode} />
         <div>
           <div className='btn-group dropup-center'>
             <button
               type='button'
-              className={`btn btn-secondary dropdown-toggle ${handelAdaptiveButton(
+              className={`btn btn-secondary dropdown-toggle ${handleAdaptiveButton(
                 width
               )}`}
               data-bs-toggle='dropdown'
@@ -190,6 +131,7 @@ export const Nav = ({
               Фильтры
             </button>
             <ul className='dropdown-menu'>
+              {/* TODO */}
               <li className='dropdown-item'>Filter item</li>
               <li className='dropdown-item'>Filter item</li>
               <li className='dropdown-item'>Filter item</li>
@@ -207,7 +149,7 @@ export const Nav = ({
         <div>
           <button
             type='button'
-            className={`btn btn-outline-light text-nowrap ${handelAdaptiveButton(
+            className={`btn btn-outline-light text-nowrap ${handleAdaptiveButton(
               width
             )}`}
             disabled={groupId === undefined}

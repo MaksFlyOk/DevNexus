@@ -16,12 +16,28 @@ const queryClient = new QueryClient({
   }
 })
 
-createRoot(document.getElementById('root') as HTMLDivElement).render(
-  <StrictMode>
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <Router />
-      </QueryClientProvider>
-    </Provider>
-  </StrictMode>
+async function enableMocking() {
+  if (import.meta.env.VITE_APP_IS_MOCKUP === 'false') {
+    return
+  }
+
+  const { worker } = await import('./mocks/browser')
+
+  return worker.start()
+}
+
+const rootElement = createRoot(
+  document.getElementById('root') as HTMLDivElement
 )
+
+enableMocking().then(() => {
+  rootElement.render(
+    <StrictMode>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <Router />
+        </QueryClientProvider>
+      </Provider>
+    </StrictMode>
+  )
+})

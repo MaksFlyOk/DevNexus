@@ -1,5 +1,5 @@
 import { useTypedSelector } from '@hooks/index.ts'
-import { NotFound } from '@screens'
+import { Landing, NotFound } from '@screens'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ROUTES } from './routes.ts'
 
@@ -17,7 +17,9 @@ const Router = () => {
       <Routes>
         {ROUTES.map(route => {
           if (route.isAuth && !auth) {
-            return
+            return (
+              <Route key={'/landing'} path={'/landing'} element={<Landing />} />
+            )
           }
 
           return (

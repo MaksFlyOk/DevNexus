@@ -10,6 +10,9 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "msw": {
+    "workerDirectory": "public"
+  },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^2.3.0",
@@ -20,6 +23,7 @@
     "js-cookie": "^3.0.5",
     "knip": "^5.46.0",
     "lodash": "^4.17.21",
+    "msw": "^2.8.2",
     "react": "^18.3.1",
     "react-device-detect": "^2.2.3",
     "react-dnd": "^16.0.1",

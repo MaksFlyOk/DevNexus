@@ -8,7 +8,7 @@ export const userData: UserProfileType = {
   groups: [
     {
       id: 1,
-      group_uuid: 'hWF6BiZ8pqkakpNhDfZcTo',
+      group_uuid: 'f81e7af3-fcf4-4cdd-b3a3-14a8087aa191',
       name: 'group1',
       icon: null,
       cards: [
