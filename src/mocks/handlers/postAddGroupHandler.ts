@@ -1,3 +1,4 @@
+import { GroupType } from '@types'
 import { http, HttpResponse, Path, PathParams } from 'msw'
 import { currentUserData, groupsData } from '../mocks-data'
 
@@ -9,21 +10,24 @@ export const postAddGroupHandler = http.post<
 >(`${import.meta.env.VITE_APP_API_URL}v1/group`, async ({ request }) => {
   const newGroupRequest = await request.json()
 
-  const newGroupIntoGroupsData = {
+  const newGroupIntoGroupsData: GroupType = {
     id: groupsData.length + 1,
     group_uuid: `${crypto.randomUUID()}`,
     name: newGroupRequest.name,
     icon: null,
     members: [
       {
-        username: 'Грейс',
-        email: 'grays@example.com'
+        username: 'Павел Николаев',
+        email: 'p.nikovaev@devnexus.com',
+        description: 'Менеджер проектов с опытом работы в различных проектах.',
+        tags: []
       }
     ],
     description: 'Основная группа разработки',
     admin: {
-      username: 'Грейс',
-      email: 'grays@example.com'
+      username: 'Павел Николаев',
+      email: 'p.nikovaev@devnexus.com',
+      description: 'Менеджер проектов с опытом работы в различных проектах.'
     },
     board: {
       columns: []
@@ -41,5 +45,5 @@ export const postAddGroupHandler = http.post<
   groupsData.push(newGroupIntoGroupsData)
   currentUserData.groups.push(newGroupIntoUserData)
 
-  return new HttpResponse({ name: newGroupRequest.name })
+  return HttpResponse.json({ name: newGroupRequest.name })
 })

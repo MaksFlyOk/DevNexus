@@ -2,8 +2,9 @@ import { UserProfileType } from '@types'
 
 export const userData: UserProfileType = {
   user: {
-    username: 'Грейс',
-    email: 'grays@example.com'
+    username: 'Павел Николаев',
+    email: 'p.nikovaev@devnexus.com',
+    description: 'Менеджер проектов с опытом работы в различных проектах.'
   },
   groups: [
     {
@@ -13,10 +14,10 @@ export const userData: UserProfileType = {
       icon: null,
       cards: [
         {
-          code: '000001',
+          code: '000004',
           title: 'Оптимизация производительности',
           column: 'К выполнению',
-          assignee: 'Грейс',
+          assignee: 'Павел Николаев',
           description: 'Оптимизировать производительность приложения.',
           start_date: '2023-10-10',
           end_date: '2023-10-18',
@@ -32,10 +33,10 @@ export const userData: UserProfileType = {
           ]
         },
         {
-          code: '000002',
+          code: '000007',
           title: 'Разработка новой функции',
           column: 'В процессе',
-          assignee: 'Грейс',
+          assignee: 'Павел Николаев',
           description: 'Разработать новую функцию для приложения.',
           start_date: '2023-10-11',
           end_date: '2023-10-22',
@@ -51,10 +52,10 @@ export const userData: UserProfileType = {
           ]
         },
         {
-          code: '000003',
+          code: '000012',
           title: 'Проверка документации',
           column: 'На проверке',
-          assignee: 'Грейс',
+          assignee: 'Павел Николаев',
           description: 'Проверить обновленную документацию.',
           start_date: '2023-10-25',
           end_date: '2023-10-27',
@@ -70,10 +71,10 @@ export const userData: UserProfileType = {
           ]
         },
         {
-          code: '000004',
+          code: '000018',
           title: 'Развертывание функции',
           column: 'Выполнено',
-          assignee: 'Грейс',
+          assignee: 'Павел Николаев',
           description: 'Развернуть новую функцию в рабочей среде.',
           start_date: '2023-10-30',
           end_date: '2023-10-30',
