@@ -4,7 +4,6 @@ import { useMutation } from '@tanstack/react-query'
 import { AuthMutationParamsType } from '@types'
 import { checkToken } from '@utils/checkToken'
 import { setToken } from '@utils/setToken'
-import { useMemo } from 'react'
 import { UseFormReset } from 'react-hook-form'
 
 interface AuthMutateParams {
@@ -12,13 +11,13 @@ interface AuthMutateParams {
   setAuthOrRegState: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const AuthMutate = (
+export const useAuth = (
   reset: AuthMutateParams['reset'],
   setAuthOrRegState: AuthMutateParams['setAuthOrRegState']
 ) => {
   const { setAuthState } = useActions()
 
-  const { mutateAsync, isPending, error } = useMutation({
+  const { mutateAsync, isPending, isError, error } = useMutation({
     mutationKey: ['auth'],
     mutationFn: async ({ name, email, password }: AuthMutationParamsType) => {
       if (!email) {
@@ -45,12 +44,10 @@ export const AuthMutate = (
     }
   })
 
-  return useMemo(
-    () => ({
-      mutateAsync,
-      isPending,
-      error
-    }),
-    [isPending, error, mutateAsync]
-  )
+  return {
+    mutateAsync,
+    isPending,
+    isError,
+    error
+  }
 }

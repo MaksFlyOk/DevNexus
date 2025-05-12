@@ -1,3 +1,4 @@
+import { AccentColorsType } from './accentColorsType'
 import { BoardType } from './boardType'
 import { UserType } from './userType'
 
@@ -9,5 +10,7 @@ export interface GroupType {
   id: number
   name: string
   board: BoardType
-  members: Array<UserType>
+  members: Array<
+    UserType & { tags: Array<{ name: string; color: AccentColorsType }> }
+  >
 }

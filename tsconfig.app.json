@@ -15,7 +15,7 @@
     "module": "ESNext",
     "noEmit": true,
 
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["ES2020", "DOM", "DOM.Iterable", "WebWorker"],
 
     "useDefineForClassFields": true,
     "allowImportingTsExtensions": true,
@@ -53,6 +53,6 @@
       "@bootstrap": ["node_modules/bootstrap/scss/bootstrap.scss"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "public/mockServiceWorker.js"],
   "exclude": ["node_modules", "dist", ".idea", "public"]
 }

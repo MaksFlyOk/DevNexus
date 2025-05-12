@@ -1,3 +1,4 @@
+import { useAuth } from '@hooks/mutations'
 import { useTypedSelector } from '@hooks/redux-hooks'
 import useWindowDimensions from '@hooks/useWindowDimensions'
 import { AuthMutationParamsType } from '@types'
@@ -6,7 +7,6 @@ import { Spinner } from '@ui/spinner'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { AuthMutate } from './AuthMutate'
 
 export const Auth = () => {
   const { auth } = useTypedSelector(state => state.authState)
@@ -25,7 +25,7 @@ export const Auth = () => {
     mode: 'onChange'
   })
 
-  const { mutateAsync, isPending, error } = AuthMutate(reset, setAuthOrRegState)
+  const { mutateAsync, isPending, error } = useAuth(reset, setAuthOrRegState)
 
   useEffect(() => {
     if (auth) {

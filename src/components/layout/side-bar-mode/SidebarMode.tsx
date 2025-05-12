@@ -67,7 +67,7 @@ export const SidebarMode: FC<SideBarModeProps> = ({
           isUserPending={isUserPending}
           isUserError={isUserError}
           userData={userData}
-          minimazeMode={true}
+          minimizeMode={true}
         />
       </div>
     </>
