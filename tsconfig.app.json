@@ -53,6 +53,7 @@
       "@bootstrap": ["node_modules/bootstrap/scss/bootstrap.scss"]
     }
   },
-  "include": ["src", "public/mockServiceWorker.js"],
-  "exclude": ["node_modules", "dist", ".idea", "public"]
+  // Необходимо поместить файл mockServiceWorker.js в корень после билда
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", ".idea"]
 }
