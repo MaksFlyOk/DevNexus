@@ -9,6 +9,19 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     base: env.VITE_APP_BASE_URL,
 
+    // server: {
+    //   fs: {
+    //     allow: ['public']
+    //   },
+    //   proxy: {
+    //     '/api': {
+    //       target: 'http://localhost:5173',
+    //       changeOrigin: true,
+    //       rewrite: path => path.replace(/^\/api/, '')
+    //     }
+    //   }
+    // },
+
     resolve: {
       alias: {
         '@styles': '/src/assets/styles',
