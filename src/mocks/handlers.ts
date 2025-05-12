@@ -1,5 +1,6 @@
 import { getGroupHandler } from './handlers/getGroupHandler'
 import { getUserPorfileHandler } from './handlers/getUserProfileHandler'
+import { postAddColumnGroup } from './handlers/postAddColumnGroup'
 import { postAddGroupHandler } from './handlers/postAddGroupHandler'
 import { postAuthUserHandler } from './handlers/postAuthUserHandler'
 import { postRegisterUserHandler } from './handlers/postRegisterUserHandler'
@@ -13,6 +14,8 @@ export const handlers = [
   // Group
   postAddGroupHandler,
   getGroupHandler,
+  postAddColumnGroup,
+
   // User
   getUserPorfileHandler
 ]
@@ -69,9 +72,6 @@ export const handlers = [
 
 // DELETE
 // /api/v1/group/{group_uuid}/column/{id}/
-
-// POST
-// /api/v1/group/{group_uuid}/column/create/
 
 // GET
 // /api/v1/group/{group_uuid}/tag/{code}/

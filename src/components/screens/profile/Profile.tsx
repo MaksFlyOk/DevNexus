@@ -45,8 +45,7 @@ export const Profile = () => {
                 </div>
                 <div>
                   <h2 className='ps-2'>{userData.user.username}</h2>
-                  {/* DEPRECATED */}
-                  <p className='ps-2'>{`{Depricated} about`}</p>
+                  <p className='ps-2'>{userData.user.description}</p>
                 </div>
               </div>
               <div className='card-body px-5'>

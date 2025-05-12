@@ -41,14 +41,5 @@ export const postAddGroupHandler = http.post<
   groupsData.push(newGroupIntoGroupsData)
   currentUserData.groups.push(newGroupIntoUserData)
 
-  return new HttpResponse(
-    { name: newGroupRequest.name },
-    {
-      status: 201,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem(import.meta.env.TOKEN)}`
-      }
-    }
-  )
+  return new HttpResponse({ name: newGroupRequest.name })
 })

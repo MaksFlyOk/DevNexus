@@ -12,7 +12,7 @@ class GroupService {
   async createGroup(groupParams: {
     name: string
   }): Promise<AxiosResponse<{ name: string }>> {
-    return await $axios.post(`${ENDPOINT_GROUP}/`, groupParams)
+    return await $axios.post(`${ENDPOINT_GROUP}`, groupParams)
   }
 
   async getGroup(

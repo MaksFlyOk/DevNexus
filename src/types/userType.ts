@@ -3,6 +3,7 @@ import { TaskType } from './boardType'
 export type UserType = {
   username: string
   email: string
+  description: string
 }
 
 export interface UserProfileType {
