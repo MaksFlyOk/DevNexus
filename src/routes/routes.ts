@@ -13,7 +13,12 @@ export const ROUTES = [
     isAuth: true
   },
   {
-    path: '/user-profile/:id',
+    path: '/user-profile/g/:group_id/u/:username',
+    component: CurrentUserProfile,
+    isAuth: true
+  },
+  {
+    path: '/card/:card_id/color/:column_color/',
     component: CurrentUserProfile,
     isAuth: true
   },

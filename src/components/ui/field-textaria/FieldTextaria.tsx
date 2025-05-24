@@ -22,9 +22,10 @@ export const FieldTextaria = <TFieldValues extends FieldValues>({
   disabled = false
 }: FieldPropsType<TFieldValues>) => {
   const [isInputStart, setIsInputStart] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
 
   useEffect(() => {
-    if (!isInputStart) setIsInputStart(prev => !prev)
+    if (!isInputStart && isFocused) setIsInputStart(prev => !prev)
   }, [error])
 
   return (
@@ -35,6 +36,7 @@ export const FieldTextaria = <TFieldValues extends FieldValues>({
       <textarea
         {...register(name, options)}
         disabled={disabled}
+        onFocus={() => setIsFocused(true)}
         className={
           isInputStart
             ? error

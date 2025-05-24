@@ -26,7 +26,8 @@ async function enableMocking() {
   return worker.start({
     serviceWorker: {
       url: `${import.meta.env.VITE_APP_BASE_URL || ''}/mockServiceWorker.js`
-    }
+    },
+    quiet: true
   })
 }
 

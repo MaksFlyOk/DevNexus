@@ -1,5 +1,7 @@
 import { UserProfileType } from '@types'
 import { Tag } from '@ui/tag'
+import { convertTextColor } from '@utils/convertTextColor'
+import { dateISOtoLocalString } from '@utils/dateISOtoLocalString'
 import { useState } from 'react'
 
 // TODO
@@ -59,7 +61,6 @@ export const UserTasksList = ({ groups }: UserTasksListProps) => {
               >
                 <div className='d-flex justify-content-between'>
                   <h4 className='fw-bold'>{card?.title}</h4>
-                  <h6 className='fw-bold pe-1'>{card.end_date}</h6>
                 </div>
                 <h5 className='pb-1'>{card?.assignee}</h5>
                 <div className='d-flex flex-wrap gap-2 pb-2'>
@@ -72,6 +73,14 @@ export const UserTasksList = ({ groups }: UserTasksListProps) => {
                   ))}
                 </div>
                 <p className='description'>{card?.description}</p>
+                <div className='d-flex flex-row justify-content-end gap-3 align-items-baseline'>
+                  <Tag color={card.column_color} tagName={card.column} />
+                  <h6
+                    className={'fw-bold ' + convertTextColor(card.column_color)}
+                  >
+                    {dateISOtoLocalString(card.end_date)}
+                  </h6>
+                </div>
               </div>
             ))}
           </div>

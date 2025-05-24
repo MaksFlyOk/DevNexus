@@ -9,7 +9,9 @@ interface TagProps {
 
 export const Tag = ({ tagName, color }: TagProps) => {
   return (
-    <span className={'badge mw-100 ' + convertBgColor(color) + ' tagName'}>
+    <span
+      className={'badge d-block mw-100 ' + convertBgColor(color) + ' tagName'}
+    >
       {tagName}
     </span>
   )

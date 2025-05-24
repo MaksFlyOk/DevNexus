@@ -1,7 +1,7 @@
 import { useActions, useTypedSelector } from '@hooks/redux-hooks'
 import groupService from '@services/groupService'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { TaskType } from '@types'
+import { TagType, TaskType } from '@types'
 
 export const useAddCardColumnGroup = () => {
   const { resetToStableState, setIsBoardLoading } = useActions()
@@ -14,7 +14,7 @@ export const useAddCardColumnGroup = () => {
   const { mutateAsync, isPending, isError, error } = useMutation<
     unknown,
     unknown,
-    Omit<TaskType, 'code'>,
+    Omit<TaskType, 'code'> | { tags: Omit<TagType, 'code'>[] },
     unknown
   >({
     mutationFn: data => {

@@ -98,7 +98,11 @@ export const MemberList = ({
                 {groupData?.members.map((member, iter: number) => (
                   <div
                     className='user-card-pointer'
-                    onClick={() => navigate(`/user-profile/${member.username}`)}
+                    onClick={() =>
+                      navigate(
+                        `/user-profile/g/${groupData.group_uuid}/u/${member.username}`
+                      )
+                    }
                     key={'User card ' + iter}
                   >
                     <MemberCard
@@ -108,6 +112,7 @@ export const MemberList = ({
                           ? `${member.username} {Admin}`
                           : member.username
                       }
+                      tags={member.tags}
                     />
                   </div>
                 ))}

@@ -9,7 +9,7 @@ interface UserData {
 }
 
 const ENDPOINT_AUTHORIZATION = '/token/'
-const ENDPOINT_REGISTRATION = '/v1/user/registration/'
+const ENDPOINT_REGISTRATION = '/v1/users/registration/'
 
 class AuthService {
   async auth(

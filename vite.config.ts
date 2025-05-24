@@ -30,6 +30,7 @@ export default defineConfig(({ mode }) => {
         '@layout': '/src/components/layout',
         '@screens': '/src/components/screens',
         '@ui': '/src/components/ui',
+        '@dev': '/src/components/dev',
         '@hooks': '/src/hooks',
         '@redux': '/src/redux',
         '@services': '/src/services',

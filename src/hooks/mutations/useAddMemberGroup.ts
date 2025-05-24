@@ -11,7 +11,7 @@ export const useAddMemberGroup = () => {
     mutationFn: async (name: string) => {
       await groupService.putMemberGroup(groupId, { username: name })
     },
-    onSettled: () => queryClient.invalidateQueries({ queryKey: [`get user`] })
+    onSettled: () => queryClient.invalidateQueries({ queryKey: [`get board`] })
   })
 
   return {

@@ -2,11 +2,15 @@ import { $axios } from '@axios'
 import { AccentColorsType, GroupType, TagType, TaskType } from '@types'
 import { AxiosResponse } from 'axios'
 
-const ENDPOINT_GROUP = '/v1/group/'
-const ENDPOINT_CREATE_COLUMN = '/column/create/'
-const ENDPOINT_CREATE_CARD = '/card/create/'
-const ENDPOINT_CREATE_CARDTAG = '/cardtag/create/'
-const ENDPOINT_ADD_MEMBER = '/add_member/'
+const ENDPOINT_GROUP = '/v1/groups/'
+const ENDPOINT_CREATE_COLUMN = '/columns/create/'
+const ENDPOINT_CREATE_CARD = '/cards/create/'
+const ENDPOINT_CREATE_CARDTAG = '/cardtags/create/'
+const ENDPOINT_GET_ALL_CARDTAGS = '/cardtags/all/'
+const ENDPOINT_CREATE__GROUP_TAG = '/tags/create/'
+const ENDPOINT_GET_ALL_GROUP_TAGS = '/tags/all/'
+const ENDPOINT_CREATE_USERTAG = '/usertags/create/'
+const ENDPOINT_ADD_MEMBER = '/add_members/'
 
 class GroupService {
   async createGroup(groupParams: {
@@ -20,8 +24,9 @@ class GroupService {
   ): Promise<AxiosResponse<GroupType>> {
     return await $axios.get(`${ENDPOINT_GROUP}${groupId}/`)
   }
+
   async deleteGroup(groupId: string | undefined): Promise<AxiosResponse<null>> {
-    return $axios.delete(`${ENDPOINT_GROUP}${groupId}/`)
+    return await $axios.delete(`${ENDPOINT_GROUP}${groupId}/`)
   }
 
   async createColumn(
@@ -38,7 +43,7 @@ class GroupService {
 
   async createCardColumnGroup(
     groupId: string | undefined,
-    cardParams: Omit<TaskType, 'code'>
+    cardParams: Omit<TaskType, 'code'> | { tags: Omit<TagType, 'code'>[] }
   ): Promise<AxiosResponse<TaskType>> {
     return await $axios.post(
       `${ENDPOINT_GROUP}${groupId}${ENDPOINT_CREATE_CARD}`,
@@ -52,7 +57,7 @@ class GroupService {
     cardParams: TaskType
   ): Promise<AxiosResponse<TaskType>> {
     return await $axios.put(
-      `${ENDPOINT_GROUP}${groupId}/card/${cardId}/`,
+      `${ENDPOINT_GROUP}${groupId}/cards/${cardId}/`,
       cardParams
     )
   }
@@ -61,16 +66,83 @@ class GroupService {
     groupId: string | undefined,
     cardTagParams: { name: string; color: AccentColorsType }
   ): Promise<AxiosResponse<{ name: string; color: AccentColorsType }>> {
-    return $axios.post(
+    return await $axios.post(
       `${ENDPOINT_GROUP}${groupId}${ENDPOINT_CREATE_CARDTAG}`,
       cardTagParams
+    )
+  }
+
+  async deleteCardTagGroup(
+    cardTagCode: string,
+    groupId: string | undefined
+  ): Promise<AxiosResponse<null>> {
+    return await $axios.delete(
+      `${ENDPOINT_GROUP}${groupId}/cardtags/${cardTagCode}/`
     )
   }
 
   async getAllCardTagGroup(
     groupId: string | undefined
   ): Promise<AxiosResponse<TagType[]>> {
-    return await $axios.get(`v1/group/${groupId}/cardtag/all`)
+    return await $axios.get(
+      `${ENDPOINT_GROUP}${groupId}${ENDPOINT_GET_ALL_CARDTAGS}`
+    )
+  }
+
+  async createTagGroup(
+    groupId: string | undefined,
+    userTagParams: { name: string; color: AccentColorsType }
+  ): Promise<AxiosResponse<{ name: string; color: AccentColorsType }>> {
+    return await $axios.post(
+      `${ENDPOINT_GROUP}${groupId}${ENDPOINT_CREATE__GROUP_TAG}`,
+      userTagParams
+    )
+  }
+
+  async deleteTagGroup(
+    userTagCode: string,
+    groupId: string | undefined
+  ): Promise<AxiosResponse<null>> {
+    return await $axios.delete(
+      `${ENDPOINT_GROUP}${groupId}/tags/${userTagCode}/`
+    )
+  }
+
+  async getAllTagGroup(
+    groupId: string | undefined
+  ): Promise<AxiosResponse<TagType[]>> {
+    return await $axios.get(
+      `${ENDPOINT_GROUP}${groupId}${ENDPOINT_GET_ALL_GROUP_TAGS}`
+    )
+  }
+
+  async createUserTagGroup(
+    groupId: string | undefined,
+    username: string,
+    userTagCodes: Array<string>
+  ): Promise<AxiosResponse<null>[]> {
+    return await Promise.all(
+      userTagCodes.map(userTagCode =>
+        $axios.post(`${ENDPOINT_GROUP}${groupId}${ENDPOINT_CREATE_USERTAG}`, {
+          username,
+          tag_code: userTagCode
+        })
+      )
+    )
+  }
+
+  async deleteUserTagGroup(
+    groupId: string | undefined,
+    username: string,
+    userTagCodes: Array<string>
+  ): Promise<AxiosResponse<null>[]> {
+    return await Promise.all(
+      userTagCodes.map(userTagCode =>
+        $axios.delete(
+          `${ENDPOINT_GROUP}${groupId}/usertags/delete/${username}/${userTagCode}/`
+        )
+      )
+    )
   }
 
   async putMemberGroup(
@@ -82,7 +154,7 @@ class GroupService {
       | { error: 'Пользователь не найден.' }
     >
   > {
-    return $axios.put(
+    return await $axios.put(
       `${ENDPOINT_GROUP}${groupId}${ENDPOINT_ADD_MEMBER}`,
       memberParams
     )

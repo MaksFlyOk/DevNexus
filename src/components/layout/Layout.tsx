@@ -1,10 +1,10 @@
+import { WindowDimensionsView } from '@dev/window-dimensions-view'
 import { useGetUser } from '@hooks/queries'
 import { useActions, useTypedSelector } from '@hooks/redux-hooks'
 import useWindowDimensions from '@hooks/useWindowDimensions'
 import { GroupType } from '@types'
 import { checkToken } from '@utils/checkToken'
 import { FC, ReactElement, useEffect } from 'react'
-import { WindowDimensionsView } from '../dev'
 import './Layout.scss'
 import { SidebarMode } from './side-bar-mode'
 

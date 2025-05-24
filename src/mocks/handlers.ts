@@ -1,23 +1,24 @@
 import { getGroupHandler } from './handlers/getGroupHandler'
-import { getUserPorfileHandler } from './handlers/getUserProfileHandler'
+import { getUserProfileHandler } from './handlers/getUserProfileHandler'
 import { postAddColumnGroup } from './handlers/postAddColumnGroup'
 import { postAddGroupHandler } from './handlers/postAddGroupHandler'
 import { postAuthUserHandler } from './handlers/postAuthUserHandler'
 import { postRegisterUserHandler } from './handlers/postRegisterUserHandler'
 
 // const putChangeCardColumnGroupHandler = http.put()
-
+// TODO
 export const handlers = [
   // Auth
   postAuthUserHandler,
   postRegisterUserHandler,
   // Group
-  postAddGroupHandler,
   getGroupHandler,
   postAddColumnGroup,
+  postAddGroupHandler,
+  // postAddCardColumnGroup,
 
   // User
-  getUserPorfileHandler
+  getUserProfileHandler
 ]
 
 // POST

@@ -14,6 +14,6 @@ export const useGetGroup = (
 
       return response.data
     },
-    enabled: groupId === undefined ? false : true
+    enabled: groupId ? true : false
   })
 }
