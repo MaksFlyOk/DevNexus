@@ -12,6 +12,8 @@ interface FieldPropsType<TFieldValues extends FieldValues> {
   type: string
 }
 
+const NotFocusedFieldsTypesArray = ['datetime-local']
+
 export const Field = <TFieldValues extends FieldValues>({
   register,
   name,
@@ -23,9 +25,14 @@ export const Field = <TFieldValues extends FieldValues>({
   type
 }: FieldPropsType<TFieldValues>) => {
   const [isInputStart, setIsInputStart] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
 
   useEffect(() => {
-    if (!isInputStart) setIsInputStart(prev => !prev)
+    if (NotFocusedFieldsTypesArray.includes(type)) {
+      if (!isInputStart) setIsInputStart(prev => !prev)
+    } else {
+      if (!isInputStart && isFocused) setIsInputStart(prev => !prev)
+    }
   }, [error])
 
   return (
@@ -36,6 +43,7 @@ export const Field = <TFieldValues extends FieldValues>({
       <input
         {...register(name, options)}
         type={type}
+        onFocus={() => setIsFocused(true)}
         disabled={disabled}
         className={
           isInputStart

@@ -15,6 +15,7 @@ export const userData: UserProfileType = {
       cards: [
         {
           code: '000004',
+          column_color: 'red',
           title: 'Оптимизация производительности',
           column: 'К выполнению',
           assignee: 'Павел Николаев',
@@ -24,16 +25,19 @@ export const userData: UserProfileType = {
           tags: [
             {
               name: 'Оптимизация',
+              code: '000009',
               color: 'blue'
             },
             {
               name: 'Средний приоритет',
+              code: '000002',
               color: 'yellow'
             }
           ]
         },
         {
           code: '000007',
+          column_color: 'blue',
           title: 'Разработка новой функции',
           column: 'В процессе',
           assignee: 'Павел Николаев',
@@ -43,16 +47,19 @@ export const userData: UserProfileType = {
           tags: [
             {
               name: 'Разработка',
+              code: '000011',
               color: 'green'
             },
             {
               name: 'Высокий приоритет',
+              code: '000001',
               color: 'red'
             }
           ]
         },
         {
           code: '000012',
+          column_color: 'green',
           title: 'Проверка документации',
           column: 'На проверке',
           assignee: 'Павел Николаев',
@@ -62,16 +69,19 @@ export const userData: UserProfileType = {
           tags: [
             {
               name: 'Документация',
+              code: '000015',
               color: 'blue'
             },
             {
               name: 'Низкий приоритет',
+              code: '000003',
               color: 'green'
             }
           ]
         },
         {
           code: '000018',
+          column_color: 'yellow',
           title: 'Развертывание функции',
           column: 'Выполнено',
           assignee: 'Павел Николаев',
@@ -81,10 +91,12 @@ export const userData: UserProfileType = {
           tags: [
             {
               name: 'Развертывание',
+              code: '000016',
               color: 'blue'
             },
             {
               name: 'Высокий приоритет',
+              code: '000001',
               color: 'red'
             }
           ]

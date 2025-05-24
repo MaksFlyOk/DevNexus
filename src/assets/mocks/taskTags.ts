@@ -2,95 +2,93 @@ import { TagType } from '@types'
 
 export const taskTagsList: TagType[] = [
   {
-    name: 'Дизайн',
-    color: 'blue'
-  },
-  {
     name: 'Высокий приоритет',
+    code: '000001',
     color: 'red'
   },
   {
-    name: 'Низкий приоритет',
-    color: 'green'
-  },
-  {
-    name: 'Баги',
-    color: 'green'
-  },
-  {
-    name: 'Оптимизация',
-    color: 'blue'
-  },
-  {
     name: 'Средний приоритет',
+    code: '000002',
     color: 'yellow'
   },
   {
-    name: 'Разработка',
+    name: 'Низкий приоритет',
+    code: '000003',
     color: 'green'
-  },
-  {
-    name: 'Тестирование',
-    color: 'blue'
   },
   {
     name: 'Контент',
-    color: 'blue'
-  },
-  {
-    name: 'Проверка кода',
-    color: 'blue'
-  },
-  {
-    name: 'Проверка дизайна',
+    code: '000004',
     color: 'green'
   },
   {
-    name: 'Документация',
+    name: 'Дизайн',
+    code: '000005',
     color: 'blue'
   },
   {
     name: 'Макет',
-    color: 'yellow'
+    code: '000006',
+    color: 'blue'
   },
   {
-    name: 'Контент',
+    name: 'Баги',
+    code: '000007',
     color: 'green'
   },
   {
     name: 'API',
+    code: '000008',
     color: 'yellow'
   },
   {
     name: 'Оптимизация',
-    color: 'yellow'
-  },
-  {
-    name: 'Развертывание',
-    color: 'blue'
-  },
-  {
-    name: 'Мониторинг',
-    color: 'green'
-  },
-  {
-    name: 'База данных',
+    code: '000009',
     color: 'blue'
   },
   {
     name: 'Интерфейс',
+    code: '000010',
     color: 'green'
   },
   {
-    name: 'API',
+    name: 'Разработка',
+    code: '000011',
+    color: 'green'
+  },
+  {
+    name: 'База данных',
+    code: '000012',
     color: 'blue'
   },
   {
-    name: 'Макет',
+    name: 'Тестирование',
+    code: '000013',
     color: 'blue'
   },
   {
-    name: 'Контент',
-    color: 'yellow'
+    name: 'Мониторинг',
+    code: '000014',
+    color: 'green'
+  },
+  {
+    name: 'Документация',
+    code: '000015',
+    color: 'blue'
+  },
+  {
+    name: 'Развертывание',
+    code: '000016',
+    color: 'blue'
+  },
+  {
+    name: 'Проверка дизайна',
+    code: '000017',
+    color: 'green'
+  },
+  {
+    name: 'Проверка кода',
+    code: '000018',
+    color: 'blue'
   }
 ]

@@ -4,7 +4,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { AccentColorsType } from '@types'
 
 export const useAddColumnGroup = () => {
-  const { resetToStableState, setIsBoardLoading } = useActions()
+  const { resetToStableState, setIsBoardLoading, setMinimizeColumnsInfoState } =
+    useActions()
 
   const { boardId } = useTypedSelector(state => state.boardState)
   const { groupId } = useTypedSelector(state => state.groupState)
@@ -20,6 +21,8 @@ export const useAddColumnGroup = () => {
       color: AccentColorsType
     }) => {
       setIsBoardLoading({ state: true })
+      setMinimizeColumnsInfoState({ name, color })
+
       return groupService.createColumn(boardId, {
         name,
         color

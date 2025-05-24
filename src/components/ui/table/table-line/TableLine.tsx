@@ -67,10 +67,7 @@ export const TableLine = ({ line, iterLine, groupColor }: TableLineProps) => {
       <td className='text-nowrap'>{dateISOtoLocalString(line.end_date)}</td>
       <td>
         <div>
-          <form
-            id='table-change-column-form'
-            onSubmit={() => console.log('111')}
-          >
+          <form id='table-change-column-form'>
             <FieldColumnSelect<ChangeColumnValuesType>
               control={control}
               handelChangeField={handleFieldChange}
@@ -90,11 +87,13 @@ export const TableLine = ({ line, iterLine, groupColor }: TableLineProps) => {
       </td>
       <td>
         {line?.tags?.map((tag, iter) => (
-          <Tag
-            tagName={tag.name}
-            color={tag.color}
-            key={line.title + ' tag ' + iter}
-          />
+          <div className='pb-1'>
+            <Tag
+              tagName={tag.name}
+              color={tag.color}
+              key={line.title + ' tag ' + iter}
+            />
+          </div>
         ))}
       </td>
       <td className='text-nowrap'>{dateISOtoLocalString(line.start_date)}</td>

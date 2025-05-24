@@ -1,5 +1,6 @@
 export * from './getGroupHandler'
 export * from './getUserProfileHandler'
+export * from './postAddCardColumnGroup'
 export * from './postAddColumnGroup'
 export * from './postAddGroupHandler'
 export * from './postAuthUserHandler'

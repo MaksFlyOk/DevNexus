@@ -41,7 +41,6 @@ export const FieldColumnSelect = <T extends FieldValues>({
   defaultValue
 }: SelectProps<T>) => {
   const [searchTerm, setSearchTerm] = useState('')
-  const [isInputStart, setIsInputStart] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
   const searchInputRef = useRef<HTMLInputElement>(null)
@@ -52,7 +51,8 @@ export const FieldColumnSelect = <T extends FieldValues>({
   )
 
   useEffect(() => {
-    if (!isInputStart) setIsInputStart(prev => !prev)
+    // TODO
+    console.log(error)
   }, [error])
 
   useEffect(() => {
@@ -91,13 +91,7 @@ export const FieldColumnSelect = <T extends FieldValues>({
         <div className='mb-3'>
           <div className='form-group position-relative'>
             <div
-              className={
-                isInputStart
-                  ? error
-                    ? 'form-control is-invalid'
-                    : 'form-control is-valid'
-                  : `form-control ${convertBorderColor(defaultColor)}`
-              }
+              className={`form-control ${convertBorderColor(defaultColor)}`}
               onClick={() => setIsOpen(prev => !prev)}
               onBlur={() => setIsOpen(false)}
             >

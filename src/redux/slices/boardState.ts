@@ -55,7 +55,6 @@ export const BoardStateSlice = createSlice({
     ) => {
       const { payload } = action
       state.prevBoard = { ...state.board }
-      console.log(payload)
 
       const updatedColumns = state.board.columns.map(column => {
         if (column.name === payload.task.column) {
@@ -126,12 +125,26 @@ export const BoardStateSlice = createSlice({
       })
     },
     resetToStableState: state => {
-      console.log(state.prevBoard, state.board)
-
       state.board = { ...state.prevBoard }
     },
     setIsBoardLoading: (state, action: PayloadAction<{ state: boolean }>) => {
       state.isBoardLoading = action.payload.state
+    },
+    setMinimizeColumnsInfoState: (
+      state,
+      action: PayloadAction<{
+        color: AccentColorsType
+        name: string
+      }>
+    ) => {
+      const { payload } = action
+
+      state.prevBoard = { ...state.board }
+
+      state.minimizeColumnsInfo = [
+        ...state.minimizeColumnsInfo,
+        { ...payload, columnIter: state.minimizeColumnsInfo.length }
+      ]
     }
   }
 })

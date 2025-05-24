@@ -54,7 +54,7 @@ export const BoardView = ({
             <h3>{data?.name}</h3>
             <button
               type='button'
-              className='btn'
+              className='btn border-0'
               onClick={() => setIsShow(true)}
             >
               <h3>

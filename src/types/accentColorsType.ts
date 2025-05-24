@@ -12,6 +12,13 @@ export enum AccentColorsTextBgType {
   text_bg_info = 'text-bg-info'
 }
 
+export enum AccentColorsButtonOutlineType {
+  button_outline_success = 'btn-outline-success',
+  button_outline_danger = 'btn-outline-danger',
+  button_outline_warning = 'btn-outline-warning',
+  button_outline_info = 'btn-outline-info'
+}
+
 export enum AccentColorsTableBgType {
   table_success = 'table-success',
   table_danger = 'table-danger',

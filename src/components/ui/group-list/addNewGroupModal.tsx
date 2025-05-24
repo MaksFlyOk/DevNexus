@@ -9,7 +9,7 @@ interface AddGroupBoardModalProps {
   addNewGroupMutation: MutateFunction<unknown, unknown, string, unknown>
 }
 
-export type AddNewTaskParamsType = {
+type AddNewGroupParamsType = {
   name: string
   description: string
   column: number
@@ -28,11 +28,11 @@ export const AddNewGroupModal = ({
     handleSubmit,
     formState: { errors },
     reset
-  } = useForm<AddNewTaskParamsType>({
+  } = useForm<AddNewGroupParamsType>({
     mode: 'onChange'
   })
 
-  const onSubmit: SubmitHandler<AddNewTaskParamsType> = data => {
+  const onSubmit: SubmitHandler<AddNewGroupParamsType> = data => {
     addNewGroupMutation(data.name)
 
     setIsShow(false)

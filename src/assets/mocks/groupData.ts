@@ -12,8 +12,8 @@ export const groupData: GroupType = {
       username: 'Все совпадения случайны',
       description: 'Разработчик с опытом работы в различных проектах.',
       tags: [
-        { name: 'Разработка', color: 'blue' },
-        { name: 'Senior', color: 'red' }
+        { name: 'Разработка', color: 'blue', code: '000003' },
+        { name: 'Senior', color: 'red', code: '000001' }
       ]
     },
     {
@@ -21,8 +21,8 @@ export const groupData: GroupType = {
       username: 'Иван Иванов',
       description: 'Тестировщик с опытом работы в различных проектах.',
       tags: [
-        { name: 'Тестирование', color: 'green' },
-        { name: 'Middle', color: 'yellow' }
+        { name: 'Тестирование', color: 'green', code: '000004' },
+        { name: 'Middle', color: 'yellow', code: '000002' }
       ]
     },
     {
@@ -30,8 +30,8 @@ export const groupData: GroupType = {
       username: 'Анна Петрова',
       description: 'Дизайнер с опытом работы в различных проектах.',
       tags: [
-        { name: 'Дизайн', color: 'blue' },
-        { name: 'Senior', color: 'red' }
+        { name: 'Дизайн', color: 'blue', code: '000005' },
+        { name: 'Senior', color: 'red', code: '000001' }
       ]
     },
     {
@@ -39,8 +39,8 @@ export const groupData: GroupType = {
       username: 'Дмитрий Смирнов',
       description: 'Менеджер проектов с опытом работы в различных проектах.',
       tags: [
-        { name: 'Менеджмент', color: 'green' },
-        { name: 'Middle', color: 'yellow' }
+        { name: 'Менеджмент', color: 'green', code: '000006' },
+        { name: 'Middle', color: 'yellow', code: '000002' }
       ]
     },
     {
@@ -48,8 +48,8 @@ export const groupData: GroupType = {
       username: 'Елена Кузнецова',
       description: 'Аналитик с опытом работы в различных проектах.',
       tags: [
-        { name: 'Аналитика', color: 'blue' },
-        { name: 'Senior', color: 'red' }
+        { name: 'Аналитика', color: 'blue', code: '000007' },
+        { name: 'Senior', color: 'red', code: '000001' }
       ]
     },
     {
@@ -57,8 +57,8 @@ export const groupData: GroupType = {
       username: 'Алексей Соколов',
       description: 'Разработчик с опытом работы в различных проектах.',
       tags: [
-        { name: 'Разработка', color: 'green' },
-        { name: 'Middle', color: 'yellow' }
+        { name: 'Разработка', color: 'green', code: '000003' },
+        { name: 'Middle', color: 'yellow', code: '000002' }
       ]
     },
     {
@@ -66,8 +66,8 @@ export const groupData: GroupType = {
       username: 'Мария Федорова',
       description: 'Тестировщик с опытом работы в различных проектах.',
       tags: [
-        { name: 'Тестирование', color: 'blue' },
-        { name: 'Senior', color: 'red' }
+        { name: 'Тестирование', color: 'blue', code: '000004' },
+        { name: 'Senior', color: 'red', code: '000001' }
       ]
     },
     {
@@ -75,8 +75,8 @@ export const groupData: GroupType = {
       username: 'Сергей Лебедев',
       description: 'Дизайнер с опытом работы в различных проектах.',
       tags: [
-        { name: 'Дизайн', color: 'green' },
-        { name: 'Middle', color: 'yellow' }
+        { name: 'Дизайн', color: 'green', code: '000005' },
+        { name: 'Middle', color: 'yellow', code: '000002' }
       ]
     },
     {
@@ -84,8 +84,8 @@ export const groupData: GroupType = {
       username: 'Ольга Морозова',
       description: 'Менеджер проектов с опытом работы в различных проектах.',
       tags: [
-        { name: 'Менеджмент', color: 'blue' },
-        { name: 'Senior', color: 'red' }
+        { name: 'Менеджмент', color: 'blue', code: '000006' },
+        { name: 'Senior', color: 'red', code: '000001' }
       ]
     },
     {
@@ -93,8 +93,8 @@ export const groupData: GroupType = {
       username: 'Павел Николаев',
       description: 'Аналитик с опытом работы в различных проектах.',
       tags: [
-        { name: 'Аналитика', color: 'green' },
-        { name: 'Middle', color: 'yellow' }
+        { name: 'Аналитика', color: 'blue', code: '000007' },
+        { name: 'Middle', color: 'yellow', code: '000002' }
       ]
     },
     {
@@ -102,8 +102,8 @@ export const groupData: GroupType = {
       username: 'Юлия Васильева',
       description: 'Разработчик с опытом работы в различных проектах.',
       tags: [
-        { name: 'Разработка', color: 'blue' },
-        { name: 'Senior', color: 'red' }
+        { name: 'Разработка', color: 'blue', code: '000003' },
+        { name: 'Senior', color: 'red', code: '000001' }
       ]
     }
   ],
@@ -132,10 +132,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Дизайн',
+                code: '000005',
                 color: 'blue'
               },
               {
                 name: 'Высокий приоритет',
+                code: '000001',
                 color: 'red'
               }
             ]
@@ -151,10 +153,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Макет',
+                code: '000006',
                 color: 'blue'
               },
               {
                 name: 'Низкий приоритет',
+                code: '000003',
                 color: 'green'
               }
             ]
@@ -170,10 +174,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Баги',
+                code: '000007',
                 color: 'green'
               },
               {
                 name: 'Высокий приоритет',
+                code: '000001',
                 color: 'red'
               }
             ]
@@ -189,10 +195,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Оптимизация',
+                code: '000009',
                 color: 'blue'
               },
               {
                 name: 'Средний приоритет',
+                code: '000002',
                 color: 'yellow'
               }
             ]
@@ -215,10 +223,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Разработка',
+                code: '000011',
                 color: 'green'
               },
               {
                 name: 'Высокий приоритет',
+                code: '000001',
                 color: 'red'
               }
             ]
@@ -235,10 +245,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Тестирование',
+                code: '000013',
                 color: 'blue'
               },
               {
                 name: 'Средний приоритет',
+                code: '000002',
                 color: 'yellow'
               }
             ]
@@ -254,10 +266,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Разработка',
+                code: '000011',
                 color: 'green'
               },
               {
                 name: 'Высокий приоритет',
+                code: '000001',
                 color: 'red'
               }
             ]
@@ -273,10 +287,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Контент',
-                color: 'blue'
+                code: '000004',
+                color: 'green'
               },
               {
                 name: 'Средний приоритет',
+                code: '000002',
                 color: 'yellow'
               }
             ]
@@ -292,10 +308,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Документация',
+                code: '000015',
                 color: 'yellow'
               },
               {
                 name: 'Средний приоритет',
+                code: '000002',
                 color: 'red'
               }
             ]
@@ -318,10 +336,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Проверка кода',
+                code: '000018',
                 color: 'blue'
               },
               {
                 name: 'Высокий приоритет',
+                code: '000001',
                 color: 'red'
               }
             ]
@@ -337,10 +357,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Проверка дизайна',
+                code: '000017',
                 color: 'green'
               },
               {
                 name: 'Средний приоритет',
+                code: '000002',
                 color: 'yellow'
               }
             ]
@@ -356,10 +378,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Документация',
-                color: 'blue'
+                code: '000015',
+                color: 'yellow'
               },
               {
                 name: 'Низкий приоритет',
+                code: '000003',
                 color: 'green'
               }
             ]
@@ -375,10 +399,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Макет',
-                color: 'yellow'
+                code: '000006',
+                color: 'blue'
               },
               {
                 name: 'Средний приоритет',
+                code: '000002',
                 color: 'red'
               }
             ]
@@ -394,10 +420,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Контент',
+                code: '000004',
                 color: 'green'
               },
               {
                 name: 'Высокий приоритет',
+                code: '000001',
                 color: 'blue'
               }
             ]
@@ -414,10 +442,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'API',
+                code: '000008',
                 color: 'yellow'
               },
               {
                 name: 'Средний приоритет',
+                code: '000002',
                 color: 'red'
               }
             ]
@@ -434,10 +464,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Тестирование',
+                code: '000013',
                 color: 'blue'
               },
               {
                 name: 'Высокий приоритет',
+                code: '000001',
                 color: 'green'
               }
             ]
@@ -453,10 +485,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Оптимизация',
-                color: 'yellow'
+                code: '000009',
+                color: 'blue'
               },
               {
                 name: 'Средний приоритет',
+                code: '000002',
                 color: 'red'
               }
             ]
@@ -479,10 +513,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Развертывание',
+                code: '000016',
                 color: 'blue'
               },
               {
                 name: 'Высокий приоритет',
+                code: '000001',
                 color: 'red'
               }
             ]
@@ -499,10 +535,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Мониторинг',
+                code: '000014',
                 color: 'green'
               },
               {
                 name: 'Средний приоритет',
+                code: '000002',
                 color: 'yellow'
               }
             ]
@@ -518,10 +556,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'База данных',
+                code: '000012',
                 color: 'blue'
               },
               {
                 name: 'Высокий приоритет',
+                code: '000001',
                 color: 'red'
               }
             ]
@@ -537,10 +577,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Интерфейс',
+                code: '000010',
                 color: 'green'
               },
               {
                 name: 'Средний приоритет',
+                code: '000002',
                 color: 'yellow'
               }
             ]
@@ -556,10 +598,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'API',
-                color: 'blue'
+                code: '000008',
+                color: 'yellow'
               },
               {
                 name: 'Высокий приоритет',
+                code: '000001',
                 color: 'red'
               }
             ]
@@ -575,10 +619,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Макет',
+                code: '000006',
                 color: 'blue'
               },
               {
                 name: 'Низкий приоритет',
+                code: '000003',
                 color: 'green'
               }
             ]
@@ -594,10 +640,12 @@ export const groupData: GroupType = {
             tags: [
               {
                 name: 'Контент',
-                color: 'yellow'
+                code: '000004',
+                color: 'green'
               },
               {
                 name: 'Средний приоритет',
+                code: '000002',
                 color: 'red'
               }
             ]

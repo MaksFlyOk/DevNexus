@@ -1,4 +1,3 @@
-import { useAddCardTagGroup } from '@hooks/mutations'
 import { AccentColorsType } from '@types'
 import { Spinner } from '@ui/spinner'
 import { useState } from 'react'
@@ -6,23 +5,25 @@ import { useState } from 'react'
 interface AddNewCardTagFormProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   newTagName: string
+  groupId?: string
+  createTagFunction: (
+    name: string,
+    color: AccentColorsType,
+    groupId?: string
+  ) => void
+  createIsPending: boolean
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const AddNewCardTagForm = ({
+export const AddNewTagForm = ({
   setIsOpen,
   newTagName,
+  groupId,
+  createTagFunction,
+  createIsPending,
   setSearchTerm
 }: AddNewCardTagFormProps) => {
   const [newTagColor, setNewTagColor] = useState<AccentColorsType>('green')
-
-  const { mutateAsync, isPending } = useAddCardTagGroup({
-    optionFunction: () => {
-      setIsOpen(false)
-      setNewTagColor('green')
-      setSearchTerm('')
-    }
-  })
 
   return (
     <div className='px-2'>
@@ -93,11 +94,18 @@ export const AddNewCardTagForm = ({
         className='btn btn-primary mt-3 w-100'
         onClick={() => {
           if (newTagName !== '') {
-            mutateAsync({ name: newTagName, color: newTagColor })
+            if (groupId) {
+              createTagFunction(newTagName, newTagColor, groupId)
+            } else {
+              createTagFunction(newTagName, newTagColor)
+            }
+
+            setIsOpen(false)
+            setSearchTerm('')
           }
         }}
       >
-        {isPending ? <Spinner /> : 'Создать'}
+        {createIsPending ? <Spinner /> : 'Создать'}
       </button>
     </div>
   )

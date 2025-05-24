@@ -1,30 +1,51 @@
 import { useGetUser } from '@hooks/queries'
+import { useActions } from '@hooks/redux-hooks'
 import { CircleImg } from '@ui/circle-img'
+import { Modal } from '@ui/modal'
+import { SecondaryNav } from '@ui/secondary-nav'
 import { Spinner } from '@ui/spinner'
+import { clearTokens } from '@utils/clearTokens'
 import { hideEmailInfo } from '@utils/hideEmailInfo'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { UpdateUserDataModal } from './UpdateUserDataModal'
 import { UserTasksList } from './user-tasks-list'
 
 export const Profile = () => {
+  const [isShow, setIsShow] = useState<boolean>(false)
+  const [danger, setDanger] = useState(false)
+
+  const { setAuthState } = useActions()
+
   const navigate = useNavigate()
+
   const { isPending, isError, data: userData } = useGetUser()
+
+  const logout = () => {
+    clearTokens()
+    navigate('/')
+
+    setAuthState(false)
+  }
 
   return (
     <>
-      <nav className='navbar bg-body-tertiary'>
-        <div className='container-fluid'>
-          <button
-            className='navbar-brand btn btn-outline-dark'
-            type='button'
-            onClick={() => navigate(-1)}
-          >
-            &larr;
-          </button>
-          <div className='d-flex'>
-            <h3>Профиль</h3>
+      <Modal isShow={isShow} setIsShow={setIsShow}>
+        {isPending ? (
+          <div className='d-flex w-100 justify-content-center py-3'>
+            <Spinner />
           </div>
-        </div>
-      </nav>
+        ) : isError ? (
+          <div className='d-flex w-100 justify-content-center py-3'>
+            <h1>
+              <span className='badge text-bg-danger'>Error</span>
+            </h1>
+          </div>
+        ) : (
+          <UpdateUserDataModal userData={userData.user} setIsShow={setIsShow} />
+        )}
+      </Modal>
+      <SecondaryNav title='Профиль' backLink={'/'} />
       {isPending ? (
         <div className='d-flex w-100 justify-content-center py-3'>
           <Spinner />
@@ -39,41 +60,60 @@ export const Profile = () => {
         <div className='container-fluid py-4'>
           <div className='container pb-4'>
             <div className='card'>
-              <div className='card-header d-flex align-items-center'>
-                <div style={{ width: 120 }}>
-                  <CircleImg alt='User img' />
+              <div className='card-header d-flex align-items-center justify-content-between'>
+                <div className='d-flex align-items-center'>
+                  <div style={{ width: 120 }}>
+                    <CircleImg alt='User img' />
+                  </div>
+                  <div>
+                    <h2 className='ps-2'>{userData.user.username}</h2>
+                  </div>
                 </div>
-                <div>
-                  <h2 className='ps-2'>{userData.user.username}</h2>
-                  <p className='ps-2'>{userData.user.description}</p>
-                </div>
+                <button
+                  type='button'
+                  className='btn btn-outline-light'
+                  onClick={() => setIsShow(true)}
+                >
+                  Изменить
+                </button>
               </div>
               <div className='card-body px-5'>
                 <div className='d-flex justify-content-between pb-4'>
                   <div>
-                    <h5 className='text-secondary'>Ваше имя</h5>
-                    <h4>{userData.user.username}</h4>
+                    <h5 className='text-secondary'>О себе</h5>
+                    <h4
+                      className={
+                        userData.user.description ? '' : 'text-body-secondary'
+                      }
+                    >
+                      {userData.user.description
+                        ? userData.user.description
+                        : 'Расскажите о себе'}
+                    </h4>
                   </div>
-                  <button type='button' className='btn btn-outline-light'>
-                    Изменить
-                  </button>
                 </div>
                 <div className='d-flex justify-content-between pb-4'>
                   <div>
                     <h5 className='text-secondary'>Ваш email</h5>
-                    <h4>{hideEmailInfo(userData.user.username)}</h4>
+                    <h4>{hideEmailInfo(userData.user.email)}</h4>
                   </div>
-                  <button type='button' className='btn btn-outline-light'>
-                    Изменить
-                  </button>
                 </div>
-                <div className='d-flex justify-content-between pb-4'>
+                <div className='d-flex justify-content-between'>
                   <div>
                     <h5 className='text-secondary'>Ваш пароль</h5>
                     <h4>*************</h4>
                   </div>
-                  <button type='button' className='btn btn-outline-light'>
-                    Изменить
+                </div>
+                <hr />
+                <div className='d-flex w-100 flex-column gap-2'>
+                  <h4 className='text-danger'>Danger-zone</h4>
+                  <button
+                    type='button'
+                    className='btn btn-outline-danger'
+                    onClick={() => (danger ? logout() : setDanger(true))}
+                    onMouseLeave={() => setDanger(false)}
+                  >
+                    {danger ? `Confirm` : `Logout`}
                   </button>
                 </div>
               </div>

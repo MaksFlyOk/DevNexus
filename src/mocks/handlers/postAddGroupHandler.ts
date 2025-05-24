@@ -7,7 +7,7 @@ export const postAddGroupHandler = http.post<
   { name: string },
   { name: string },
   Path
->(`${import.meta.env.VITE_APP_API_URL}v1/group`, async ({ request }) => {
+>(`${import.meta.env.VITE_APP_API_URL}v1/groups/`, async ({ request }) => {
   const newGroupRequest = await request.json()
 
   const newGroupIntoGroupsData: GroupType = {

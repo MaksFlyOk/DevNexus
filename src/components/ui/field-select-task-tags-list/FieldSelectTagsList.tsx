@@ -1,5 +1,7 @@
-import { TagType } from '@types'
+import { AccentColorsType, TagType } from '@types'
+import { Tag } from '@ui/tag'
 import { convertBgColor } from '@utils/convertBgColor'
+import { convertButtonOutlineColor } from '@utils/convertButtonOutlineColor'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useEffect, useRef, useState } from 'react'
 import {
@@ -9,11 +11,23 @@ import {
   Path,
   PathValue
 } from 'react-hook-form'
-import { AddNewCardTagForm } from './AddNewCardTagForm'
-import { TaskTagCardSelect } from './task-tag-card-select/TaskTagCardSelect'
+import { AddNewTagForm } from './AddNewTagForm'
 
-interface SelectTaskTagListProps<T extends FieldValues> {
+interface FieldSelectTagListProps<T extends FieldValues> {
   name: Path<T>
+  deleteTagFunction?: (code: string) => void
+  createTagFunctionWithGroupId?: (
+    name: string,
+    color: AccentColorsType,
+    groupId: string
+  ) => void
+  createTagFunctionWithoutGroupId?: (
+    name: string,
+    color: AccentColorsType
+  ) => void
+  createIsPending: boolean
+  maxTags?: number
+  groupId?: string
   tagList: TagType[]
   label: string
   placeholder?: string
@@ -23,8 +37,14 @@ interface SelectTaskTagListProps<T extends FieldValues> {
   defaultValue?: PathValue<T, Path<T>>
 }
 
-export const FieldSelectTaskTagList = <T extends FieldValues>({
+export const FieldSelectTagList = <T extends FieldValues>({
   name,
+  deleteTagFunction,
+  createTagFunctionWithGroupId,
+  createTagFunctionWithoutGroupId,
+  createIsPending,
+  maxTags = 3,
+  groupId,
   tagList,
   label,
   placeholder = 'ㅤ',
@@ -32,7 +52,7 @@ export const FieldSelectTaskTagList = <T extends FieldValues>({
   error,
   control,
   defaultValue
-}: SelectTaskTagListProps<T>) => {
+}: FieldSelectTagListProps<T>) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [isInputStart, setIsInputStart] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
@@ -62,8 +82,8 @@ export const FieldSelectTaskTagList = <T extends FieldValues>({
   }, [tagList, searchTerm])
 
   useEffect(() => {
-    if (!isInputStart) setIsInputStart(prev => !prev)
-  }, [error])
+    if (!isInputStart && isOpen) setIsInputStart(prev => !prev)
+  }, [error, isOpen])
 
   useEffect(() => {
     if (isOpen && searchInputRef.current) {
@@ -93,6 +113,13 @@ export const FieldSelectTaskTagList = <T extends FieldValues>({
       name={name}
       disabled={disabled}
       control={control}
+      rules={{
+        validate: fieldValues => {
+          if (fieldValues?.length > maxTags) {
+            return `Максимальное количество тэгов ${maxTags}`
+          }
+        }
+      }}
       defaultValue={defaultValue}
       render={({ field }) => (
         <div className='mb-3'>
@@ -157,7 +184,26 @@ export const FieldSelectTaskTagList = <T extends FieldValues>({
                   {tagList?.length === 0 || !tagList ? (
                     searchTerm ? (
                       <div className='p-1'>
-                        <AddNewCardTagForm
+                        <AddNewTagForm
+                          groupId={groupId}
+                          createTagFunction={(
+                            name: string,
+                            color: AccentColorsType,
+                            groupId?: string
+                          ) => {
+                            if (groupId) {
+                              if (createTagFunctionWithGroupId)
+                                createTagFunctionWithGroupId(
+                                  name,
+                                  color,
+                                  groupId
+                                )
+                            } else {
+                              if (createTagFunctionWithoutGroupId)
+                                createTagFunctionWithoutGroupId(name, color)
+                            }
+                          }}
+                          createIsPending={createIsPending}
                           setIsOpen={setIsOpen}
                           newTagName={searchTerm}
                           setSearchTerm={setSearchTerm}
@@ -165,7 +211,7 @@ export const FieldSelectTaskTagList = <T extends FieldValues>({
                       </div>
                     ) : (
                       <button className='dropdown-item' type='button' disabled>
-                        Тэги отсутсвуют
+                        Тэги отсутствуют
                       </button>
                     )
                   ) : filteredTags?.filter(tag => {
@@ -188,38 +234,66 @@ export const FieldSelectTaskTagList = <T extends FieldValues>({
                         return !arr.includes(tag.code)
                       })
                       ?.map(tag => (
-                        <button
+                        <div
+                          className='mb-2 px-2 d-flex gap-2 justify-content-between'
                           key={`${tag.name}${tag.code}`}
-                          className='dropdown-item p-1'
-                          type='button'
-                          onClick={() => {
-                            field.onChange({
-                              target: {
-                                value:
-                                  field.value?.length < 3
-                                    ? [
-                                        ...field.value,
-                                        {
-                                          name: tag.name,
-                                          color: tag.color,
-                                          code: tag.code
-                                        }
-                                      ]
-                                    : field.value
-                              }
-                            })
-                            setIsOpen(false)
-                          }}
                         >
-                          <TaskTagCardSelect
-                            tagName={tag.name}
-                            color={tag.color}
-                          />
-                        </button>
+                          <button
+                            className={`btn w-100 p-1 ${convertButtonOutlineColor(
+                              tag.color
+                            )}`}
+                            type='button'
+                            onClick={() => {
+                              field.onChange({
+                                target: {
+                                  value:
+                                    field.value?.length < maxTags
+                                      ? [
+                                          ...field.value,
+                                          {
+                                            name: tag.name,
+                                            color: tag.color,
+                                            code: tag.code
+                                          }
+                                        ]
+                                      : field.value
+                                }
+                              })
+                              setIsOpen(false)
+                            }}
+                          >
+                            <Tag color={tag.color} tagName={tag.name} />
+                          </button>
+                          {deleteTagFunction === undefined ||
+                          groupId === undefined ? null : (
+                            <button
+                              className='btn btn-outline-light'
+                              type='button'
+                              onClick={() => deleteTagFunction(tag.code)}
+                            >
+                              -
+                            </button>
+                          )}
+                        </div>
                       ))
                   ) : (
                     <div className='p-1'>
-                      <AddNewCardTagForm
+                      <AddNewTagForm
+                        groupId={groupId}
+                        createTagFunction={(
+                          name: string,
+                          color: AccentColorsType,
+                          groupId?: string
+                        ) => {
+                          if (groupId) {
+                            if (createTagFunctionWithGroupId)
+                              createTagFunctionWithGroupId(name, color, groupId)
+                          } else {
+                            if (createTagFunctionWithoutGroupId)
+                              createTagFunctionWithoutGroupId(name, color)
+                          }
+                        }}
+                        createIsPending={createIsPending}
                         setIsOpen={setIsOpen}
                         newTagName={searchTerm}
                         setSearchTerm={setSearchTerm}

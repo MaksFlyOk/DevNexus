@@ -12,8 +12,6 @@ export const $axios = axios.create({
   }
 })
 
-// TODO
-
 const refreshAccessToken = async () => {
   try {
     const response = await axios.post(
@@ -51,6 +49,8 @@ $axios.interceptors.request.use(
             }
           )
         } catch (error) {
+          console.log(error)
+
           if (error) {
             clearTokens()
             console.error(error)

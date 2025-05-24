@@ -2,7 +2,8 @@ import { AccentColorsType } from '@types'
 import { http, HttpResponse, Path, PathParams } from 'msw'
 import { groupsData } from '../mocks-data'
 
-export const postAddColumnGroup = http.post<
+// TODO
+export const postAddCardColumnGroup = http.post<
   PathParams,
   { name: string; color: AccentColorsType },
   | { id: number; name: string; color: AccentColorsType }

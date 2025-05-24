@@ -1,14 +1,18 @@
-import { useAddCardColumnGroup } from '@hooks/mutations'
+import {
+  useAddCardColumnGroup,
+  useAddCardTagGroup,
+  useDeleteCardTag
+} from '@hooks/mutations'
 import { useGetAllTaskTags } from '@hooks/queries'
 import { useActions, useTypedSelector } from '@hooks/redux-hooks'
-import { TagType } from '@types'
+import { AccentColorsType, TagType } from '@types'
 import { Field } from '@ui/field'
+import { FieldSelectMemberList } from '@ui/field-select-member-list'
+import { FieldSelectTagList } from '@ui/field-select-task-tags-list'
 import { FieldTextaria } from '@ui/field-textaria'
 import { Spinner } from '@ui/spinner'
 import { Dispatch, SetStateAction } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { FieldSelectMemberList } from './field-select-member-list'
-import { FieldSelectTaskTagList } from './field-select-task-tags-list'
 
 interface AddGroupBoardModalProps {
   setIsShow: Dispatch<SetStateAction<boolean>>
@@ -16,7 +20,7 @@ interface AddGroupBoardModalProps {
   group_uuid: string
 }
 
-export type AddNewTaskParamsType = {
+type AddNewTaskParamsType = {
   name: string
   description: string
   column: number
@@ -50,28 +54,33 @@ export const AddNewTaskBoardModal = ({
     isPending: taskTagListIsPending
   } = useGetAllTaskTags(group_uuid)
 
-  const { mutateAsync } = useAddCardColumnGroup()
+  const { mutateAsync: mutateAddCardColumnGroup } = useAddCardColumnGroup()
+  const { mutateAsync: mutateDeleteCardTag } = useDeleteCardTag(group_uuid)
+  const {
+    mutateAsync: mutateCreateCardTag,
+    isPending: isPendingCreateCardTag
+  } = useAddCardTagGroup()
 
   const onSubmit: SubmitHandler<AddNewTaskParamsType> = data => {
     // TODO
-    const start_date = new Date().toISOString()
+    const defaultStartDate = new Date().toISOString()
 
     addTask({
       title: data.name,
       description: data.description,
       column: columnName,
       assignee: data.assignee,
-      start_date: start_date,
+      start_date: data.start_date ? data.start_date : defaultStartDate,
       end_date: data.end_date,
       tags: data.tags
     })
 
-    mutateAsync({
+    mutateAddCardColumnGroup({
       title: data.name,
       description: data.description,
       column: columnName,
       assignee: data.assignee,
-      start_date: start_date,
+      start_date: data.start_date ? data.start_date : defaultStartDate,
       end_date: data.end_date,
       tags: data.tags?.map(tag => {
         return { name: tag.name, color: tag.color }
@@ -123,6 +132,12 @@ export const AddNewTaskBoardModal = ({
               register={register}
               disabled={false}
               error={errors?.description?.message}
+              options={{
+                maxLength: {
+                  value: 250,
+                  message: 'Максимальная длина описания 250 символов'
+                }
+              }}
               name='description'
               type='textaria'
               label='Описание'
@@ -137,8 +152,19 @@ export const AddNewTaskBoardModal = ({
                 </h1>
               </div>
             ) : (
-              <FieldSelectTaskTagList<AddNewTaskParamsType>
+              <FieldSelectTagList<AddNewTaskParamsType>
                 name='tags'
+                groupId={group_uuid}
+                deleteTagFunction={(cardTagCode: string) =>
+                  mutateDeleteCardTag({ cardTagCode })
+                }
+                createTagFunctionWithoutGroupId={(
+                  name: string,
+                  color: AccentColorsType
+                ) => {
+                  mutateCreateCardTag({ name, color })
+                }}
+                createIsPending={isPendingCreateCardTag}
                 label='Тэги'
                 placeholder='Тэги'
                 error={errors?.tags?.message}
@@ -158,12 +184,20 @@ export const AddNewTaskBoardModal = ({
             <Field
               register={register}
               disabled={false}
+              error={errors?.start_date?.message}
+              name='start_date'
+              type='datetime-local'
+              label='Начальная дата'
+            />
+            <Field
+              register={register}
+              disabled={false}
               error={errors?.end_date?.message}
               name='end_date'
               type='datetime-local'
-              label='Дата срока'
+              label='Дедлайн'
               options={{
-                required: 'Выберите дату'
+                required: { value: true, message: 'Выберите дату' }
               }}
             />
           </form>

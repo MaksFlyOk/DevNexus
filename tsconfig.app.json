@@ -39,6 +39,8 @@
       "@screens": ["src/components/screens/index.ts"],
       "@ui/*": ["src/components/ui/*"],
       "@ui": ["src/components/ui/index.ts"],
+      "@dev/*": ["src/components/dev/*"],
+      "@dev": ["src/components/dev/index.ts"],
       "@hooks/*": ["src/hooks/*"],
       "@hooks": ["src/hooks/index.ts"],
       "@redux/*": ["src/redux/*"],
