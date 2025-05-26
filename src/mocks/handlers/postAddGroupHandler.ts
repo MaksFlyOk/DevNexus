@@ -1,6 +1,11 @@
 import { GroupType } from '@types'
 import { http, HttpResponse, Path, PathParams } from 'msw'
-import { currentUserData, groupsData } from '../mocks-data'
+import {
+  currentUserData,
+  groupCardTagsData,
+  groupsData,
+  groupTagsData
+} from '../mocks-data'
 
 export const postAddGroupHandler = http.post<
   PathParams,
@@ -10,9 +15,11 @@ export const postAddGroupHandler = http.post<
 >(`${import.meta.env.VITE_APP_API_URL}v1/groups/`, async ({ request }) => {
   const newGroupRequest = await request.json()
 
+  const newGroupUUID = crypto.randomUUID()
+
   const newGroupIntoGroupsData: GroupType = {
     id: groupsData.length + 1,
-    group_uuid: `${crypto.randomUUID()}`,
+    group_uuid: newGroupUUID,
     name: newGroupRequest.name,
     icon: null,
     members: [
@@ -36,7 +43,7 @@ export const postAddGroupHandler = http.post<
 
   const newGroupIntoUserData = {
     id: groupsData.length + 1,
-    group_uuid: `${crypto.randomUUID()}`,
+    group_uuid: newGroupUUID,
     name: newGroupRequest.name,
     icon: null,
     cards: []
@@ -44,6 +51,8 @@ export const postAddGroupHandler = http.post<
 
   groupsData.push(newGroupIntoGroupsData)
   currentUserData.groups.push(newGroupIntoUserData)
+  groupCardTagsData.push({ group_uuid: newGroupUUID, tags: [] })
+  groupTagsData.push({ group_uuid: newGroupUUID, tags: [] })
 
   return HttpResponse.json({ name: newGroupRequest.name })
 })

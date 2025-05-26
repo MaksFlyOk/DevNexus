@@ -61,7 +61,7 @@ class GroupService {
   async putCardColumnGroup(
     groupId: string | undefined,
     cardCode: string | undefined,
-    cardParams: TaskType
+    cardParams: Omit<TaskType, 'column_color'>
   ): Promise<AxiosResponse<TaskType>> {
     return await $axios.put(
       `${ENDPOINT_GROUP}${groupId}/cards/${cardCode}/`,

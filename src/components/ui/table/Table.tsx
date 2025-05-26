@@ -26,6 +26,9 @@ export const Table = ({ boardData }: TableProps) => {
 
   useEffect(() => {
     if (boardData.group_uuid !== boardId || isBoardLoading) {
+      console.log('update')
+      console.log('into kanban', boardData)
+
       setInitialBoardState(boardData)
     }
 
@@ -33,13 +36,11 @@ export const Table = ({ boardData }: TableProps) => {
       queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
       setIsBoardLoading({ state: true })
     }
-  }, [boardData, boardId, board])
 
-  useEffect(() => {
     if (!invalidateBoardData) {
       setIsBoardLoading({ state: false })
     }
-  }, [invalidateBoardData])
+  }, [boardData, boardId, board, invalidateBoardData])
 
   return (
     <div className='overflow-x-scroll p-2 h-100'>

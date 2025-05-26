@@ -1,15 +1,17 @@
 import { AccentColorsType, UserType } from '@types'
 
 export const membersDataList: Array<
-  UserType & { tags: Array<{ name: string; color: AccentColorsType }> }
+  UserType & {
+    tags: Array<{ name: string; color: AccentColorsType; code: string }>
+  }
 > = [
   {
     email: 'all.random@devnexus.com',
     username: 'Все совпадения случайны',
     description: 'Разработчик с опытом работы в различных проектах.',
     tags: [
-      { name: 'Разработка', color: 'blue' },
-      { name: 'Высокий приоритет', color: 'red' }
+      { name: 'Разработка', color: 'blue', code: '000003' },
+      { name: 'Senior', color: 'red', code: '000001' }
     ]
   },
   {
@@ -17,8 +19,8 @@ export const membersDataList: Array<
     username: 'Иван Иванов',
     description: 'Тестировщик с опытом работы в различных проектах.',
     tags: [
-      { name: 'Тестирование', color: 'green' },
-      { name: 'Средний приоритет', color: 'yellow' }
+      { name: 'Тестирование', color: 'green', code: '000004' },
+      { name: 'Middle', color: 'yellow', code: '000002' }
     ]
   },
   {
@@ -26,8 +28,8 @@ export const membersDataList: Array<
     username: 'Анна Петрова',
     description: 'Дизайнер с опытом работы в различных проектах.',
     tags: [
-      { name: 'Дизайн', color: 'blue' },
-      { name: 'Высокий приоритет', color: 'red' }
+      { name: 'Дизайн', color: 'blue', code: '000005' },
+      { name: 'Senior', color: 'red', code: '000001' }
     ]
   },
   {
@@ -35,8 +37,8 @@ export const membersDataList: Array<
     username: 'Дмитрий Смирнов',
     description: 'Менеджер проектов с опытом работы в различных проектах.',
     tags: [
-      { name: 'Менеджмент', color: 'green' },
-      { name: 'Средний приоритет', color: 'yellow' }
+      { name: 'Менеджмент', color: 'green', code: '000006' },
+      { name: 'Middle', color: 'yellow', code: '000002' }
     ]
   },
   {
@@ -44,8 +46,8 @@ export const membersDataList: Array<
     username: 'Елена Кузнецова',
     description: 'Аналитик с опытом работы в различных проектах.',
     tags: [
-      { name: 'Аналитика', color: 'blue' },
-      { name: 'Высокий приоритет', color: 'red' }
+      { name: 'Аналитика', color: 'blue', code: '000007' },
+      { name: 'Senior', color: 'red', code: '000001' }
     ]
   },
   {
@@ -53,8 +55,8 @@ export const membersDataList: Array<
     username: 'Алексей Соколов',
     description: 'Разработчик с опытом работы в различных проектах.',
     tags: [
-      { name: 'Разработка', color: 'green' },
-      { name: 'Средний приоритет', color: 'yellow' }
+      { name: 'Разработка', color: 'green', code: '000008' },
+      { name: 'Middle', color: 'yellow', code: '000002' }
     ]
   },
   {
@@ -62,8 +64,8 @@ export const membersDataList: Array<
     username: 'Мария Федорова',
     description: 'Тестировщик с опытом работы в различных проектах.',
     tags: [
-      { name: 'Тестирование', color: 'blue' },
-      { name: 'Высокий приоритет', color: 'red' }
+      { name: 'Тестирование', color: 'blue', code: '000009' },
+      { name: 'Senior', color: 'red', code: '000001' }
     ]
   },
   {
@@ -71,8 +73,8 @@ export const membersDataList: Array<
     username: 'Сергей Лебедев',
     description: 'Дизайнер с опытом работы в различных проектах.',
     tags: [
-      { name: 'Дизайн', color: 'green' },
-      { name: 'Средний приоритет', color: 'yellow' }
+      { name: 'Дизайн', color: 'green', code: '000010' },
+      { name: 'Middle', color: 'yellow', code: '000002' }
     ]
   },
   {
@@ -80,8 +82,8 @@ export const membersDataList: Array<
     username: 'Ольга Морозова',
     description: 'Менеджер проектов с опытом работы в различных проектах.',
     tags: [
-      { name: 'Менеджмент', color: 'blue' },
-      { name: 'Высокий приоритет', color: 'red' }
+      { name: 'Менеджмент', color: 'blue', code: '000011' },
+      { name: 'Senior', color: 'red', code: '000001' }
     ]
   },
   {
@@ -89,8 +91,8 @@ export const membersDataList: Array<
     username: 'Павел Николаев',
     description: 'Аналитик с опытом работы в различных проектах.',
     tags: [
-      { name: 'Аналитика', color: 'green' },
-      { name: 'Средний приоритет', color: 'yellow' }
+      { name: 'Аналитика', color: 'blue', code: '000007' },
+      { name: 'Middle', color: 'yellow', code: '000002' }
     ]
   },
   {
@@ -98,8 +100,8 @@ export const membersDataList: Array<
     username: 'Юлия Васильева',
     description: 'Разработчик с опытом работы в различных проектах.',
     tags: [
-      { name: 'Разработка', color: 'blue' },
-      { name: 'Высокий приоритет', color: 'red' }
+      { name: 'Разработка', color: 'blue', code: '000003' },
+      { name: 'Senior', color: 'red', code: '000001' }
     ]
   }
 ]

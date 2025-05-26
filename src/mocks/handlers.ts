@@ -1,25 +1,68 @@
+import { deleteCardColumnGroup } from './handlers/deleteCardColumnGroup'
+import { deleteCardTagGroup } from './handlers/deleteCardTagGroup'
+import { deleteGroupHandler } from './handlers/deleteGroupHandler'
+import { deleteTagGroup } from './handlers/deleteTagGroup'
+import { getAllCardTagGroup } from './handlers/getAllCardTagGroup'
+import { getAllTagGroup } from './handlers/getAllTagGroup'
+import { getCurrentUserProfileHandler } from './handlers/getCurrentUserProfileHandler'
+import { getGroupColumnCardHandler } from './handlers/getGroupColumnCardHandler'
 import { getGroupHandler } from './handlers/getGroupHandler'
 import { getUserProfileHandler } from './handlers/getUserProfileHandler'
+import { postAddCardColumnGroup } from './handlers/postAddCardColumnGroup'
 import { postAddColumnGroup } from './handlers/postAddColumnGroup'
 import { postAddGroupHandler } from './handlers/postAddGroupHandler'
 import { postAuthUserHandler } from './handlers/postAuthUserHandler'
+import { postCreateCardTagGroup } from './handlers/postCreateCardTagGroup'
+import { postCreateTagGroup } from './handlers/postCreateTagGroup'
+import { postCurrentUserCreateTagsHandler } from './handlers/postCurrentUserCreateTags'
+import { postCurrentUserDeleteTags } from './handlers/postCurrentUserDeleteTags'
 import { postRegisterUserHandler } from './handlers/postRegisterUserHandler'
+import { putAddMemberGroup } from './handlers/putAddMemberGroup'
+import { putUpdateCardColumnGroup } from './handlers/putUpdateCardColumnGroup'
+import { putUserProfileHandler } from './handlers/putUserProfileHandler'
 
-// const putChangeCardColumnGroupHandler = http.put()
-// TODO:
 export const handlers = [
   // Auth
   postAuthUserHandler,
   postRegisterUserHandler,
   // Group
-  getGroupHandler,
-  postAddColumnGroup,
   postAddGroupHandler,
-  // postAddCardColumnGroup,
+  getGroupHandler,
+  deleteGroupHandler,
+  postAddColumnGroup,
+  postAddCardColumnGroup, // Divide timezone
+  getGroupColumnCardHandler,
+  putUpdateCardColumnGroup, // Divide timezone
+  deleteCardColumnGroup,
+  postCreateCardTagGroup,
+  deleteCardTagGroup,
+  getAllCardTagGroup,
+  postCreateTagGroup,
+  deleteTagGroup,
+  getAllTagGroup,
+  postCurrentUserCreateTagsHandler,
+  postCurrentUserDeleteTags,
+  putAddMemberGroup,
 
   // User
-  getUserProfileHandler
+  getUserProfileHandler,
+  putUserProfileHandler,
+  getCurrentUserProfileHandler
 ]
+
+// PUT
+// /api/v1/groups/{group_uuid}/
+
+// GET
+// /api/v1/groups/{group_uuid}/columns/{id}/
+
+// PUT
+// /api/v1/groups/{group_uuid}/columns/{id}/
+
+// DELETE
+// /api/v1/group/{group_uuid}/columns/{id}/
+
+// - - - - - - - - - - - - -
 
 // POST
 // /api/token/refresh/
@@ -27,79 +70,17 @@ export const handlers = [
 // POST
 // /api/token/verify/
 
-// - - - - - - - - - - - - -
+// GET
+// /api/v1/users/profile/{username}/
 
 // PUT
-// /api/v1/group/{group_uuid}/
-
-// DELETE
-// /api/v1/group/{group_uuid}/
+// /api/v1/users/profile/{username}/
 
 // PUT
-// /api/v1/group/{group_uuid}/add_member/
+// /api/v1/groups/{group_uuid}/cardtags/{code}/
+
+// PUT
+// /api/v1/group/{group_uuid}/tags/{code}/
 
 // GET
-// /api/v1/group/{group_uuid}/card/{code}/
-
-// PUT
-// /api/v1/group/{group_uuid}/card/{code}/
-
-// DELETE
-// /api/v1/group/{group_uuid}/card/{code}/
-
-// POST
-// /api/v1/group/{group_uuid}/card/create/
-
-// GET
-// /api/v1/group/{group_uuid}/cardtag/{code}/
-
-// PUT
-// /api/v1/group/{group_uuid}/cardtag/{code}/
-
-// DELETE
-// /api/v1/group/{group_uuid}/cardtag/{code}/
-
-// GET
-// /api/v1/group/{group_uuid}/cardtag/all
-
-// POST
-// /api/v1/group/{group_uuid}/cardtag/create/
-
-// GET
-// /api/v1/group/{group_uuid}/column/{id}/
-
-// PUT
-// /api/v1/group/{group_uuid}/column/{id}/
-
-// DELETE
-// /api/v1/group/{group_uuid}/column/{id}/
-
-// GET
-// /api/v1/group/{group_uuid}/tag/{code}/
-
-// PUT
-// /api/v1/group/{group_uuid}/tag/{code}/
-
-// DELETE
-// /api/v1/group/{group_uuid}/tag/{code}/
-
-// POST
-// /api/v1/group/{group_uuid}/tag/create/
-
-// POST
-// /api/v1/group/{group_uuid}/usertag/create/
-
-// DELETE
-// /api/v1/group/{group_uuid}/usertag/delete/{username}/{tag}/
-
-// GET
-// /api/v1/user/profile/
-
-// PUT
-// /api/v1/user/profile/
-
-// GET
-// /api/v1/user/profile/{username}/
-
-// PUT
-// /api/v1/user/profile/{username}/
+// /api/v1/group/{group_uuid}/tags/{code}/

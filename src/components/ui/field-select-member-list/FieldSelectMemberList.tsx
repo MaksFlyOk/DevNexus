@@ -127,7 +127,7 @@ export const FieldSelectMemberList = <T extends FieldValues>({
                   onFocus={e => (e.target.value = '')}
                   ref={searchInputRef}
                 />
-                <div className='overflow-scroll' style={{ maxHeight: '50vh' }}>
+                <div className='overflow-scroll' style={{ maxHeight: '40vh' }}>
                   {memberList?.length === 0 || !memberList ? (
                     <button className='dropdown-item' type='button' disabled>
                       Здесь пока никого нет

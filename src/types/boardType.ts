@@ -16,6 +16,7 @@ export interface TaskType {
   assignee: string
   code: string
   column: ColumnType['name']
+  column_color: AccentColorsType
   description: string
   start_date: string
   end_date: string

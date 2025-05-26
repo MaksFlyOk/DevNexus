@@ -45,6 +45,8 @@ export const BoardStateSlice = createSlice({
   initialState,
   reducers: {
     setInitialBoardState: (state, action: PayloadAction<GroupType>) => {
+      console.log(action.payload)
+
       state.board.columns = action.payload.board.columns
       state.boardId = action.payload.group_uuid
       state.minimizeColumnsInfo = setMinimizeColumnsInfo(state.board)
@@ -115,6 +117,7 @@ export const BoardStateSlice = createSlice({
             code: '000000',
             title: payload.title,
             column: column.name,
+            column_color: column.color,
             assignee: payload.assignee,
             description: payload.description,
             start_date: payload.start_date,
