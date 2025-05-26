@@ -50,7 +50,7 @@ export const useUpdateUserTagsGroup = (
         deleteUserTagsArrayQueries &&
         deleteUserTagsArrayQueries?.length !== 0
       ) {
-        groupService.deleteUserTagGroup(
+        await groupService.deleteUserTagGroup(
           groupId,
           username,
           deleteUserTagsArrayQueries
@@ -58,7 +58,7 @@ export const useUpdateUserTagsGroup = (
       }
 
       if (addUserTagsArrayQueries.length !== 0) {
-        groupService.createUserTagGroup(
+        await groupService.createUserTagGroup(
           groupId,
           username,
           addUserTagsArrayQueries

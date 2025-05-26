@@ -75,7 +75,7 @@ export const SidebarMode: FC<SideBarModeProps> = ({
     <>
       <div className='row position-relative main-container-with-sidebar'>
         <div
-          className='offcanvas offcanvas-start px-0 border-end border-2 border-primary'
+          className='offcanvas offcanvas-start px-0 border-end border-2 border-primary overflow-x-hidden'
           tabIndex={-1}
           id='sidebar'
           data-bs-keyboard

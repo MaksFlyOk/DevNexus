@@ -80,7 +80,7 @@ export const UpdateCardModal = ({
     console.log(data)
 
     mutateUpdateCardColumnGroup({
-      title: data.name ? data.name : placeholders.assignee,
+      title: data.name ? data.name : placeholders.title,
       description: data.description
         ? data.description
         : placeholders.description,

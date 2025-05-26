@@ -10,7 +10,7 @@ export const useUpdateCardColumnGroup = (groupId: string, cardCode: string) => {
 
   const { mutateAsync, isPending, isError, error } = useMutation({
     mutationKey: ['auth'],
-    mutationFn: async (data: TaskType) => {
+    mutationFn: async (data: Omit<TaskType, 'column_color'>) => {
       await groupService.putCardColumnGroup(groupId, cardCode, data)
     },
     onError: error => {

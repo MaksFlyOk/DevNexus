@@ -40,6 +40,9 @@ const ListInner = ({ boardData }: ListProps) => {
 
   useEffect(() => {
     if (boardData.group_uuid !== boardId || isBoardLoading) {
+      console.log('update')
+      console.log('into kanban', boardData)
+
       setInitialBoardState(boardData)
     }
 
@@ -47,13 +50,11 @@ const ListInner = ({ boardData }: ListProps) => {
       queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
       setIsBoardLoading({ state: true })
     }
-  }, [boardData, boardId, board])
 
-  useEffect(() => {
     if (!invalidateBoardData) {
       setIsBoardLoading({ state: false })
     }
-  }, [invalidateBoardData])
+  }, [boardData, boardId, board, invalidateBoardData])
 
   return (
     <div

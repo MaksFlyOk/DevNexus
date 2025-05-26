@@ -1,6 +1,6 @@
 export const hideEmailInfo = (text: string) => {
   const indexAtMark = text.indexOf('@')
-  const indexAtDot = text.indexOf('.')
+  const indexAtDot = text.lastIndexOf('.')
 
   return (
     '*'.repeat(text.substring(0, indexAtMark).length) +
