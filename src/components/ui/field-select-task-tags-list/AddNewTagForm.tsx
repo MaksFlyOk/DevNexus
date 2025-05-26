@@ -94,6 +94,7 @@ export const AddNewTagForm = ({
         className='btn btn-primary mt-3 w-100'
         onClick={() => {
           if (newTagName !== '') {
+            console.log(groupId)
             if (groupId) {
               createTagFunction(newTagName, newTagColor, groupId)
             } else {

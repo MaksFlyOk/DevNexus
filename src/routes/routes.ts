@@ -1,4 +1,4 @@
-import { Auth, Home, Landing, Profile } from '@screens'
+import { Auth, Card, Home, Landing, Profile } from '@screens'
 import { CurrentUserProfile } from '@screens/current-user-profile'
 
 export const ROUTES = [
@@ -18,8 +18,8 @@ export const ROUTES = [
     isAuth: true
   },
   {
-    path: '/card/:card_id/color/:column_color/',
-    component: CurrentUserProfile,
+    path: '/card/g/:group_id/c/:card_title/:card_code',
+    component: Card,
     isAuth: true
   },
   {

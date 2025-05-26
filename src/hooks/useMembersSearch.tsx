@@ -1,7 +1,7 @@
 import { TagType, UserType } from '@types'
 import { MemberCard } from '@ui'
 
-// TODO
+// TODO:
 export const useMembersSearch = () => {
   return function (
     inputValue: string,

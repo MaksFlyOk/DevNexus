@@ -6,6 +6,7 @@ interface FieldPropsType<TFieldValues extends FieldValues> {
   name: Path<TFieldValues>
   label: string
   placeholder?: string
+  defaultValue?: string | undefined
   error: string | undefined
   options?: object
   disabled?: boolean
@@ -20,6 +21,7 @@ export const Field = <TFieldValues extends FieldValues>({
   label,
   placeholder,
   error,
+  defaultValue = undefined,
   options,
   disabled = false,
   type
@@ -54,6 +56,9 @@ export const Field = <TFieldValues extends FieldValues>({
         }
         id={'validationServer_' + name}
         placeholder={placeholder}
+        defaultValue={
+          NotFocusedFieldsTypesArray.includes(type) ? defaultValue : undefined
+        }
         aria-describedby={'validationServer_' + name}
         required={false}
       />

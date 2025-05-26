@@ -105,15 +105,7 @@ export const MemberList = ({
                     }
                     key={'User card ' + iter}
                   >
-                    <MemberCard
-                      name={
-                        groupData.admin.username === member.username &&
-                        groupData.admin.email === member.email
-                          ? `${member.username} {Admin}`
-                          : member.username
-                      }
-                      tags={member.tags}
-                    />
+                    <MemberCard name={member.username} tags={member.tags} />
                   </div>
                 ))}
               </>

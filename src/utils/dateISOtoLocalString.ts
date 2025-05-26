@@ -1,7 +1,9 @@
+import { dateSetTimezone } from './dateSetTimezone'
+
 export const dateISOtoLocalString = (ISOdateString: string) => {
   const date = new Date(ISOdateString)
 
-  return date.toLocaleString('ru-ru', {
+  return new Date(dateSetTimezone(date)).toLocaleString('ru-ru', {
     weekday: 'short',
     year: '2-digit',
     month: '2-digit',

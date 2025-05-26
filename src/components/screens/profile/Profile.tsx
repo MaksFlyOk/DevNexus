@@ -124,7 +124,10 @@ export const Profile = () => {
               <div className='card-header'>
                 <h2 className='ps-2'>Задачи</h2>
               </div>
-              <div className='card-body px-5'>
+              <div
+                className='overflow-y-scroll overflow-x-hidden card-body px-5'
+                style={{ maxHeight: '70dvh' }}
+              >
                 <UserTasksList groups={userData.groups} />
               </div>
             </div>

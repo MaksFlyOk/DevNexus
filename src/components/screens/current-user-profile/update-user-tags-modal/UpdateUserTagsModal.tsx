@@ -7,6 +7,7 @@ import { useGetAllGroupTags } from '@hooks/queries'
 import { AccentColorsType, TagType } from '@types'
 import { FieldSelectTagList } from '@ui/field-select-task-tags-list'
 import { Spinner } from '@ui/spinner'
+import { setPlaceholderFieldSelectTags } from '@utils/setPlaceholderFieldSelectTags'
 import { Dispatch, SetStateAction } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
@@ -23,26 +24,6 @@ interface UpdateUserTagsModalProps {
 
 type UpdateUserTagsParamsType = {
   tags: TagType[]
-}
-
-const setPlaceholderFieldSelectTags = (
-  tagsArray: Array<{
-    tag_name: string
-    tag_code: string
-    tag_color: AccentColorsType
-  }>
-) => {
-  let placeholder = ''
-
-  tagsArray.forEach((tag, iter, arr) => {
-    if (iter !== arr.length - 1) {
-      placeholder += tag.tag_name + ', '
-    } else {
-      placeholder += tag.tag_name
-    }
-  })
-
-  return placeholder === '' ? 'Здесь пустовато' : placeholder
 }
 
 export const UpdateUserTagsModal = ({
@@ -118,6 +99,7 @@ export const UpdateUserTagsModal = ({
               <FieldSelectTagList<UpdateUserTagsParamsType>
                 name='tags'
                 maxTags={2}
+                withGroupId={true}
                 groupId={group_uuid}
                 deleteTagFunction={(userTagCode: string) =>
                   mutateDeleteTagGroup({ userTagCode })

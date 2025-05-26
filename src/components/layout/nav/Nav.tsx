@@ -106,7 +106,7 @@ export const Nav = ({
               Фильтры
             </button>
             <ul className='dropdown-menu'>
-              {/* TODO */}
+              {/* TODO: */}
               <li className='dropdown-item'>Filter item</li>
               <li className='dropdown-item'>Filter item</li>
               <li className='dropdown-item'>Filter item</li>

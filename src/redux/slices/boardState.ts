@@ -68,8 +68,8 @@ export const BoardStateSlice = createSlice({
           return {
             ...column,
             tasks: [
-              { ...payload.task, column: payload.newColumn },
-              ...column.tasks
+              ...column.tasks,
+              { ...payload.task, column: payload.newColumn }
             ]
           }
         }

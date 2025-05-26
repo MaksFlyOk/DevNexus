@@ -51,15 +51,29 @@ class GroupService {
     )
   }
 
-  async putCardColumnGroupMove(
+  async getCardColumnGroup(
     groupId: string | undefined,
-    cardId: string | undefined,
+    cardCode: string | undefined
+  ): Promise<AxiosResponse<TaskType & { column_color: AccentColorsType }>> {
+    return await $axios.get(`${ENDPOINT_GROUP}${groupId}/cards/${cardCode}/`)
+  }
+
+  async putCardColumnGroup(
+    groupId: string | undefined,
+    cardCode: string | undefined,
     cardParams: TaskType
   ): Promise<AxiosResponse<TaskType>> {
     return await $axios.put(
-      `${ENDPOINT_GROUP}${groupId}/cards/${cardId}/`,
+      `${ENDPOINT_GROUP}${groupId}/cards/${cardCode}/`,
       cardParams
     )
+  }
+
+  async deleteCardColumnGroup(
+    groupId: string | undefined,
+    cardCode: string | undefined
+  ): Promise<AxiosResponse<TaskType>> {
+    return await $axios.delete(`${ENDPOINT_GROUP}${groupId}/cards/${cardCode}/`)
   }
 
   async createCardTagGroup(

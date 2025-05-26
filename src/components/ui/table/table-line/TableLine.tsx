@@ -4,6 +4,7 @@ import { AccentColorsType, TaskType } from '@types'
 import { Tag } from '@ui/tag'
 import { dateISOtoLocalString } from '@utils/dateISOtoLocalString'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { FieldColumnSelect } from './FieldColumnSelect'
 import './TableLine.scss'
 
@@ -18,9 +19,12 @@ export type ChangeColumnValuesType = {
 }
 
 export const TableLine = ({ line, iterLine, groupColor }: TableLineProps) => {
+  const navigate = useNavigate()
+
   const { moveTask } = useActions()
 
   const { minimizeColumnsInfo } = useTypedSelector(state => state.boardState)
+  const { groupId } = useTypedSelector(state => state.groupState)
 
   const {
     handleSubmit,
@@ -62,7 +66,13 @@ export const TableLine = ({ line, iterLine, groupColor }: TableLineProps) => {
   return (
     <tr>
       <th scope='row'>{iterLine}</th>
-      <td>{line.title}</td>
+      <td
+        onClick={() =>
+          navigate(`/card/g/${groupId}/c/${line.title}/${line.code}`)
+        }
+      >
+        {line.title}
+      </td>
       <td>{line.assignee}</td>
       <td className='text-nowrap'>{dateISOtoLocalString(line.end_date)}</td>
       <td>

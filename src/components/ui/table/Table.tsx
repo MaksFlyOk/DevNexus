@@ -6,7 +6,7 @@ import { isEqual } from 'lodash'
 import { useEffect } from 'react'
 import { TableGroup } from './table-group/TableGroup'
 
-// TODO
+// TODO:
 
 interface TableProps {
   boardData: GroupType
@@ -15,7 +15,9 @@ interface TableProps {
 export const Table = ({ boardData }: TableProps) => {
   const { setInitialBoardState, setIsBoardLoading } = useActions()
 
-  const { board, boardId } = useTypedSelector(state => state.boardState)
+  const { board, boardId, isBoardLoading } = useTypedSelector(
+    state => state.boardState
+  )
   const { groupId } = useTypedSelector(state => state.groupState)
 
   const queryClient = useQueryClient()
@@ -23,7 +25,7 @@ export const Table = ({ boardData }: TableProps) => {
   const invalidateBoardData = useIsFetching({ queryKey: ['get board'] })
 
   useEffect(() => {
-    if (boardData.group_uuid !== boardId) {
+    if (boardData.group_uuid !== boardId || isBoardLoading) {
       setInitialBoardState(boardData)
     }
 

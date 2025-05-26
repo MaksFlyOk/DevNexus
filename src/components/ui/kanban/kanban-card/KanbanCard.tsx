@@ -1,9 +1,11 @@
+import { useTypedSelector } from '@hooks/redux-hooks'
 import { ColumnType, TaskType } from '@types'
 import { Tag } from '@ui/tag'
 import { convertBorderColor } from '@utils/convertBorderColor'
 import { convertTextColor } from '@utils/convertTextColor'
 import { dateISOtoLocalString } from '@utils/dateISOtoLocalString'
 import { useDrag } from 'react-dnd'
+import { useNavigate } from 'react-router-dom'
 import './KanbanCard.scss'
 
 interface KanbanCardProps {
@@ -12,6 +14,10 @@ interface KanbanCardProps {
 }
 
 export const KanbanCard = ({ task, color }: KanbanCardProps) => {
+  const navigate = useNavigate()
+
+  const { groupId } = useTypedSelector(state => state.groupState)
+
   const [{ isDragging }, drag] = useDrag<
     TaskType,
     void,
@@ -28,7 +34,9 @@ export const KanbanCard = ({ task, color }: KanbanCardProps) => {
   return (
     <div
       ref={drag}
-      onClick={() => console.log('card', task?.code, 'click')}
+      onClick={() =>
+        navigate(`/card/g/${groupId}/c/${task.title}/${task.code}`)
+      }
       className={
         'rounded-3 border border-2 p-2 ' +
         convertBorderColor(color) +

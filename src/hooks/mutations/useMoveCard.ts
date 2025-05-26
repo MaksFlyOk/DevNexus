@@ -17,7 +17,7 @@ export const useMoveCard = () => {
     unknown
   >({
     mutationFn: data => {
-      return groupService.putCardColumnGroupMove(groupId, data.task.code, {
+      return groupService.putCardColumnGroup(groupId, data.task.code, {
         ...data.task,
         column: data.column
       })

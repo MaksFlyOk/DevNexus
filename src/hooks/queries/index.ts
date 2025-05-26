@@ -1,5 +1,6 @@
 export * from './useGetAllGroupTags'
 export * from './useGetAllTaskTags'
 export * from './useGetBoard'
+export * from './useGetCard'
 export * from './useGetCurrentUser'
 export * from './useGetUser'

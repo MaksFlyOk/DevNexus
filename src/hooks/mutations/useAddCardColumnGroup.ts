@@ -18,12 +18,11 @@ export const useAddCardColumnGroup = () => {
     unknown
   >({
     mutationFn: data => {
-      setIsBoardLoading({ state: true })
-
       return groupService.createCardColumnGroup(boardId, data)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
+      setIsBoardLoading({ state: true })
     },
     onError: () => {
       resetToStableState()

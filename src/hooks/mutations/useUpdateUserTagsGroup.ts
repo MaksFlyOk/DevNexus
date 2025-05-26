@@ -46,9 +46,6 @@ export const useUpdateUserTagsGroup = (
             ) === -1
         )
         .map(tag => tag.code)
-
-      console.log(deleteUserTagsArrayQueries)
-      console.log(addUserTagsArrayQueries)
       if (
         deleteUserTagsArrayQueries &&
         deleteUserTagsArrayQueries?.length !== 0
