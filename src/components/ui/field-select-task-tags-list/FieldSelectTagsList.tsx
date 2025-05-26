@@ -28,6 +28,7 @@ interface FieldSelectTagListProps<T extends FieldValues> {
   createIsPending: boolean
   maxTags?: number
   groupId?: string
+  withGroupId?: boolean
   tagList: TagType[]
   label: string
   placeholder?: string
@@ -45,6 +46,7 @@ export const FieldSelectTagList = <T extends FieldValues>({
   createIsPending,
   maxTags = 3,
   groupId,
+  withGroupId = false,
   tagList,
   label,
   placeholder = 'ㅤ',
@@ -191,7 +193,7 @@ export const FieldSelectTagList = <T extends FieldValues>({
                             color: AccentColorsType,
                             groupId?: string
                           ) => {
-                            if (groupId) {
+                            if (groupId && withGroupId) {
                               if (createTagFunctionWithGroupId)
                                 createTagFunctionWithGroupId(
                                   name,
@@ -285,7 +287,7 @@ export const FieldSelectTagList = <T extends FieldValues>({
                           color: AccentColorsType,
                           groupId?: string
                         ) => {
-                          if (groupId) {
+                          if (groupId && withGroupId) {
                             if (createTagFunctionWithGroupId)
                               createTagFunctionWithGroupId(name, color, groupId)
                           } else {

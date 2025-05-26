@@ -50,7 +50,7 @@ export const BoardView = ({
       <div className='col h-100 d-flex flex-column p-0'>
         <div className='d-flex justify-content-between align-items-center'>
           <div className='d-flex'>
-            {/* TODO */}
+            {/* TODO: */}
             <h3>{data?.name}</h3>
             <button
               type='button'

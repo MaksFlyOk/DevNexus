@@ -16,6 +16,7 @@ interface SelectMemberListProps<T extends FieldValues> {
   label: string
   placeholder?: string
   disabled?: boolean
+  mandatory?: boolean
   error: string | undefined
   control: Control<T>
   defaultValue?: PathValue<T, Path<T>>
@@ -27,6 +28,7 @@ export const FieldSelectMemberList = <T extends FieldValues>({
   label,
   placeholder = 'ㅤ',
   disabled = false,
+  mandatory = true,
   error,
   control,
   defaultValue
@@ -86,7 +88,9 @@ export const FieldSelectMemberList = <T extends FieldValues>({
       disabled={disabled}
       control={control}
       rules={{
-        required: { value: true, message: 'Поле не может быть пустым' }
+        required: mandatory
+          ? { value: true, message: 'Поле не может быть пустым' }
+          : false
       }}
       defaultValue={defaultValue}
       render={({ field }) => (

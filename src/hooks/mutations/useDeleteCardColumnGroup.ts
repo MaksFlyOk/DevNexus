@@ -2,29 +2,27 @@ import { useActions } from '@hooks/redux-hooks'
 import groupService from '@services/groupService'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-interface DeleteCardTagParams {
-  cardTagCode: string
-}
-
-export const useDeleteCardTag = (groupId: string) => {
+export const useDeleteCardColumnGroup = (
+  groupId: string | undefined,
+  cardCode: string | undefined,
+  optionFunction?: () => void
+) => {
   const queryClient = useQueryClient()
 
   const { setIsBoardLoading } = useActions()
 
-  const { mutateAsync, isPending, isError, error } = useMutation<
-    unknown,
-    unknown,
-    DeleteCardTagParams,
-    unknown
-  >({
-    mutationFn: async ({ cardTagCode }) => {
-      await groupService.deleteCardTagGroup(cardTagCode, groupId)
+  const { mutateAsync, isPending, isError, error } = useMutation({
+    mutationFn: async () => {
+      await groupService.deleteCardColumnGroup(groupId, cardCode)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
-      queryClient.invalidateQueries({ queryKey: ['get all task tags'] })
 
       setIsBoardLoading({ state: true })
+
+      if (optionFunction) {
+        optionFunction()
+      }
     }
   })
 

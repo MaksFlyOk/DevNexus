@@ -20,7 +20,6 @@ export const useAddColumnGroup = () => {
       name: string
       color: AccentColorsType
     }) => {
-      setIsBoardLoading({ state: true })
       setMinimizeColumnsInfoState({ name, color })
 
       return groupService.createColumn(boardId, {
@@ -30,6 +29,7 @@ export const useAddColumnGroup = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
+      setIsBoardLoading({ state: true })
     },
     onError: () => {
       resetToStableState()

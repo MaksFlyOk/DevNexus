@@ -1,15 +1,21 @@
+import { useTypedSelector } from '@hooks/redux-hooks'
 import { ColumnType, TaskType } from '@types'
 import { Tag } from '@ui/tag'
 import { convertBorderColor } from '@utils/convertBorderColor'
 import { convertTextColor } from '@utils/convertTextColor'
 import { dateISOtoLocalString } from '@utils/dateISOtoLocalString'
 import { useDrag } from 'react-dnd'
+import { useNavigate } from 'react-router-dom'
 
 interface ListItemProps {
   task: TaskType
   color: ColumnType['color'] | undefined
 }
 export const ListItem = ({ task, color }: ListItemProps) => {
+  const navigate = useNavigate()
+
+  const { groupId } = useTypedSelector(state => state.groupState)
+
   const [{ isDragging }, drag] = useDrag<
     TaskType,
     void,
@@ -26,6 +32,9 @@ export const ListItem = ({ task, color }: ListItemProps) => {
   return (
     <div
       ref={drag}
+      onClick={() =>
+        navigate(`/card/g/${groupId}/c/${task.title}/${task.code}`)
+      }
       className={`p-2 rounded-3 border border-2 ${convertBorderColor(color)} ${
         isDragging ? ' bg-dark' : ''
       }`}

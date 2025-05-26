@@ -1,10 +1,10 @@
 import {
-  useAddCardColumnGroup,
   useAddCardTagGroup,
-  useDeleteCardTag
+  useDeleteCardTag,
+  useUpdateCardColumnGroup
 } from '@hooks/mutations'
 import { useGetAllTaskTags } from '@hooks/queries'
-import { useActions, useTypedSelector } from '@hooks/redux-hooks'
+import { useTypedSelector } from '@hooks/redux-hooks'
 import { AccentColorsType, TagType } from '@types'
 import { Field } from '@ui/field'
 import { FieldSelectMemberList } from '@ui/field-select-member-list'
@@ -14,77 +14,88 @@ import { Spinner } from '@ui/spinner'
 import { Dispatch, SetStateAction } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-interface AddNewTaskModalProps {
+interface UpdateCardModalProps {
   setIsShow: Dispatch<SetStateAction<boolean>>
+  groupId: string
+  cardCode: string
+  placeholders: {
+    title: string
+    description: string
+    assignee: string
+    start_date: string
+    end_date: string
+    tags: string
+  }
   columnName: string
-  group_uuid: string
+  defaultDates: { start_date: string; end_date: string }
+  defaultTags: TagType[]
 }
 
-type AddNewTaskParamsType = {
+type UpdateCardParamsType = {
   name: string
   description: string
-  column: number
   assignee: string
-  tags: TagType[]
   start_date: string
   end_date: string
+  tags: TagType[]
 }
 
-export const AddNewTaskBoardModal = ({
+export const UpdateCardModal = ({
   setIsShow,
   columnName,
-  group_uuid
-}: AddNewTaskModalProps) => {
+  placeholders,
+  groupId,
+  cardCode,
+  defaultDates,
+  defaultTags
+}: UpdateCardModalProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
     reset
-  } = useForm<AddNewTaskParamsType>({
+  } = useForm<UpdateCardParamsType>({
     mode: 'onChange'
   })
-  const { addTask } = useActions()
-
   const { memberList } = useTypedSelector(state => state.userListState)
 
   const {
     data: taskTagList,
     isError: taskTagListIsError,
     isPending: taskTagListIsPending
-  } = useGetAllTaskTags(group_uuid)
+  } = useGetAllTaskTags(groupId)
 
-  const { mutateAsync: mutateAddCardColumnGroup } = useAddCardColumnGroup()
-  const { mutateAsync: mutateDeleteCardTag } = useDeleteCardTag(group_uuid)
+  const { mutateAsync: mutateUpdateCardColumnGroup } = useUpdateCardColumnGroup(
+    groupId,
+    cardCode
+  )
+  const { mutateAsync: mutateDeleteCardTag } = useDeleteCardTag(groupId)
   const {
     mutateAsync: mutateCreateCardTag,
     isPending: isPendingCreateCardTag
   } = useAddCardTagGroup()
 
-  const onSubmit: SubmitHandler<AddNewTaskParamsType> = data => {
-    // TODO:
-    const defaultStartDate = new Date().toISOString()
+  const onSubmit: SubmitHandler<UpdateCardParamsType> = data => {
+    console.log(data)
 
-    addTask({
-      title: data.name,
-      description: data.description,
+    mutateUpdateCardColumnGroup({
+      title: data.name ? data.name : placeholders.assignee,
+      description: data.description
+        ? data.description
+        : placeholders.description,
       column: columnName,
-      assignee: data.assignee,
-      start_date: data.start_date ? data.start_date : defaultStartDate,
-      end_date: data.end_date,
-      tags: data.tags
-    })
-
-    mutateAddCardColumnGroup({
-      title: data.name,
-      description: data.description,
-      column: columnName,
-      assignee: data.assignee,
-      start_date: data.start_date ? data.start_date : defaultStartDate,
-      end_date: data.end_date,
-      tags: data.tags?.map(tag => {
-        return { name: tag.name, color: tag.color }
-      })
+      code: cardCode,
+      assignee: data.assignee ? data.assignee : placeholders.assignee,
+      start_date:
+        data.start_date !== placeholders.start_date
+          ? data.start_date
+          : defaultDates.start_date,
+      end_date:
+        data.end_date !== placeholders.end_date
+          ? data.end_date
+          : defaultDates.end_date,
+      tags: data.tags.length !== 0 ? data.tags : defaultTags
     })
 
     setIsShow(false)
@@ -96,7 +107,7 @@ export const AddNewTaskBoardModal = ({
       <div className='modal-content'>
         <div className='modal-header'>
           <h1 className='modal-title fs-5' id='exampleModalLabel'>
-            Добавление новой задачи
+            Обновление задачи
           </h1>
           <button
             type='button'
@@ -115,9 +126,8 @@ export const AddNewTaskBoardModal = ({
               name='name'
               type='text'
               label='Название задачи'
-              placeholder='example'
+              placeholder={placeholders.title}
               options={{
-                required: 'Выберите другое название',
                 minLength: {
                   value: 4,
                   message: 'Минимальное число знаков в названии 4'
@@ -141,7 +151,7 @@ export const AddNewTaskBoardModal = ({
               name='description'
               type='textaria'
               label='Описание'
-              placeholder='example'
+              placeholder={placeholders.description}
             />
             {taskTagListIsPending ? (
               <Spinner />
@@ -152,9 +162,9 @@ export const AddNewTaskBoardModal = ({
                 </h1>
               </div>
             ) : (
-              <FieldSelectTagList<AddNewTaskParamsType>
+              <FieldSelectTagList<UpdateCardParamsType>
                 name='tags'
-                groupId={group_uuid}
+                groupId={groupId}
                 deleteTagFunction={(cardTagCode: string) =>
                   mutateDeleteCardTag({ cardTagCode })
                 }
@@ -166,17 +176,18 @@ export const AddNewTaskBoardModal = ({
                 }}
                 createIsPending={isPendingCreateCardTag}
                 label='Тэги'
-                placeholder='Тэги'
+                placeholder={placeholders.tags}
                 error={errors?.tags?.message}
                 tagList={taskTagList as TagType[]}
                 defaultValue={[]}
                 control={control}
               />
             )}
-            <FieldSelectMemberList<AddNewTaskParamsType>
+            <FieldSelectMemberList<UpdateCardParamsType>
               name='assignee'
               label='Исполнитель'
-              placeholder='Исполнитель'
+              mandatory={false}
+              placeholder={placeholders.assignee}
               error={errors?.assignee?.message}
               memberList={memberList}
               control={control}
@@ -185,6 +196,7 @@ export const AddNewTaskBoardModal = ({
               register={register}
               disabled={false}
               error={errors?.start_date?.message}
+              defaultValue={placeholders.start_date}
               name='start_date'
               type='datetime-local'
               label='Начальная дата'
@@ -195,6 +207,7 @@ export const AddNewTaskBoardModal = ({
               error={errors?.end_date?.message}
               name='end_date'
               type='datetime-local'
+              defaultValue={placeholders.end_date}
               label='Дедлайн'
               options={{
                 required: { value: true, message: 'Выберите дату' }

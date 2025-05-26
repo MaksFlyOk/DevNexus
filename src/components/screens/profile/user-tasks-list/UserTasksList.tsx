@@ -4,7 +4,7 @@ import { convertTextColor } from '@utils/convertTextColor'
 import { dateISOtoLocalString } from '@utils/dateISOtoLocalString'
 import { useState } from 'react'
 
-// TODO
+// TODO:
 
 interface UserTasksListProps {
   groups: UserProfileType['groups']

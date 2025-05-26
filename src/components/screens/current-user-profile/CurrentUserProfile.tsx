@@ -19,7 +19,6 @@ export const CurrentUserProfile = () => {
   const { data, isPending, isError } = useGetCurrentUser(group_id, username)
 
   return (
-    // TODO
     <>
       <SecondaryNav title={`Профиль ${username}`} backLink={'/'} />
       {isPending ? (
@@ -91,18 +90,21 @@ export const CurrentUserProfile = () => {
                         {data.user_tags.length === 0 ? 'Добавить' : 'Обновить'}
                       </button>
                     </div>
-                    <div className='d-flex flex-wrap gap-2'>
+                    <div className='pt-2 d-flex flex-row gap-2 align-items-baseline'>
                       {data.user_tags.length === 0 ? (
                         <h4 className='text-body-secondary'>
                           Здесь пока пустовато
                         </h4>
                       ) : (
                         data.user_tags?.map((tag, iter) => (
-                          <Tag
-                            tagName={tag.tag_name}
-                            color={tag.tag_color}
-                            key={'tag ' + iter + tag.tag_code}
-                          />
+                          <div key={'tag ' + iter + tag.tag_code}>
+                            <h5>
+                              <Tag
+                                tagName={tag.tag_name}
+                                color={tag.tag_color}
+                              />
+                            </h5>
+                          </div>
                         ))
                       )}
                     </div>

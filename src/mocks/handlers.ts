@@ -6,7 +6,7 @@ import { postAuthUserHandler } from './handlers/postAuthUserHandler'
 import { postRegisterUserHandler } from './handlers/postRegisterUserHandler'
 
 // const putChangeCardColumnGroupHandler = http.put()
-// TODO
+// TODO:
 export const handlers = [
   // Auth
   postAuthUserHandler,

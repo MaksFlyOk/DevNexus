@@ -16,7 +16,9 @@ interface KanbanProps {
 const KanbanInner = ({ boardData }: KanbanProps) => {
   const { moveTask, setInitialBoardState, setIsBoardLoading } = useActions()
 
-  const { board, boardId } = useTypedSelector(state => state.boardState)
+  const { board, boardId, isBoardLoading } = useTypedSelector(
+    state => state.boardState
+  )
   const { groupId } = useTypedSelector(state => state.groupState)
 
   const queryClient = useQueryClient()
@@ -28,7 +30,9 @@ const KanbanInner = ({ boardData }: KanbanProps) => {
   useDndScrolling(scrollRef)
 
   useEffect(() => {
-    if (boardData.group_uuid !== boardId) {
+    if (boardData.group_uuid !== boardId || isBoardLoading) {
+      console.log('update')
+
       setInitialBoardState(boardData)
     }
 
