@@ -147,7 +147,7 @@ export const FieldSelectTagList = <T extends FieldValues>({
               onClick={() => setIsOpen(prev => !prev)}
               onBlur={() => setIsOpen(false)}
             >
-              <div className='d-flex gap-1'>
+              <div className='d-flex gap-1 overflow-x-scroll'>
                 {field.value?.length !== 0
                   ? field.value.map((tag: TagType) => (
                       <span
@@ -193,7 +193,7 @@ export const FieldSelectTagList = <T extends FieldValues>({
                   ref={searchInputRef}
                 />
                 <div className='invalid-feedback mb-2 ms-1'>{errorInput}</div>
-                <div className='overflow-scroll' style={{ maxHeight: '30vh' }}>
+                <div className='overflow-auto' style={{ maxHeight: '30vh' }}>
                   {tagList?.length === 0 || !tagList ? (
                     searchTerm ? (
                       <div className='p-1'>
@@ -224,7 +224,11 @@ export const FieldSelectTagList = <T extends FieldValues>({
                         />
                       </div>
                     ) : (
-                      <button className='dropdown-item' type='button' disabled>
+                      <button
+                        className='dropdown-item text-truncate'
+                        type='button'
+                        disabled
+                      >
                         Тэги отсутствуют
                       </button>
                     )
@@ -249,11 +253,11 @@ export const FieldSelectTagList = <T extends FieldValues>({
                       })
                       ?.map(tag => (
                         <div
-                          className='mb-2 px-2 d-flex gap-2 justify-content-between'
+                          className='mb-2 px-2 d-flex gap-2 align-items-center'
                           key={`${tag.name}${tag.code}`}
                         >
                           <button
-                            className={`btn w-100 p-1 ${convertButtonOutlineColor(
+                            className={`btn p-1 text-truncate flex-grow-1 ${convertButtonOutlineColor(
                               tag.color
                             )}`}
                             type='button'
@@ -276,12 +280,14 @@ export const FieldSelectTagList = <T extends FieldValues>({
                               setIsOpen(false)
                             }}
                           >
-                            <Tag color={tag.color} tagName={tag.name} />
+                            <span className='text-truncate'>
+                              <Tag color={tag.color} tagName={tag.name} />
+                            </span>
                           </button>
                           {deleteTagFunction === undefined ||
                           groupId === undefined ? null : (
                             <button
-                              className='btn btn-outline-light'
+                              className='btn btn-outline-light flex-shrink-0'
                               type='button'
                               onClick={() => deleteTagFunction(tag.code)}
                             >

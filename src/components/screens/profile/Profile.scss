@@ -1,24 +1,28 @@
 @import '/node_modules/bootstrap/scss/bootstrap.scss';
 
-.layout-container {
+.user-profile-img {
+  min-width: 80px;
+}
+
+.profile-container {
   @include make-container($container-padding-x);
 
   width: 100vw;
 }
 
 @media (min-width: 1440px) {
-  .layout-container {
+  .profile-container {
     width: 90vw;
   }
 }
 
 @media (min-width: 1920px) {
-  .layout-container {
-    width: 80vw;
+  .profile-container {
+    width: 70vw;
   }
 }
 @media (min-width: 2560px) {
-  .layout-container {
+  .profile-container {
     width: 2100px;
   }
 }

@@ -6,6 +6,7 @@ import { convertTextColor } from '@utils/convertTextColor'
 import { dateISOtoLocalString } from '@utils/dateISOtoLocalString'
 import { useDrag } from 'react-dnd'
 import { useNavigate } from 'react-router-dom'
+import './ListItem.scss'
 
 interface ListItemProps {
   task: TaskType
@@ -40,9 +41,9 @@ export const ListItem = ({ task, color }: ListItemProps) => {
       }`}
     >
       <div className='d-flex justify-content-between'>
-        <h4 className='fw-bold'>{task?.title}</h4>
+        <h4 className='fw-bold task-name'>{task?.title}</h4>
       </div>
-      <h5 className='pb-1'>{task?.assignee}</h5>
+      <h5 className='pb-1 text-wrap text-break'>{task?.assignee}</h5>
       <div className='d-flex flex-wrap gap-2 pb-2'>
         {task?.tags?.map((tag, iter) => (
           <Tag

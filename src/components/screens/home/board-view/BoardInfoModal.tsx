@@ -40,21 +40,24 @@ export const BoardInfoModal = ({
           ></button>
         </div>
         <div className='modal-body position-relative '>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '0.4fr 2fr'
-            }}
-          >
-            <div>
-              <CircleImg img={groupData?.icon} alt={groupData?.name + ' img'} />
+          <div className='card-header d-flex align-items-center justify-content-between'>
+            <div className='d-flex align-items-center'>
+              <div className='user-profile-img'>
+                <CircleImg
+                  img={groupData?.icon}
+                  alt={groupData?.name + ' img'}
+                />
+              </div>
+              <h5 className='ps-2 text-wrap text-break'>
+                {groupData?.description}
+              </h5>
             </div>
-            <h5 className='mx-3 my-3'>{groupData?.description}</h5>
           </div>
           <div
             className='overflow-y-scroll overflow-x-hidden bg-light-subtle px-2 mt-2 rounded-3'
             style={{ height: '50vh' }}
           >
+            {/* TODO: */}
             <MemberList
               isGroupError={isGroupError}
               isGroupPending={isGroupPending}

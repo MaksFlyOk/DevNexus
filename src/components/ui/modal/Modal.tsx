@@ -13,7 +13,7 @@ export const Modal: FC<ModalProps> = ({ isShow, setIsShow, children }) => {
     <div
       className={`custom-modal ${
         isShow ? 'custom-modal-show' : 'custom-modal-hide'
-      } vh-100 vw-100 p-0`}
+      } vh-100 vw-100 p-0 m-0`}
       tabIndex={-1}
     >
       <div className='d-flex justify-content-center pt-5'>

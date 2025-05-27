@@ -11,17 +11,17 @@ export const SecondaryNav = ({ title, backLink }: SecondaryNav) => {
   const navigate = useNavigate()
 
   return (
-    <nav className='navbar bg-body-tertiary py-3 secondary-nav-container'>
+    <nav className='navbar bg-body-tertiary py-3'>
       <WindowDimensionsView />
-      <div className='container-fluid'>
-        <button
-          className='navbar-brand btn btn-lg btn-outline-dark'
-          type='button'
-          onClick={() => navigate(backLink)}
-        >
-          return
-        </button>
-        <div className='d-flex'>
+      <div className='secondary-nav-container'>
+        <div className='d-flex flex-column-reverse flex-sm-row justify-content-between'>
+          <button
+            className='navbar-brand btn btn-sm btn-outline-dark m-0'
+            type='button'
+            onClick={() => navigate(backLink)}
+          >
+            return
+          </button>
           <h5>{title}</h5>
         </div>
       </div>

@@ -15,7 +15,7 @@ export const NotFound = () => {
 
   return (
     <div className='container-fluid d-flex justify-content-center vh-100'>
-      <div className='col-6 d-flex align-items-center justify-content-center'>
+      <div className='col-sm-6 d-flex align-items-center justify-content-center'>
         <div className='d-flex flex-column gap-3'>
           <img
             className='img-fluid'
