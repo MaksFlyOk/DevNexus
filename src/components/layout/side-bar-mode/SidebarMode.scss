@@ -1,13 +1,13 @@
 .main-container-without-sidebar {
-  height: calc(100dvh - 107px);
+  height: calc(100dvh - 108px);
 }
 
 .nav-container-without-sidebar {
-  height: calc(100dvh - (100dvh - 95px));
+  height: calc(100dvh - (100dvh - 108px));
 }
 
 .main-container-with-sidebar {
-  height: calc(100dvh - 95px);
+  height: calc(100dvh - 80px);
 }
 
 .sidebar-main {
@@ -15,9 +15,9 @@
 }
 
 .sidebar-profile {
-  height: calc(100dvh - (100dvh - 95px));
+  height: calc(100dvh - (100dvh - 70px));
 }
 
 .nav-container-with-sidebar {
-  height: calc(100dvh - (100dvh - 95px));
+  height: calc(100dvh - (100dvh - 70px));
 }

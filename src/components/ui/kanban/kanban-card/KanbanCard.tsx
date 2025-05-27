@@ -44,7 +44,7 @@ export const KanbanCard = ({ task, color }: KanbanCardProps) => {
       }
     >
       <h5 className='fw-bold task-name'>{task?.title}</h5>
-      <h5 className='pb-1'>{task?.assignee}</h5>
+      <h5 className='pb-1 text-wrap text-break'>{task?.assignee}</h5>
       <div className='d-flex flex-wrap gap-2 pb-2'>
         {task?.tags?.map((tag, iter) => (
           <Tag

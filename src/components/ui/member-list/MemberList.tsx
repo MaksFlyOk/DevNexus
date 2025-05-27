@@ -58,7 +58,7 @@ export const MemberList = ({
             <input
               className='form-control form-control-lg'
               type='text'
-              placeholder='Найти участника'
+              placeholder='Найти'
               aria-label='Поле "Найти участника"'
               disabled={isGroupPending || isGroupError}
               value={inputValue}

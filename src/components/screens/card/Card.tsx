@@ -6,12 +6,12 @@ import { SecondaryNav } from '@ui/secondary-nav'
 import { Spinner } from '@ui/spinner'
 import { Tag } from '@ui/tag'
 import { dateISOtoLocalString } from '@utils/dateISOtoLocalString'
-import { dateSetTimezone } from '@utils/dateSetTimezone'
 import { formatDateForDateTimeInput } from '@utils/formatDateForDateTimeInput'
 import { formatTimeRemaining } from '@utils/formatTimeRemaining'
 import { setPlaceholderFieldSelectTags } from '@utils/setPlaceholderFieldSelectTags'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import './Card.scss'
 import { UpdateCardModal } from './update-card-modal'
 
 export const Card = () => {
@@ -34,9 +34,6 @@ export const Card = () => {
 
     if (data && !timer) {
       const dead_line = new Date(data.end_date)
-      console.log('start_line', new Date(data.start_date))
-      console.log('dead_line', dead_line)
-      console.log('dead_line timezone', new Date(dateSetTimezone(dead_line)))
 
       timer = setInterval(
         () => setDeadlineTimer(formatTimeRemaining(dead_line)),
@@ -61,7 +58,7 @@ export const Card = () => {
           </h1>
         </div>
       ) : (
-        <div className='container-fluid py-4'>
+        <div className='container-fluid card-container py-4'>
           <Modal isShow={isShow} setIsShow={setIsShow}>
             {group_id && card_code ? (
               <UpdateCardModal
@@ -87,80 +84,65 @@ export const Card = () => {
               <span className='badge text-bg-danger'>Error</span>
             )}
           </Modal>
-          <div className='container pb-4'>
+          <div className='container-fluid pb-4'>
             <div className='card'>
-              <div className='card-header d-flex align-items-center justify-content-between'>
-                <div>
-                  <h2 className='ps-2'>{data.title}</h2>
-                </div>
+              <div className='card-header gap-4 gap-sm-2 d-flex flex-column flex-sm-row justify-content-sm-between align-items-center'>
+                <h2>{data.title}</h2>
                 <h5>{deadlineTimer}</h5>
               </div>
-              <div className='card-body px-5'>
-                <div className='d-flex justify-content-between pb-4'>
-                  <div>
-                    <h5 className='text-secondary'>Исполнитель</h5>
-                    <h4>{data.assignee}</h4>
-                  </div>
+              <div className='card-body'>
+                <div className='pb-2'>
+                  <h5 className='text-secondary'>Исполнитель</h5>
+                  <h4 className='text-wrap text-break'>{data.assignee}</h4>
                 </div>
-                <div className='d-flex justify-content-between pb-4'>
-                  <div>
-                    <div className='d-flex gap-2 align-items-center'>
-                      <h5 className='text-secondary'>Статус</h5>{' '}
-                    </div>
-                    <div className='pt-2 d-flex flex-row gap-2 align-items-baseline'>
-                      <h4>
+                <div className='d-flex justify-content-between pb-2'>
+                  <div className='w-100'>
+                    <h5 className='text-secondary'>Статус</h5>{' '}
+                    <div className='pt-2 d-flex'>
+                      <h4 className='text-truncate'>
                         <Tag tagName={data.column} color={data.column_color} />
                       </h4>
                     </div>
                   </div>
                 </div>
-                <div className='d-flex justify-content-between pb-4'>
-                  <div>
-                    <h5 className='text-secondary'>Описание задачи</h5>
-                    <h4
-                      className={data.description ? '' : 'text-body-secondary'}
-                    >
-                      <p className='text-break'>
-                        {data.description
-                          ? data.description
-                          : 'Без ТЗ результат хз'}
-                      </p>
-                    </h4>
-                  </div>
+                <div className='pb-2'>
+                  <h5 className='text-secondary'>Описание задачи</h5>
+                  <h4 className={data.description ? '' : 'text-body-secondary'}>
+                    <p className='text-break'>
+                      {data.description
+                        ? data.description
+                        : 'Без ТЗ результат хз'}
+                    </p>
+                  </h4>
                 </div>
-                <div className='d-flex justify-content-between pb-4'>
+                <div className='pb-2'>
                   <div>
-                    <div className='d-flex gap-2 align-items-center'>
-                      <h5 className='text-secondary'>Тэги</h5>{' '}
-                    </div>
-                    <div className='pt-2 d-flex flex-row gap-2 align-items-baseline'>
+                    <h5 className='text-secondary'>Тэги</h5>{' '}
+                    <div className='pt-2 d-flex flex-wrap gap-2 align-items-baseline'>
                       {data.tags.length === 0 ? (
-                        <h4 className='text-body-secondary'>
+                        <h4 className='text-body-secondary text-truncate'>
                           Здесь пока пустовато
                         </h4>
                       ) : (
                         data.tags?.map((tag, iter) => (
-                          <div key={'tag ' + iter + tag.code}>
-                            <h4>
-                              <Tag tagName={tag.name} color={tag.color} />
-                            </h4>
-                          </div>
+                          <h4
+                            className='text-truncate'
+                            key={'tag ' + iter + tag.code}
+                          >
+                            <Tag tagName={tag.name} color={tag.color} />
+                          </h4>
                         ))
                       )}
                     </div>
                   </div>
                 </div>
-                <div className='d-flex justify-content-between pb-4'>
-                  <div>
-                    <h5 className='text-secondary'>Начальная дата</h5>
-                    <h4>{dateISOtoLocalString(data.start_date)}</h4>
-                  </div>
+                <div className='pb-2'>
+                  <h5 className='text-secondary'>Начальная дата</h5>
+                  <h4>{dateISOtoLocalString(data.start_date)}</h4>
                 </div>
-                <div className='d-flex justify-content-between'>
-                  <div>
-                    <h5 className='text-secondary'>Дедлайн</h5>
-                    <h4>{dateISOtoLocalString(data.end_date)}</h4>
-                  </div>
+                <div>
+                  <h5 className='text-secondary'>Дедлайн</h5>
+                  <h4>{dateISOtoLocalString(data.end_date)}</h4>
                 </div>
                 <hr />
                 <div className='d-flex w-100 flex-column'>

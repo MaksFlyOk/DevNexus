@@ -4,11 +4,11 @@
 .userCardHeader {
   display: grid;
   display: flex;
-  gap: map-get($spacers, 3);
+  gap: map-get($spacers, 1);
   align-items: center;
 
   > div > img {
-    width: clamp(30px, 5vw, 100px) !important;
+    width: clamp(30px, 5vw, 70px) !important;
   }
 }
 

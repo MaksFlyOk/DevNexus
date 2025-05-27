@@ -1,5 +1,5 @@
 @import '@styles/mixins';
 
-.description {
+.task-name {
   @include text-reduction-mixin-line-clamp(2, true);
 }

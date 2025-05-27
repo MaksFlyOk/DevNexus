@@ -6,7 +6,6 @@ import { dateISOtoLocalString } from '@utils/dateISOtoLocalString'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { FieldColumnSelect } from './FieldColumnSelect'
-import './TableLine.scss'
 
 interface TableLineProps {
   line: TaskType
@@ -106,7 +105,7 @@ export const TableLine = ({ line, iterLine, groupColor }: TableLineProps) => {
         </div>
       </td>
       <td>
-        <p className='description'>{line.description}</p>
+        <p>{line.description}</p>
       </td>
       <td>
         {line?.tags?.map((tag, iter) => (

@@ -6,10 +6,7 @@ export const Notification = () => {
   const { removeNotificationState } = useActions()
 
   return (
-    <div
-      className='position-absolute bottom-0 end-0'
-      style={{ zIndex: 100000 }}
-    >
+    <div className='position-fixed bottom-0 end-0' style={{ zIndex: 100000 }}>
       <div className='d-flex flex-column justify-content-end pe-4 pb-4'>
         <div className='d-flex flex-column gap-2'>
           {items.map(notification => (

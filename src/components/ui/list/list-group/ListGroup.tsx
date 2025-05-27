@@ -71,7 +71,7 @@ export const ListGroup = ({
         />
       </Modal>
       <div
-        className={`d-flex justify-content-between py-2 px-3 ${
+        className={`d-flex justify-content-between gap-1 py-2 px-3 ${
           isShowGroup
             ? `rounded-top-4 ${convertBgColor(groupColor)}`
             : `rounded-4 ${
@@ -82,7 +82,7 @@ export const ListGroup = ({
         }`}
       >
         <div>
-          <h4>{groupName}</h4>
+          <h4 className='text-wrap text-break'>{groupName}</h4>
           <h6>Sum: {tasks?.length}</h6>
         </div>
         <div className='d-flex gap-3'>

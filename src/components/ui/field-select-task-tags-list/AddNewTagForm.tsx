@@ -29,7 +29,7 @@ export const AddNewTagForm = ({
 
   return (
     <div className='px-2'>
-      <div className='d-flex flex-row gap-2'>
+      <div className='d-flex flex-row gap-2 overflow-x-auto'>
         <input
           checked={newTagColor == 'green' ? true : false}
           onChange={event =>
