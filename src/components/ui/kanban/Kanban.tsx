@@ -36,7 +36,9 @@ const KanbanInner = ({ boardData }: KanbanProps) => {
 
       setInitialBoardState(boardData)
     }
+  }, [boardData, boardId])
 
+  useEffect(() => {
     if (!isEqual(boardData.board, board)) {
       queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
       setIsBoardLoading({ state: true })

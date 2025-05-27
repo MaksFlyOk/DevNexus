@@ -1,14 +1,16 @@
 import { AccentColorsType } from './accentColorsType'
 import { TaskType } from './boardType'
+import { TagType } from './tagType'
 
 export type UserType = {
   username: string
   email: string
   description: string
+  tags: TagType[]
 }
 
 export interface UserProfileType {
-  user: UserType
+  user: Omit<UserType, 'tags'>
   groups: Array<{
     name: string
     id: number
@@ -19,7 +21,7 @@ export interface UserProfileType {
 }
 
 export interface CurrentUserProfileType {
-  user: UserType
+  user: Omit<UserType, 'tags'>
   user_tags: Array<{
     tag_name: string
     tag_code: string

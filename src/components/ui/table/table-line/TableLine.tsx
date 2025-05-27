@@ -18,6 +18,18 @@ export type ChangeColumnValuesType = {
   column: string
 }
 
+const breakDateTimeString = (dateTimeString: string) => {
+  const timeStartIndex = dateTimeString.lastIndexOf(',') + 1
+  const arrDateAndTime: Array<string> = [
+    dateTimeString.substring(0, timeStartIndex),
+    dateTimeString.substring(timeStartIndex, dateTimeString.length)
+  ]
+
+  return arrDateAndTime.map((element, iter) => (
+    <p key={element + iter}>{element}</p>
+  ))
+}
+
 export const TableLine = ({ line, iterLine, groupColor }: TableLineProps) => {
   const navigate = useNavigate()
 
@@ -67,6 +79,7 @@ export const TableLine = ({ line, iterLine, groupColor }: TableLineProps) => {
     <tr>
       <th scope='row'>{iterLine}</th>
       <td
+        className='text-decoration-underline'
         onClick={() =>
           navigate(`/card/g/${groupId}/c/${line.title}/${line.code}`)
         }
@@ -74,22 +87,22 @@ export const TableLine = ({ line, iterLine, groupColor }: TableLineProps) => {
         {line.title}
       </td>
       <td>{line.assignee}</td>
-      <td className='text-nowrap'>{dateISOtoLocalString(line.end_date)}</td>
+      <td className='text-nowrap'>
+        {breakDateTimeString(dateISOtoLocalString(line.end_date))}
+      </td>
       <td>
         <div>
-          <form id='table-change-column-form'>
-            <FieldColumnSelect<ChangeColumnValuesType>
-              control={control}
-              handelChangeField={handleFieldChange}
-              error={errors?.column?.message}
-              columnColorList={minimizeColumnsInfo}
-              columnValueList={setColumnValueList(minimizeColumnsInfo)}
-              name='column'
-              defaultColor={groupColor as AccentColorsType}
-              defaultValue={line.column}
-              placeholder='column'
-            />
-          </form>
+          <FieldColumnSelect<ChangeColumnValuesType>
+            control={control}
+            handelChangeField={handleFieldChange}
+            error={errors?.column?.message}
+            columnColorList={minimizeColumnsInfo}
+            columnValueList={setColumnValueList(minimizeColumnsInfo)}
+            name='column'
+            defaultColor={groupColor as AccentColorsType}
+            defaultValue={line.column}
+            placeholder='column'
+          />
         </div>
       </td>
       <td>
@@ -97,16 +110,14 @@ export const TableLine = ({ line, iterLine, groupColor }: TableLineProps) => {
       </td>
       <td>
         {line?.tags?.map((tag, iter) => (
-          <div className='pb-1'>
-            <Tag
-              tagName={tag.name}
-              color={tag.color}
-              key={line.title + ' tag ' + iter}
-            />
+          <div className='pb-1' key={line.title + ' tag ' + iter}>
+            <Tag tagName={tag.name} color={tag.color} />
           </div>
         ))}
       </td>
-      <td className='text-nowrap'>{dateISOtoLocalString(line.start_date)}</td>
+      <td className='text-nowrap'>
+        {breakDateTimeString(dateISOtoLocalString(line.start_date))}
+      </td>
     </tr>
   )
 }

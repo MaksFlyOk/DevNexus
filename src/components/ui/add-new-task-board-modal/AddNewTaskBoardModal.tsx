@@ -177,6 +177,7 @@ export const AddNewTaskBoardModal = ({
               name='assignee'
               label='Исполнитель'
               placeholder='Исполнитель'
+              mandatory
               error={errors?.assignee?.message}
               memberList={memberList}
               control={control}

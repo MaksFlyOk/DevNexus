@@ -3,7 +3,7 @@ import { TagType } from './tagType'
 import { UserType } from './userType'
 
 export interface GroupType {
-  admin: UserType
+  admin: Omit<UserType, 'tags'>
   description: string
   group_uuid: string
   icon?: string | null

@@ -13,7 +13,7 @@ export const useAddColumnGroup = () => {
   const queryClient = useQueryClient()
 
   const { mutateAsync, isPending, isError, error } = useMutation({
-    mutationFn: ({
+    mutationFn: async ({
       name,
       color
     }: {
@@ -22,7 +22,7 @@ export const useAddColumnGroup = () => {
     }) => {
       setMinimizeColumnsInfoState({ name, color })
 
-      return groupService.createColumn(boardId, {
+      return await groupService.createColumn(boardId, {
         name,
         color
       })

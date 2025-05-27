@@ -2,10 +2,11 @@ import { AccentColorsType } from '@types'
 import { Spinner } from '@ui/spinner'
 import { useState } from 'react'
 
-interface AddNewCardTagFormProps {
+interface AddNewTagFormProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   newTagName: string
   groupId?: string
+  disabled: boolean
   createTagFunction: (
     name: string,
     color: AccentColorsType,
@@ -19,10 +20,11 @@ export const AddNewTagForm = ({
   setIsOpen,
   newTagName,
   groupId,
+  disabled,
   createTagFunction,
   createIsPending,
   setSearchTerm
-}: AddNewCardTagFormProps) => {
+}: AddNewTagFormProps) => {
   const [newTagColor, setNewTagColor] = useState<AccentColorsType>('green')
 
   return (
@@ -91,6 +93,7 @@ export const AddNewTagForm = ({
       </div>
       <button
         type='button'
+        disabled={disabled}
         className='btn btn-primary mt-3 w-100'
         onClick={() => {
           if (newTagName !== '') {

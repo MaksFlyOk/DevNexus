@@ -16,8 +16,8 @@ export const useMoveCard = () => {
     { task: TaskType; column: TaskType['column'] },
     unknown
   >({
-    mutationFn: data => {
-      return groupService.putCardColumnGroup(groupId, data.task.code, {
+    mutationFn: async data => {
+      return await groupService.putCardColumnGroup(groupId, data.task.code, {
         ...data.task,
         column: data.column
       })

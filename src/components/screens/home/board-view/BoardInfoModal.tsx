@@ -1,9 +1,9 @@
 import { useDeleteGroup } from '@hooks/mutations'
 import { GroupType } from '@types'
 import { CircleImg } from '@ui/circle-img'
+import { DangerZone } from '@ui/danger-zone'
 import { MemberList } from '@ui/member-list'
-import { Spinner } from '@ui/spinner'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 
 interface AddGroupBoardModalProps {
   setIsShow: Dispatch<SetStateAction<boolean>>
@@ -18,8 +18,6 @@ export const BoardInfoModal = ({
   isGroupPending,
   groupData
 }: AddGroupBoardModalProps) => {
-  const [danger, setDanger] = useState(false)
-
   const { mutateAsync, isPending } = useDeleteGroup({
     optionFunction: () => {
       setIsShow(false)
@@ -65,17 +63,11 @@ export const BoardInfoModal = ({
           </div>
         </div>
         <div className='modal-footer'>
-          <div className='d-flex w-100 flex-column gap-2'>
-            <h4 className='text-danger'>Danger-zone</h4>
-            <button
-              type='button'
-              className='btn btn-outline-danger'
-              onClick={() => (danger ? mutateAsync() : setDanger(true))}
-              onMouseLeave={() => setDanger(false)}
-            >
-              {isPending ? <Spinner /> : danger ? `Confirm` : `Delete group`}
-            </button>
-          </div>
+          <DangerZone
+            buttonTitle='Delete group'
+            buttonFunction={mutateAsync}
+            isPending={isPending}
+          />
         </div>
       </div>
     </div>

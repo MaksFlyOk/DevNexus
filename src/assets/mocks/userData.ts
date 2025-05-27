@@ -14,28 +14,6 @@ export const userData: UserProfileType = {
       icon: null,
       cards: [
         {
-          code: '000004',
-          column_color: 'red',
-          title: 'Оптимизация производительности',
-          column: 'К выполнению',
-          assignee: 'Павел Николаев',
-          description: 'Оптимизировать производительность приложения.',
-          start_date: '2023-10-10',
-          end_date: '2023-10-18',
-          tags: [
-            {
-              name: 'Оптимизация',
-              code: '000009',
-              color: 'blue'
-            },
-            {
-              name: 'Средний приоритет',
-              code: '000002',
-              color: 'yellow'
-            }
-          ]
-        },
-        {
           code: '000007',
           column_color: 'blue',
           title: 'Разработка новой функции',

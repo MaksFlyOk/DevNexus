@@ -1,5 +1,6 @@
 import { useDeleteCardColumnGroup } from '@hooks/mutations'
 import { useGetCard } from '@hooks/queries'
+import { DangerZone } from '@ui/danger-zone'
 import { Modal } from '@ui/modal'
 import { SecondaryNav } from '@ui/secondary-nav'
 import { Spinner } from '@ui/spinner'
@@ -18,7 +19,6 @@ export const Card = () => {
   const navigate = useNavigate()
 
   const [isShow, setIsShow] = useState(false)
-  const [danger, setDanger] = useState(false)
   const [deadlineTimer, setDeadlineTimer] = useState('')
 
   const { data, isPending, isError } = useGetCard(group_id, card_code)
@@ -170,17 +170,7 @@ export const Card = () => {
                 </div>
               </div>
               <div className='card-footer'>
-                <div className='d-flex w-100 flex-column gap-2'>
-                  <h4 className='text-danger'>Danger-zone</h4>
-                  <button
-                    type='button'
-                    className='btn btn-outline-danger'
-                    onClick={() => (danger ? mutateAsync() : setDanger(true))}
-                    onMouseLeave={() => setDanger(false)}
-                  >
-                    {danger ? `Confirm` : `Delete`}
-                  </button>
-                </div>
+                <DangerZone buttonTitle='Delete' buttonFunction={mutateAsync} />
               </div>
             </div>
           </div>

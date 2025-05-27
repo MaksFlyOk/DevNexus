@@ -1,11 +1,15 @@
-import { TagType } from '@types'
+import { AccentColorsType, TagType } from '@types'
 import { CircleImg, Tag } from '@ui'
 import './MemberCard.scss'
+
+type TagTypeWithPrimaryColor = Omit<TagType, 'color'> & {
+  color: AccentColorsType | 'primary'
+}
 
 interface MemberCardProps {
   name: string
   img?: string
-  tags: TagType[]
+  tags: TagTypeWithPrimaryColor[]
 }
 
 export const MemberCard = ({ name, img, tags }: MemberCardProps) => {

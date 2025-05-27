@@ -4,7 +4,7 @@ import './Tag.scss'
 
 interface TagProps {
   tagName: string
-  color: AccentColorsType
+  color: AccentColorsType | 'primary'
 }
 
 export const Tag = ({ tagName, color }: TagProps) => {
