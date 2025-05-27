@@ -37,16 +37,6 @@ export const Layout: FC<LayoutProps> = ({
 
   return (
     <>
-      {/* <div
-        className='position-absolute bottom-0 end-0'
-        style={{ zIndex: 100000 }}
-      >
-        <div className='pe-3 pb-4'>
-          <h1>3121212121212</h1>
-          <h1>3121212121212</h1>
-          <h1>3121212121212</h1>
-        </div>
-      </div> */}
       <div
         className={`${
           width <= 1440 ? 'container-fluid' : 'layout-container'

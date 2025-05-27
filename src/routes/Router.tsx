@@ -1,5 +1,6 @@
 import { useTypedSelector } from '@hooks/index.ts'
 import { Landing, NotFound } from '@screens'
+import { Notification } from '@ui/notification/Notification.tsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ROUTES } from './routes.ts'
 
@@ -14,24 +15,31 @@ const Router = () => {
         v7_startTransition: true
       }}
     >
-      <Routes>
-        {ROUTES.map(route => {
-          if (route.isAuth && !auth) {
-            return (
-              <Route key={'/landing'} path={'/landing'} element={<Landing />} />
-            )
-          }
+      <div>
+        <Notification />
+        <Routes>
+          {ROUTES.map(route => {
+            if (route.isAuth && !auth) {
+              return (
+                <Route
+                  key={'/landing'}
+                  path={'/landing'}
+                  element={<Landing />}
+                />
+              )
+            }
 
-          return (
-            <Route
-              key={route.path}
-              path={route.path}
-              element={<route.component />}
-            />
-          )
-        })}
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={<route.component />}
+              />
+            )
+          })}
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   )
 }
