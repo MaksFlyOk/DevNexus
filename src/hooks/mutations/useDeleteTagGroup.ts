@@ -1,3 +1,4 @@
+import { useActions } from '@hooks/redux-hooks'
 import groupService from '@services/groupService'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
@@ -6,16 +7,21 @@ interface DeleteUserTagParams {
 }
 
 export const useDeleteTagGroup = (groupId: string, username: string) => {
+  const { addTimedNotification } = useActions()
+
   const queryClient = useQueryClient()
 
   const { mutateAsync, isPending, isError, error } = useMutation<
     unknown,
-    unknown,
+    Error,
     DeleteUserTagParams,
     unknown
   >({
     mutationFn: async ({ userTagCode }) => {
-      await groupService.deleteTagGroup(userTagCode, groupId)
+      return await groupService.deleteTagGroup(userTagCode, groupId)
+    },
+    onError: error => {
+      addTimedNotification({ message: error.message, type: 'danger' })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['get all user tags'] })

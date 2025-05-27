@@ -54,7 +54,5 @@ export const postAddGroupHandler = http.post<
   groupCardTagsData.push({ group_uuid: newGroupUUID, tags: [] })
   groupTagsData.push({ group_uuid: newGroupUUID, tags: [] })
 
-  console.log(groupsData)
-
-  return HttpResponse.json({ name: newGroupRequest.name })
+  return HttpResponse.json({ name: newGroupRequest.name }, { status: 200 })
 })

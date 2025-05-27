@@ -1,5 +1,6 @@
 import { WindowDimensionsView } from '@dev/window-dimensions-view'
 import { To, useNavigate } from 'react-router-dom'
+import './SecondaryNav.scss'
 
 interface SecondaryNav {
   title: string
@@ -10,10 +11,9 @@ export const SecondaryNav = ({ title, backLink }: SecondaryNav) => {
   const navigate = useNavigate()
 
   return (
-    <nav className='navbar bg-body-tertiary py-3'>
+    <nav className='navbar bg-body-tertiary py-3 secondary-nav-container'>
       <WindowDimensionsView />
       <div className='container-fluid'>
-        {/* TODO: change button style */}
         <button
           className='navbar-brand btn btn-lg btn-outline-dark'
           type='button'
@@ -22,7 +22,7 @@ export const SecondaryNav = ({ title, backLink }: SecondaryNav) => {
           return
         </button>
         <div className='d-flex'>
-          <h3>{title}</h3>
+          <h5>{title}</h5>
         </div>
       </div>
     </nav>

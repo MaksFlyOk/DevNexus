@@ -47,7 +47,7 @@ export const getCurrentUserProfileHandler = http.get(
         cards: userCards
       }
 
-      return HttpResponse.json(responseUserData)
+      return HttpResponse.json(responseUserData, { status: 200 })
     }
 
     return HttpResponse.json({ error: 'что-то пошло не так' }, { status: 400 })

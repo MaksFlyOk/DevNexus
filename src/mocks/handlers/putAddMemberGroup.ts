@@ -25,7 +25,10 @@ export const putAddMemberGroup = http.put<
         tags: []
       })
 
-      return HttpResponse.json({ username: newGroupMemberRequest.username })
+      return HttpResponse.json(
+        { username: newGroupMemberRequest.username },
+        { status: 200 }
+      )
     }
 
     return HttpResponse.json({ error: 'Что то пошло не так' }, { status: 400 })

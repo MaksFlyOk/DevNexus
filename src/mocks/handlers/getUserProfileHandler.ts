@@ -49,13 +49,16 @@ export const getUserProfileHandler = http.get(
       currentUserData.user.username
     )
 
-    return HttpResponse.json({
-      user: {
-        username: currentUserData.user.username,
-        email: currentUserData.user.email,
-        description: currentUserData.user.description
+    return HttpResponse.json(
+      {
+        user: {
+          username: currentUserData.user.username,
+          email: currentUserData.user.email,
+          description: currentUserData.user.description
+        },
+        groups: userCards
       },
-      groups: userCards
-    })
+      { status: 200 }
+    )
   }
 )

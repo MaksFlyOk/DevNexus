@@ -6,7 +6,7 @@ export const postAddColumnGroup = http.post<
   PathParams,
   { name: string; color: AccentColorsType },
   | { id: number; name: string; color: AccentColorsType }
-  | { error: 'Что то пошло не так' },
+  | { error: 'Не получилось добавить группу' },
   Path
 >(
   `${import.meta.env.VITE_APP_API_URL}v1/groups/:id/columns/create/`,
@@ -28,13 +28,19 @@ export const postAddColumnGroup = http.post<
 
       groupsData[currentGroupIndex]?.board.columns.push(newColumnGroupData)
 
-      return HttpResponse.json({
-        id: newColumnGroupData.code,
-        name: newColumnGroupData.name,
-        color: newColumnGroupData.color
-      })
+      return HttpResponse.json(
+        {
+          id: newColumnGroupData.code,
+          name: newColumnGroupData.name,
+          color: newColumnGroupData.color
+        },
+        { status: 200 }
+      )
     }
 
-    return HttpResponse.json({ error: 'Что то пошло не так' })
+    return HttpResponse.json(
+      { error: 'Не получилось добавить группу' },
+      { status: 400 }
+    )
   }
 )

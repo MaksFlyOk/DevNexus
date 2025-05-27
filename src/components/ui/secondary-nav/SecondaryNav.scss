@@ -1,0 +1,24 @@
+@import '/node_modules/bootstrap/scss/bootstrap.scss';
+
+.secondary-nav-container {
+  @include make-container($container-padding-x);
+
+  width: 100vw;
+}
+
+@media (min-width: 1440px) {
+  .secondary-nav-container {
+    width: 90vw;
+  }
+}
+
+@media (min-width: 1920px) {
+  .secondary-nav-container {
+    width: 70vw;
+  }
+}
+@media (min-width: 2560px) {
+  .secondary-nav-container {
+    width: 2100px;
+  }
+}

@@ -18,7 +18,9 @@ export const getAllCardTagGroup = http.get<
     console.log('tgs', groupCardTagsData[currentGroupIndex])
 
     if (groupCardTagsData[currentGroupIndex]?.tags) {
-      return HttpResponse.json(groupCardTagsData[currentGroupIndex].tags)
+      return HttpResponse.json(groupCardTagsData[currentGroupIndex].tags, {
+        status: 200
+      })
     }
 
     return HttpResponse.json({ error: 'Что то пошло не так' }, { status: 400 })

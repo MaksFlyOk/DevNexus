@@ -1,3 +1,4 @@
+import { useActions } from '@hooks/redux-hooks'
 import userService from '@services/userService'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Dispatch, SetStateAction } from 'react'
@@ -24,11 +25,12 @@ export const useUpdateUserProfile = (
   }>,
   setIsShow: Dispatch<SetStateAction<boolean>>
 ) => {
+  const { addTimedNotification } = useActions()
   const queryClient = useQueryClient()
 
   const { mutateAsync, isPending, isError, error } = useMutation<
     unknown,
-    unknown,
+    Error,
     UserProfileDataParams,
     unknown
   >({
@@ -48,7 +50,7 @@ export const useUpdateUserProfile = (
       }
     }: UserProfileDataParams) => {
       if (newUsername || newEmail || newDescription) {
-        await userService.putUpdateUserProfile({
+        return await userService.putUpdateUserProfile({
           username: newUsername ? newUsername : oldUsername,
           email: newEmail ? newEmail : oldEmail,
           description: newDescription ? newDescription : oldDescrioption
@@ -56,13 +58,14 @@ export const useUpdateUserProfile = (
       }
 
       if (old_password && new_password) {
-        await userService.putUpdateUserPassword({ old_password, new_password })
+        return await userService.putUpdateUserPassword({
+          old_password,
+          new_password
+        })
       }
-
-      return name
     },
     onError: error => {
-      console.log(error)
+      addTimedNotification({ message: error.message, type: 'danger' })
     },
     onSuccess: () => {
       console.log('success')

@@ -16,8 +16,13 @@ export const deleteGroupHandler = http.delete<PathParams, null, object, Path>(
     if (currentGroupIndexUserData !== -1 && currentGroupIndexUserData !== -1) {
       groupsData.splice(currentGroupIndexGroupsData, 1)
       currentUserData.groups.splice(currentGroupIndexUserData, 1)
+
+      return HttpResponse.json({}, { status: 200 })
     }
 
-    return HttpResponse.json({})
+    return HttpResponse.json(
+      { error: 'Не получилось удалить группу' },
+      { status: 400 }
+    )
   }
 )

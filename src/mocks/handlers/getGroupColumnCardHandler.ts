@@ -12,7 +12,8 @@ export const getGroupColumnCardHandler = http.get(
         ?.board.columns.find(column =>
           column.tasks.find(task => task.code === code)
         )
-        ?.tasks.find(task => task.code === code)
+        ?.tasks.find(task => task.code === code),
+      { status: 200 }
     )
   }
 )

@@ -4,7 +4,10 @@ import { groupsData } from '../mocks-data'
 export const postCurrentUserDeleteTags = http.delete<
   PathParams,
   null,
-  object | { error: 'Что то пошло не так' },
+  | object
+  | { error: 'Не получилось обновить тэги' }
+  | { error: 'Пользователь не состоит в группе' }
+  | { error: 'Такой группы не существует' },
   Path
 >(
   `${
@@ -36,12 +39,25 @@ export const postCurrentUserDeleteTags = http.delete<
               1
             )
 
-            return HttpResponse.json({})
+            return HttpResponse.json({}, { status: 200 })
           }
         }
+
+        return HttpResponse.json(
+          { error: 'Не получилось обновить тэги' },
+          { status: 400 }
+        )
       }
+
+      return HttpResponse.json(
+        { error: 'Пользователь не состоит в группе' },
+        { status: 400 }
+      )
     }
 
-    return HttpResponse.json({ error: 'Что то пошло не так' }, { status: 400 })
+    return HttpResponse.json(
+      { error: 'Такой группы не существует' },
+      { status: 400 }
+    )
   }
 )

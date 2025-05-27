@@ -14,7 +14,7 @@ export const postAddCardColumnGroup = http.post<
   PathParams,
   Omit<TaskType, 'code'> & { tags: Omit<TagType, 'code'>[] },
   | (TaskType & { column_color: AccentColorsType })
-  | { error: 'Что то пошло не так' },
+  | { error: 'Такой колонки не существует' },
   Path
 >(
   `${import.meta.env.VITE_APP_API_URL}v1/groups/:group_id/cards/create/`,
@@ -64,9 +64,12 @@ export const postAddCardColumnGroup = http.post<
         currentColumnIndex
       ]?.tasks.push(newCardData)
 
-      return HttpResponse.json(newCardData)
+      return HttpResponse.json(newCardData, { status: 200 })
     }
 
-    return HttpResponse.json({ error: 'Что то пошло не так' })
+    return HttpResponse.json(
+      { error: 'Такой колонки не существует' },
+      { status: 400 }
+    )
   }
 )

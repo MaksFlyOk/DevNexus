@@ -9,16 +9,19 @@ interface DeleteCardTagParams {
 export const useDeleteCardTag = (groupId: string) => {
   const queryClient = useQueryClient()
 
-  const { setIsBoardLoading } = useActions()
+  const { setIsBoardLoading, addTimedNotification } = useActions()
 
   const { mutateAsync, isPending, isError, error } = useMutation<
     unknown,
-    unknown,
+    Error,
     DeleteCardTagParams,
     unknown
   >({
     mutationFn: async ({ cardTagCode }) => {
-      await groupService.deleteCardTagGroup(cardTagCode, groupId)
+      return await groupService.deleteCardTagGroup(cardTagCode, groupId)
+    },
+    onError: error => {
+      addTimedNotification({ message: error.message, type: 'danger' })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })

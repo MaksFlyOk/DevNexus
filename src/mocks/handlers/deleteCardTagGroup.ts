@@ -23,7 +23,7 @@ export const deleteCardTagGroup = http.delete<
       if (currentCardTagIndex !== -1) {
         groupCardTagsData[currentGroupIndex].tags.splice(currentCardTagIndex, 1)
 
-        return HttpResponse.json({})
+        return HttpResponse.json({}, { status: 200 })
       }
     }
 

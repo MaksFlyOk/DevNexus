@@ -1,17 +1,28 @@
-import { useTypedSelector } from '@hooks/redux-hooks'
+import { useActions, useTypedSelector } from '@hooks/redux-hooks'
 import groupService from '@services/groupService'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export const useAddMemberGroup = () => {
+  const { addTimedNotification } = useActions()
+
   const { groupId } = useTypedSelector(state => state.groupState)
 
   const queryClient = useQueryClient()
 
   const { mutateAsync, isPending, isError, error } = useMutation({
     mutationFn: async (name: string) => {
-      await groupService.putMemberGroup(groupId, { username: name })
+      return await groupService.putMemberGroup(groupId, { username: name })
     },
-    onSettled: () => queryClient.invalidateQueries({ queryKey: [`get board`] })
+    onError: error => {
+      addTimedNotification({ message: error.message, type: 'danger' })
+    },
+    onSuccess: () => {
+      addTimedNotification({
+        message: 'Пользователь успешно добавлен',
+        type: 'success'
+      })
+      queryClient.invalidateQueries({ queryKey: [`get board`] })
+    }
   })
 
   return {
