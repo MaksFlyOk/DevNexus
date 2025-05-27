@@ -17,9 +17,11 @@ export const getAllTagGroup = http.get<
     )
 
     if (groupTagsData[currentGroupIndex]?.tags) {
-      return HttpResponse.json(groupTagsData[currentGroupIndex].tags)
+      return HttpResponse.json(groupTagsData[currentGroupIndex].tags, {
+        status: 200
+      })
     }
 
-    return HttpResponse.json({ error: 'Что то пошло не так' })
+    return HttpResponse.json({ error: 'Что то пошло не так' }, { status: 400 })
   }
 )

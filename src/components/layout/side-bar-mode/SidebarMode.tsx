@@ -120,7 +120,7 @@ export const SidebarMode: FC<SideBarModeProps> = ({
           className={`${
             isShowSideBar ? 'd-block' : 'd-none'
           } position-fixed w-100 h-100 bg-dark-subtle opacity-50`}
-          style={{ zIndex: 1055 }}
+          style={{ zIndex: 1030 }}
         ></div>
         <div
           className={`offcanvas offcanvas-start px-0 border-end border-2 border-primary overflow-x-hidden ${

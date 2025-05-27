@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { TaskType } from '@types'
 
 export const useMoveCard = () => {
-  const { resetToStableState } = useActions()
+  const { resetToStableState, addTimedNotification } = useActions()
 
   const { groupId } = useTypedSelector(state => state.groupState)
 
@@ -12,7 +12,7 @@ export const useMoveCard = () => {
 
   const { mutateAsync, isPending, isError, error } = useMutation<
     unknown,
-    unknown,
+    Error,
     { task: TaskType; column: TaskType['column'] },
     unknown
   >({
@@ -25,7 +25,9 @@ export const useMoveCard = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
     },
-    onError: () => {
+    onError: error => {
+      addTimedNotification({ message: error.message, type: 'danger' })
+
       resetToStableState()
     }
   })

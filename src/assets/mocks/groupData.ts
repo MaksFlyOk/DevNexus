@@ -1,5 +1,9 @@
 import { GroupType } from '@types'
 
+const generateDateISO = (plusTime: number) => {
+  return new Date(new Date().getTime() + plusTime).toISOString()
+}
+
 export const groupData: GroupType = {
   id: 1,
   group_uuid: 'f81e7af3-fcf4-4cdd-b3a3-14a8087aa191',
@@ -127,8 +131,8 @@ export const groupData: GroupType = {
             assignee: 'Анна Петрова',
             description:
               'Создать современный и адаптивный дизайн для главной страницы.',
-            start_date: '2023-09-01',
-            end_date: '2023-10-01',
+            start_date: generateDateISO(4_000_000),
+            end_date: generateDateISO(100_000_000),
             tags: [
               {
                 name: 'Дизайн',
@@ -149,8 +153,8 @@ export const groupData: GroupType = {
             column: 'К выполнению',
             assignee: 'Дмитрий Смирнов',
             description: 'Создать макет для новой страницы.',
-            start_date: '2023-10-01',
-            end_date: '2023-10-07',
+            start_date: generateDateISO(10_000_000),
+            end_date: generateDateISO(40_000_000),
             tags: [
               {
                 name: 'Макет',
@@ -171,8 +175,8 @@ export const groupData: GroupType = {
             column_color: 'red',
             assignee: 'Алексей Соколов',
             description: 'Исправить найденные баги в приложении.',
-            start_date: '2023-10-03',
-            end_date: '2023-10-15',
+            start_date: generateDateISO(11_310_321),
+            end_date: generateDateISO(27_000_000),
             tags: [
               {
                 name: 'Баги',
@@ -193,8 +197,8 @@ export const groupData: GroupType = {
             column_color: 'red',
             assignee: 'Алексей Соколов',
             description: 'Оптимизировать производительность приложения.',
-            start_date: '2023-10-10',
-            end_date: '2023-10-18',
+            start_date: generateDateISO(500_000),
+            end_date: generateDateISO(25_500_000),
             tags: [
               {
                 name: 'Оптимизация',
@@ -222,8 +226,8 @@ export const groupData: GroupType = {
             column_color: 'blue',
             assignee: 'Алексей Соколов',
             description: 'Разработать бэкенд API для новой функции.',
-            start_date: '2023-09-10',
-            end_date: '2023-10-10',
+            start_date: generateDateISO(10_000_000),
+            end_date: generateDateISO(25_300_000),
             tags: [
               {
                 name: 'Разработка',
@@ -245,8 +249,8 @@ export const groupData: GroupType = {
             assignee: 'Дмитрий Смирнов',
             description:
               'Провести тестирование удобства использования нового интерфейса.',
-            start_date: '2023-10-15',
-            end_date: '2023-10-25',
+            start_date: generateDateISO(1_040_000),
+            end_date: generateDateISO(45_300_000),
             tags: [
               {
                 name: 'Тестирование',
@@ -267,8 +271,8 @@ export const groupData: GroupType = {
             column_color: 'blue',
             assignee: 'Павел Николаев',
             description: 'Разработать новую функцию для приложения.',
-            start_date: '2023-10-11',
-            end_date: '2023-10-22',
+            start_date: generateDateISO(15_423_000),
+            end_date: generateDateISO(65_310_000),
             tags: [
               {
                 name: 'Разработка',
@@ -289,8 +293,8 @@ export const groupData: GroupType = {
             column_color: 'blue',
             assignee: 'Сергей Лебедев',
             description: 'Написать блог о новых функциях продукта.',
-            start_date: '2023-10-03',
-            end_date: '2023-10-25',
+            start_date: generateDateISO(0),
+            end_date: generateDateISO(25_300_000),
             tags: [
               {
                 name: 'Контент',
@@ -311,8 +315,8 @@ export const groupData: GroupType = {
             column_color: 'blue',
             assignee: 'Ольга Морозова',
             description: 'Обновить документацию для новой функции.',
-            start_date: '2023-05-30',
-            end_date: '2023-10-30',
+            start_date: generateDateISO(1_000_000),
+            end_date: generateDateISO(205_300_000),
             tags: [
               {
                 name: 'Документация',
@@ -340,8 +344,8 @@ export const groupData: GroupType = {
             column_color: 'green',
             assignee: 'Мария Федорова',
             description: 'Проверить изменения кода для новой функции.',
-            start_date: '2023-10-17',
-            end_date: '2023-10-20',
+            start_date: generateDateISO(0),
+            end_date: generateDateISO(3_250_300_000),
             tags: [
               {
                 name: 'Проверка кода',
@@ -362,8 +366,8 @@ export const groupData: GroupType = {
             column_color: 'green',
             assignee: 'Анна Петрова',
             description: 'Проверить изменения дизайна для главной страницы.',
-            start_date: '2023-09-25',
-            end_date: '2023-10-25',
+            start_date: generateDateISO(1_000_000),
+            end_date: generateDateISO(25_300_000),
             tags: [
               {
                 name: 'Проверка дизайна',
@@ -384,8 +388,8 @@ export const groupData: GroupType = {
             column_color: 'green',
             assignee: 'Павел Николаев',
             description: 'Проверить обновленную документацию.',
-            start_date: '2023-10-25',
-            end_date: '2023-10-27',
+            start_date: generateDateISO(12_000_000),
+            end_date: generateDateISO(205_300_000),
             tags: [
               {
                 name: 'Документация',
@@ -406,8 +410,8 @@ export const groupData: GroupType = {
             column_color: 'green',
             assignee: 'Мария Федорова',
             description: 'Проверить созданный макет для новой страницы.',
-            start_date: '2023-10-04',
-            end_date: '2023-10-30',
+            start_date: generateDateISO(1_000_000),
+            end_date: generateDateISO(25_900_000),
             tags: [
               {
                 name: 'Макет',
@@ -428,8 +432,8 @@ export const groupData: GroupType = {
             column_color: 'green',
             assignee: 'Дмитрий Смирнов',
             description: 'Проверить написанный блог о новых функциях продукта.',
-            start_date: '2023-11-01',
-            end_date: '2023-11-02',
+            start_date: generateDateISO(1_000_000),
+            end_date: generateDateISO(25_300_000),
             tags: [
               {
                 name: 'Контент',
@@ -451,8 +455,8 @@ export const groupData: GroupType = {
             assignee: 'Иван Иванов',
             description:
               'Проверить разработанный бэкенд API для новой функции.',
-            start_date: '2023-10-05',
-            end_date: '2023-11-05',
+            start_date: generateDateISO(0),
+            end_date: generateDateISO(1_204_300_000),
             tags: [
               {
                 name: 'API',
@@ -474,8 +478,8 @@ export const groupData: GroupType = {
             assignee: 'Сергей Лебедев',
             description:
               'Проверить тестирование удобства использования нового интерфейса.',
-            start_date: '2023-11-01',
-            end_date: '2023-11-07',
+            start_date: generateDateISO(13_000_000),
+            end_date: generateDateISO(250_300_000),
             tags: [
               {
                 name: 'Тестирование',
@@ -496,8 +500,8 @@ export const groupData: GroupType = {
             column_color: 'green',
             assignee: 'Алексей Соколов',
             description: 'Проверить оптимизацию производительности приложения.',
-            start_date: '2023-10-25',
-            end_date: '2023-11-10',
+            start_date: generateDateISO(1_000_000),
+            end_date: generateDateISO(25_300_000),
             tags: [
               {
                 name: 'Оптимизация',
@@ -525,8 +529,8 @@ export const groupData: GroupType = {
             column_color: 'yellow',
             assignee: 'Павел Николаев',
             description: 'Развернуть новую функцию в рабочей среде.',
-            start_date: '2023-10-30',
-            end_date: '2023-10-30',
+            start_date: generateDateISO(1_000_000),
+            end_date: generateDateISO(300_000),
             tags: [
               {
                 name: 'Развертывание',
@@ -548,8 +552,8 @@ export const groupData: GroupType = {
             assignee: 'Юлия Васильева',
             description:
               'Мониторить производительность новой функции после развертывания.',
-            start_date: '2023-10-25',
-            end_date: '2023-11-05',
+            start_date: generateDateISO(1_400_000),
+            end_date: generateDateISO(2_300_000),
             tags: [
               {
                 name: 'Мониторинг',
@@ -570,8 +574,8 @@ export const groupData: GroupType = {
             column_color: 'yellow',
             assignee: 'Алексей Соколов',
             description: 'Обновить базу данных для поддержки новой функции.',
-            start_date: '2023-11-01',
-            end_date: '2023-11-07',
+            start_date: generateDateISO(0),
+            end_date: generateDateISO(300_000),
             tags: [
               {
                 name: 'База данных',
@@ -592,8 +596,8 @@ export const groupData: GroupType = {
             column_color: 'yellow',
             assignee: 'Елена Кузнецова',
             description: 'Обновить интерфейс для поддержки новой функции.',
-            start_date: '2023-11-04',
-            end_date: '2023-11-10',
+            start_date: generateDateISO(1_000_000),
+            end_date: generateDateISO(25_300_000),
             tags: [
               {
                 name: 'Интерфейс',
@@ -614,8 +618,8 @@ export const groupData: GroupType = {
             column_color: 'yellow',
             assignee: 'Алексей Соколов',
             description: 'Обновить API для поддержки новой функции.',
-            start_date: '2023-10-22',
-            end_date: '2023-11-12',
+            start_date: generateDateISO(1_000),
+            end_date: generateDateISO(300_000),
             tags: [
               {
                 name: 'API',
@@ -636,8 +640,8 @@ export const groupData: GroupType = {
             column_color: 'yellow',
             assignee: 'Сергей Лебедев',
             description: 'Обновить макет для новой страницы.',
-            start_date: '2023-11-12',
-            end_date: '2023-11-17',
+            start_date: generateDateISO(-24_100_000_000),
+            end_date: generateDateISO(-25_300_000),
             tags: [
               {
                 name: 'Макет',
@@ -658,8 +662,8 @@ export const groupData: GroupType = {
             column_color: 'yellow',
             assignee: 'Елена Кузнецова',
             description: 'Обновить блог о новых функциях продукта.',
-            start_date: '2023-11-10',
-            end_date: '2023-11-20',
+            start_date: generateDateISO(-100_000_000),
+            end_date: generateDateISO(0),
             tags: [
               {
                 name: 'Контент',

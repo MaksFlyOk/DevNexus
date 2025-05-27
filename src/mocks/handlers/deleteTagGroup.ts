@@ -23,7 +23,7 @@ export const deleteTagGroup = http.delete<
       if (currentTagIndex !== -1) {
         groupTagsData[currentGroupIndex].tags.splice(currentTagIndex, 1)
 
-        return HttpResponse.json({})
+        return HttpResponse.json({}, { status: 200 })
       }
     }
 

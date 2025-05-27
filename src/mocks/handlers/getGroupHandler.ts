@@ -6,13 +6,9 @@ export const getGroupHandler = http.get(
   ({ params }) => {
     const { id } = params
 
-    console.log('all', groupsData)
-    console.log('id', id)
-    console.log(
-      'current',
-      groupsData.find(group => group.group_uuid === id)
+    return HttpResponse.json(
+      groupsData.find(group => group.group_uuid === id),
+      { status: 200 }
     )
-
-    return HttpResponse.json(groupsData.find(group => group.group_uuid === id))
   }
 )

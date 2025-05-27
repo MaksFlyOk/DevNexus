@@ -7,7 +7,10 @@ export const postCurrentUserCreateTagsHandler = http.post<
     username: string
     tag_code: string
   },
-  object | { error: 'Что то пошло не так' },
+  | object
+  | { error: 'Не получилось обновить тэги' }
+  | { error: 'Пользователь не состоит в группе' }
+  | { error: 'Такой группы не существует' },
   Path
 >(
   `${import.meta.env.VITE_APP_API_URL}v1/groups/:group_id/usertags/create`,
@@ -43,12 +46,25 @@ export const postCurrentUserCreateTagsHandler = http.post<
           if (tag) {
             groupsData[groupIndex].members[memberIndex].tags.push(tag)
 
-            return HttpResponse.json({})
+            return HttpResponse.json({}, { status: 200 })
           }
         }
+
+        return HttpResponse.json(
+          { error: 'Не получилось обновить тэги' },
+          { status: 400 }
+        )
       }
+
+      return HttpResponse.json(
+        { error: 'Пользователь не состоит в группе' },
+        { status: 400 }
+      )
     }
 
-    return HttpResponse.json({ error: 'Что то пошло не так' }, { status: 400 })
+    return HttpResponse.json(
+      { error: 'Такой группы не существует' },
+      { status: 400 }
+    )
   }
 )

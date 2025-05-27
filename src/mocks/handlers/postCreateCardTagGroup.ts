@@ -35,12 +35,15 @@ export const postCreateCardTagGroup = http.post<
         )
       })
 
-      return HttpResponse.json({
-        name: newGroupTagRequest.name,
-        color: newGroupTagRequest.color
-      })
+      return HttpResponse.json(
+        {
+          name: newGroupTagRequest.name,
+          color: newGroupTagRequest.color
+        },
+        { status: 200 }
+      )
     }
 
-    return HttpResponse.json({ error: 'Что то пошло не так' })
+    return HttpResponse.json({ error: 'Что то пошло не так' }, { status: 400 })
   }
 )

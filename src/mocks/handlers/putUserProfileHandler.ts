@@ -17,7 +17,5 @@ export const putUserProfileHandler = http.put<
     currentUserData.user[key] = newUserData[key]
   }
 
-  return HttpResponse.json(currentUserData.user)
-
-  return HttpResponse.json({ error: 'Что то пошло не так' })
+  return HttpResponse.json(currentUserData.user, { status: 200 })
 })

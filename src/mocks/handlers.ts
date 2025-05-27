@@ -30,9 +30,9 @@ export const handlers = [
   getGroupHandler,
   deleteGroupHandler,
   postAddColumnGroup,
-  postAddCardColumnGroup, // Divide timezone
+  postAddCardColumnGroup,
   getGroupColumnCardHandler,
-  putUpdateCardColumnGroup, // Divide timezone
+  putUpdateCardColumnGroup,
   deleteCardColumnGroup,
   postCreateCardTagGroup,
   deleteCardTagGroup,

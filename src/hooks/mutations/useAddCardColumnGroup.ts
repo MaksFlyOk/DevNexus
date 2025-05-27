@@ -4,7 +4,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { TagType, TaskType } from '@types'
 
 export const useAddCardColumnGroup = () => {
-  const { resetToStableState, setIsBoardLoading } = useActions()
+  const { resetToStableState, setIsBoardLoading, addTimedNotification } =
+    useActions()
 
   const { boardId } = useTypedSelector(state => state.boardState)
   const { groupId } = useTypedSelector(state => state.groupState)
@@ -13,7 +14,7 @@ export const useAddCardColumnGroup = () => {
 
   const { mutateAsync, isPending, isError, error } = useMutation<
     unknown,
-    unknown,
+    Error,
     Omit<TaskType, 'code'> | { tags: Omit<TagType, 'code'>[] },
     unknown
   >({
@@ -24,7 +25,9 @@ export const useAddCardColumnGroup = () => {
       queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
       setIsBoardLoading({ state: true })
     },
-    onError: () => {
+    onError: error => {
+      addTimedNotification({ message: error.message, type: 'danger' })
+
       resetToStableState()
     }
   })

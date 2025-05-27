@@ -15,7 +15,7 @@ export const useAuth = (
   reset: AuthMutateParams['reset'],
   setAuthOrRegState: AuthMutateParams['setAuthOrRegState']
 ) => {
-  const { setAuthState } = useActions()
+  const { setAuthState, addTimedNotification } = useActions()
 
   const { mutateAsync, isPending, isError, error } = useMutation({
     mutationKey: ['auth'],
@@ -24,23 +24,35 @@ export const useAuth = (
         const { data } = await authService.auth(name, password)
 
         setToken(data)
+        return 'auth'
       } else {
         await authService.register(name, password, email)
 
         reset()
+        return 'register'
       }
-
-      return name
     },
-    onError: () => {
+    onError: error => {
       reset()
+
+      addTimedNotification({
+        message: error.message,
+        type: 'danger'
+      })
     },
-    onSuccess: () => {
+    onSuccess: data => {
       if (checkToken()) setAuthState(true)
 
       setAuthOrRegState(prev =>
         prev === 'registration' ? 'login' : 'registration'
       )
+
+      if (data === 'register') {
+        addTimedNotification({
+          message: 'Вы успешно зарегестрировались',
+          type: 'success'
+        })
+      }
     }
   })
 

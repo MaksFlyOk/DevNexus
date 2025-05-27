@@ -9,7 +9,7 @@ interface useDeleteGroupParams {
 export const useDeleteGroup = ({
   optionFunction = undefined
 }: useDeleteGroupParams) => {
-  const { setGroupId } = useActions()
+  const { setGroupId, addTimedNotification } = useActions()
 
   const { groupId } = useTypedSelector(state => state.groupState)
 
@@ -18,6 +18,9 @@ export const useDeleteGroup = ({
   const { mutateAsync, isPending, isError, error } = useMutation({
     mutationFn: async () => {
       return await groupService.deleteGroup(groupId)
+    },
+    onError: error => {
+      addTimedNotification({ message: error.message, type: 'danger' })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['get user'] })

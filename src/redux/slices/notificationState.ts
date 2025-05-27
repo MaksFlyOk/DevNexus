@@ -11,6 +11,10 @@ interface NotificationsState {
   items: Notification[]
 }
 
+const generateId = () => {
+  return Math.random().toString(36).substring(2, 9)
+}
+
 const initialState: NotificationsState = { items: [] }
 
 export const notificationSlice = createSlice({
@@ -31,15 +35,15 @@ export const notificationStateReducer = notificationSlice.reducer
 export const notificationState = (state: RootState) => state.boardState
 
 export const addTimedNotification =
-  (notification: Notification, timeout = 5000): AppThunk =>
+  (notification: Omit<Notification, 'id'>, timeout = 4000): AppThunk =>
   dispatch => {
-    const fullNotification = { ...notification }
+    const fullNotification = { ...notification, id: generateId() }
 
     dispatch(notificationStateActions.addNewNotificationState(fullNotification))
 
     setTimeout(() => {
       dispatch(
-        notificationStateActions.removeNotificationState(notification.id)
+        notificationStateActions.removeNotificationState(fullNotification.id)
       )
     }, timeout)
   }

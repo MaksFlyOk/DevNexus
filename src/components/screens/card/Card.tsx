@@ -6,6 +6,7 @@ import { SecondaryNav } from '@ui/secondary-nav'
 import { Spinner } from '@ui/spinner'
 import { Tag } from '@ui/tag'
 import { dateISOtoLocalString } from '@utils/dateISOtoLocalString'
+import { dateSetTimezone } from '@utils/dateSetTimezone'
 import { formatDateForDateTimeInput } from '@utils/formatDateForDateTimeInput'
 import { formatTimeRemaining } from '@utils/formatTimeRemaining'
 import { setPlaceholderFieldSelectTags } from '@utils/setPlaceholderFieldSelectTags'
@@ -33,6 +34,9 @@ export const Card = () => {
 
     if (data && !timer) {
       const dead_line = new Date(data.end_date)
+      console.log('start_line', new Date(data.start_date))
+      console.log('dead_line', dead_line)
+      console.log('dead_line timezone', new Date(dateSetTimezone(dead_line)))
 
       timer = setInterval(
         () => setDeadlineTimer(formatTimeRemaining(dead_line)),

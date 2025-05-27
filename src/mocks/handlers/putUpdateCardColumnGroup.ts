@@ -6,7 +6,9 @@ export const putUpdateCardColumnGroup = http.put<
   PathParams,
   Omit<TaskType, 'code'> & { tags: Omit<TagType, 'code'>[] },
   | (TaskType & { column_color: AccentColorsType })
-  | { error: 'Что то пошло не так' },
+  | { error: 'Такой группы не существует' }
+  | { error: 'Такой колонки не существует' }
+  | { error: 'Такой карточки не существует' },
   Path
 >(
   `${import.meta.env.VITE_APP_API_URL}v1/groups/:group_id/cards/:card_code/`,
@@ -61,8 +63,22 @@ export const putUpdateCardColumnGroup = http.put<
               groupsData[currentGroupIndex]?.board.columns[newCardColumnIndex]
                 ?.color,
             description: updateCardColumnGroupDataRequest.description,
-            end_date: updateCardColumnGroupDataRequest.end_date,
-            start_date: updateCardColumnGroupDataRequest.start_date,
+            end_date: new Date(
+              new Date(updateCardColumnGroupDataRequest.end_date).getTime() -
+                new Date(
+                  updateCardColumnGroupDataRequest.end_date
+                ).getTimezoneOffset() *
+                  60 *
+                  1000
+            ).toISOString(),
+            start_date: new Date(
+              new Date(updateCardColumnGroupDataRequest.start_date).getTime() -
+                new Date(
+                  updateCardColumnGroupDataRequest.start_date
+                ).getTimezoneOffset() *
+                  60 *
+                  1000
+            ).toISOString(),
             title: updateCardColumnGroupDataRequest.title,
             tags: updateCardColumnGroupDataRequest.tags,
             code: groupsData[currentGroupIndex]?.board.columns[
@@ -88,11 +104,24 @@ export const putUpdateCardColumnGroup = http.put<
             ].tasks.push(newCardData)
           }
 
-          return HttpResponse.json(newCardData)
+          return HttpResponse.json(newCardData, { status: 200 })
         }
+
+        return HttpResponse.json(
+          { error: 'Такой карточки не существует' },
+          { status: 400 }
+        )
       }
+
+      return HttpResponse.json(
+        { error: 'Такой колонки не существует' },
+        { status: 400 }
+      )
     }
 
-    return HttpResponse.json({ error: 'Что то пошло не так' }, { status: 400 })
+    return HttpResponse.json(
+      { error: 'Такой группы не существует' },
+      { status: 400 }
+    )
   }
 )

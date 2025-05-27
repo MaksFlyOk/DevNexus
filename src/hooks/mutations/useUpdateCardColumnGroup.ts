@@ -6,18 +6,21 @@ import { TaskType } from '@types'
 export const useUpdateCardColumnGroup = (groupId: string, cardCode: string) => {
   const queryClient = useQueryClient()
 
-  const { setIsBoardLoading } = useActions()
+  const { setIsBoardLoading, addTimedNotification } = useActions()
 
   const { mutateAsync, isPending, isError, error } = useMutation({
     mutationKey: ['auth'],
     mutationFn: async (data: Omit<TaskType, 'column_color'>) => {
-      await groupService.putCardColumnGroup(groupId, cardCode, data)
+      return await groupService.putCardColumnGroup(groupId, cardCode, data)
     },
     onError: error => {
-      console.log(error)
+      addTimedNotification({ message: error.message, type: 'danger' })
     },
     onSuccess: () => {
-      console.log('success')
+      addTimedNotification({
+        message: 'Карточка успешно обновлена',
+        type: 'success'
+      })
 
       queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
       queryClient.invalidateQueries({

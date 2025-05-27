@@ -1,3 +1,4 @@
+import { useActions } from '@hooks/redux-hooks'
 import groupService from '@services/groupService'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { AccentColorsType, TagType } from '@types'
@@ -15,11 +16,13 @@ export const useUpdateUserTagsGroup = (
   groupId: string,
   username: string
 ) => {
+  const { addTimedNotification } = useActions()
+
   const queryClient = useQueryClient()
 
   const { mutateAsync, isPending, isError, error } = useMutation<
     unknown,
-    unknown,
+    Error,
     UserProfileDataParams,
     unknown
   >({
@@ -50,7 +53,7 @@ export const useUpdateUserTagsGroup = (
         deleteUserTagsArrayQueries &&
         deleteUserTagsArrayQueries?.length !== 0
       ) {
-        await groupService.deleteUserTagGroup(
+        return await groupService.deleteUserTagGroup(
           groupId,
           username,
           deleteUserTagsArrayQueries
@@ -58,7 +61,7 @@ export const useUpdateUserTagsGroup = (
       }
 
       if (addUserTagsArrayQueries.length !== 0) {
-        await groupService.createUserTagGroup(
+        return await groupService.createUserTagGroup(
           groupId,
           username,
           addUserTagsArrayQueries
@@ -66,7 +69,7 @@ export const useUpdateUserTagsGroup = (
       }
     },
     onError: error => {
-      console.log(error)
+      addTimedNotification({ message: error.message, type: 'danger' })
     },
     onSuccess: () => {
       console.log('success')

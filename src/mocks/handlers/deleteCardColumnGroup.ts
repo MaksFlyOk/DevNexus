@@ -56,10 +56,18 @@ export const deleteCardColumnGroup = http.delete<
           currentCardAndColumnIndex.columnIndex
         ]?.tasks.splice(currentCardAndColumnIndex.taskIndex, 1)
 
-        return HttpResponse.json({})
+        return HttpResponse.json({}, { status: 200 })
       }
+
+      return HttpResponse.json(
+        { error: 'Такой колонки не существует' },
+        { status: 400 }
+      )
     }
 
-    return HttpResponse.json({ error: 'Что то пошло не так' }, { status: 400 })
+    return HttpResponse.json(
+      { error: 'Такой группы не существует' },
+      { status: 400 }
+    )
   }
 )
