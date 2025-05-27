@@ -1,4 +1,3 @@
-import { WindowDimensionsView } from '@dev/window-dimensions-view'
 import { To, useNavigate } from 'react-router-dom'
 import './SecondaryNav.scss'
 
@@ -12,7 +11,7 @@ export const SecondaryNav = ({ title, backLink }: SecondaryNav) => {
 
   return (
     <nav className='navbar bg-body-tertiary py-3'>
-      <WindowDimensionsView />
+      {/* <WindowDimensionsView /> */}
       <div className='secondary-nav-container'>
         <div className='d-flex flex-column-reverse flex-sm-row justify-content-between'>
           <button

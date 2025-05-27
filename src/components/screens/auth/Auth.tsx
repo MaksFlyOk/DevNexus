@@ -1,4 +1,3 @@
-import { WindowDimensionsView } from '@dev/window-dimensions-view'
 import { useAuth } from '@hooks/mutations'
 import { useTypedSelector } from '@hooks/redux-hooks'
 import useWindowDimensions from '@hooks/useWindowDimensions'
@@ -40,7 +39,7 @@ export const Auth = () => {
 
   return (
     <>
-      <WindowDimensionsView />
+      {/* <WindowDimensionsView /> */}
       <div className='container-fluid container-xxl d-flex justify-content-center vh-100'>
         <div className='col-md-6 col-10 d-flex align-items-center'>
           <div className='row w-100 m-0 d-flex'>
