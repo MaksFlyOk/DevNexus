@@ -1,8 +1,10 @@
 import {
+  addTimedNotification,
   AuthStateActions,
   BoardStateActions,
   BoardViewStateActions,
-  GroupStateActions
+  GroupStateActions,
+  notificationStateActions
 } from '@redux/slices'
 import { userListStateActions } from '@redux/slices/userListSate'
 import { bindActionCreators } from '@reduxjs/toolkit'
@@ -13,7 +15,9 @@ const allActions = {
   ...AuthStateActions,
   ...GroupStateActions,
   ...BoardStateActions,
-  ...userListStateActions
+  ...userListStateActions,
+  ...notificationStateActions,
+  addTimedNotification
 }
 
 export const useActions = () => {
