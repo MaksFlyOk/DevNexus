@@ -71,7 +71,7 @@ export const Landing = () => {
             <div className='col-lg-6'>
               <h1 className='display-4 fw-bold mb-4'>DevNexus</h1>
               <p className='lead mb-4'>
-                Современная система для совместной разработки, которая помогает
+                Современная система для совместной работы, которая помогает
                 командам эффективно управлять проектами и задачами.
               </p>
               <div className='d-flex gap-3'>
@@ -172,9 +172,7 @@ export const Landing = () => {
                 <Logo />
                 <h1 className='h2'>DevNexus</h1>
               </div>
-              <span className='ms-2 text-muted'>
-                Система совместной разработки
-              </span>
+              <span className='ms-2 text-muted'>Система совместной работы</span>
             </div>
             <div>
               <a
