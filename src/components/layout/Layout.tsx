@@ -1,4 +1,3 @@
-import { WindowDimensionsView } from '@dev/window-dimensions-view'
 import { useGetUser } from '@hooks/queries'
 import { useActions, useTypedSelector } from '@hooks/redux-hooks'
 import useWindowDimensions from '@hooks/useWindowDimensions'
@@ -42,7 +41,7 @@ export const Layout: FC<LayoutProps> = ({
           width <= 1440 ? 'container-fluid' : 'layout-container'
         } vh-100`}
       >
-        <WindowDimensionsView />
+        {/* <WindowDimensionsView /> */}
         <SidebarMode
           isUserPending={isPending}
           isUserError={isError}
