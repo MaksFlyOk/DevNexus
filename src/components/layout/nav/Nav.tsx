@@ -5,7 +5,7 @@ import { AccentColorsType, UserProfileType } from '@types'
 import { Modal } from '@ui'
 import { UserProfileCard } from '@ui/user-profile-card'
 import { handleAdaptiveButton } from '@utils/handleAdaptiveButton'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { AddNewColumnModal } from './add-new-colomn-modal'
 import { BoardViewButtonsGroup } from './BoardViewButtonsGroup'
@@ -13,6 +13,7 @@ import './Nav.scss'
 
 interface NavProps {
   minimizeMode?: boolean
+  setIsShowSideBar?: Dispatch<SetStateAction<boolean | undefined>>
   isUserPending?: boolean
   isUserError?: boolean
   userData?: UserProfileType | undefined
@@ -25,6 +26,7 @@ export type AddNewColumnParamsType = {
 
 export const Nav = ({
   minimizeMode = false,
+  setIsShowSideBar,
   isUserPending,
   isUserError,
   userData
@@ -80,47 +82,45 @@ export const Nav = ({
       <div className='col px-4 d-flex align-items-center gap-2 justify-content-center justify-content-sm-between flex-wrap'>
         {minimizeMode ? null : (
           <div>
-            <a
+            <button
               className={`btn btn-light ${handleAdaptiveButton(width)}`}
-              data-bs-toggle='offcanvas'
-              href='#sidebar'
-              role='button'
-              aria-controls='sidebar'
+              type='button'
+              onClick={() => {
+                if (setIsShowSideBar) setIsShowSideBar(true)
+              }}
             >
               Menu
-            </a>
+            </button>
           </div>
         )}
         <BoardViewButtonsGroup minimizeMode={minimizeMode} />
-        <div>
-          <div className='btn-group dropup-center'>
-            <button
-              type='button'
-              className={`btn btn-secondary dropdown-toggle ${handleAdaptiveButton(
-                width
-              )}`}
-              data-bs-toggle='dropdown'
-              aria-expanded='false'
-              disabled={groupId === undefined}
-            >
-              Фильтры
-            </button>
-            <ul className='dropdown-menu'>
-              {/* TODO: */}
-              <li className='dropdown-item'>Filter item</li>
-              <li className='dropdown-item'>Filter item</li>
-              <li className='dropdown-item'>Filter item</li>
-              <li>
-                <hr className='dropdown-divider' />
-              </li>
-              <li>
-                <a className='dropdown-item' href='#'>
-                  Очистить
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+        {/* <div className='btn-group dropup-center'>
+          <button
+            type='button'
+            className={`btn btn-secondary dropdown-toggle ${handleAdaptiveButton(
+              width
+            )}`}
+            data-bs-toggle='dropdown'
+            aria-expanded='false'
+            disabled={groupId === undefined}
+          >
+            Фильтры
+          </button>
+          <ul className='dropdown-menu'>
+            TODO:
+            <li className='dropdown-item'>Filter item</li>
+            <li className='dropdown-item'>Filter item</li>
+            <li className='dropdown-item'>Filter item</li>
+            <li>
+              <hr className='dropdown-divider' />
+            </li>
+            <li>
+              <a className='dropdown-item' href='#'>
+                Очистить
+              </a>
+            </li>
+          </ul>
+        </div> */}
         <div>
           <button
             type='button'

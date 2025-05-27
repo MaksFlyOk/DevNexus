@@ -16,8 +16,8 @@ export const useDeleteGroup = ({
   const queryClient = useQueryClient()
 
   const { mutateAsync, isPending, isError, error } = useMutation({
-    mutationFn: () => {
-      return groupService.deleteGroup(groupId)
+    mutationFn: async () => {
+      return await groupService.deleteGroup(groupId)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['get user'] })

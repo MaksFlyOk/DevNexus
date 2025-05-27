@@ -12,7 +12,7 @@ export const putUserProfileHandler = http.put<
   const newUserData = await request.json()
 
   for (const key of Object.keys(currentUserData.user) as Array<
-    keyof UserType
+    keyof Omit<UserType, 'tags'>
   >) {
     currentUserData.user[key] = newUserData[key]
   }

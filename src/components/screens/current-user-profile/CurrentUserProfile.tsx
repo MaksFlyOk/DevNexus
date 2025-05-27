@@ -12,7 +12,7 @@ import { useParams } from 'react-router-dom'
 import { UpdateUserTagsModal } from './update-user-tags-modal'
 
 export const CurrentUserProfile = () => {
-  const { group_id, username } = useParams()
+  const { group_id, username, admin } = useParams()
 
   const [isShow, setIsShow] = useState(false)
 
@@ -96,16 +96,25 @@ export const CurrentUserProfile = () => {
                           Здесь пока пустовато
                         </h4>
                       ) : (
-                        data.user_tags?.map((tag, iter) => (
-                          <div key={'tag ' + iter + tag.tag_code}>
-                            <h5>
-                              <Tag
-                                tagName={tag.tag_name}
-                                color={tag.tag_color}
-                              />
-                            </h5>
-                          </div>
-                        ))
+                        <>
+                          {admin === 'true' ? (
+                            <div key={'tag Admin 000000'}>
+                              <h5>
+                                <Tag tagName={'Admin'} color={'primary'} />
+                              </h5>
+                            </div>
+                          ) : null}
+                          {data.user_tags?.map((tag, iter) => (
+                            <div key={'tag ' + iter + tag.tag_code}>
+                              <h5>
+                                <Tag
+                                  tagName={tag.tag_name}
+                                  color={tag.tag_color}
+                                />
+                              </h5>
+                            </div>
+                          ))}
+                        </>
                       )}
                     </div>
                   </div>

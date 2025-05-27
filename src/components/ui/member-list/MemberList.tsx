@@ -1,7 +1,10 @@
 import { useAddMemberGroup } from '@hooks/mutations'
 import { useActions } from '@hooks/redux-hooks'
-import { useMembersSearch } from '@hooks/useMembersSearch'
-import { GroupType } from '@types'
+import {
+  TagTypeWithPrimaryColor,
+  useMembersSearch
+} from '@hooks/useMembersSearch'
+import { GroupType, UserType } from '@types'
 import { MemberCard, Modal, Spinner } from '@ui'
 import { SetStateAction, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -100,17 +103,49 @@ export const MemberList = ({
                     className='user-card-pointer'
                     onClick={() =>
                       navigate(
-                        `/user-profile/g/${groupData.group_uuid}/u/${member.username}`
+                        `/user-profile/g/${groupData.group_uuid}/a/${
+                          member.username === groupData.admin.username &&
+                          member.email === groupData.admin.email
+                        }/u/${member.username}`
                       )
                     }
                     key={'User card ' + iter}
                   >
-                    <MemberCard name={member.username} tags={member.tags} />
+                    <MemberCard
+                      name={member.username}
+                      tags={
+                        member.username === groupData.admin.username &&
+                        member.email === groupData.admin.email
+                          ? [
+                              ...member.tags,
+                              {
+                                name: 'Admin',
+                                color: 'primary',
+                                code: '000000'
+                              }
+                            ]
+                          : member.tags
+                      }
+                    />
                   </div>
                 ))}
               </>
             ) : (
-              searchMembersFunction(inputValue, groupData?.members)
+              searchMembersFunction(
+                inputValue,
+                groupData?.members.map(user =>
+                  user.username === groupData.admin.username &&
+                  user.email === groupData.admin.email
+                    ? {
+                        ...user,
+                        tags: [
+                          ...user.tags,
+                          { name: 'Admin', color: 'primary', code: '000000' }
+                        ]
+                      }
+                    : user
+                ) as (UserType & { tags: TagTypeWithPrimaryColor[] })[]
+              )
             )}
           </>
         )}

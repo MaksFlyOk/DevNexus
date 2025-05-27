@@ -1,6 +1,7 @@
 import { useGetUser } from '@hooks/queries'
 import { useActions } from '@hooks/redux-hooks'
 import { CircleImg } from '@ui/circle-img'
+import { DangerZone } from '@ui/danger-zone'
 import { Modal } from '@ui/modal'
 import { SecondaryNav } from '@ui/secondary-nav'
 import { Spinner } from '@ui/spinner'
@@ -13,7 +14,6 @@ import { UserTasksList } from './user-tasks-list'
 
 export const Profile = () => {
   const [isShow, setIsShow] = useState<boolean>(false)
-  const [danger, setDanger] = useState(false)
 
   const { setAuthState } = useActions()
 
@@ -105,17 +105,7 @@ export const Profile = () => {
                   </div>
                 </div>
                 <hr />
-                <div className='d-flex w-100 flex-column gap-2'>
-                  <h4 className='text-danger'>Danger-zone</h4>
-                  <button
-                    type='button'
-                    className='btn btn-outline-danger'
-                    onClick={() => (danger ? logout() : setDanger(true))}
-                    onMouseLeave={() => setDanger(false)}
-                  >
-                    {danger ? `Confirm` : `Logout`}
-                  </button>
-                </div>
+                <DangerZone buttonTitle='Logout' buttonFunction={logout} />
               </div>
             </div>
           </div>

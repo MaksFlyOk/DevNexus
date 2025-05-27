@@ -17,8 +17,8 @@ export const useAddCardColumnGroup = () => {
     Omit<TaskType, 'code'> | { tags: Omit<TagType, 'code'>[] },
     unknown
   >({
-    mutationFn: data => {
-      return groupService.createCardColumnGroup(boardId, data)
+    mutationFn: async data => {
+      return await groupService.createCardColumnGroup(boardId, data)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })

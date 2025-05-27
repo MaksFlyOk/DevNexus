@@ -26,12 +26,11 @@ export const Table = ({ boardData }: TableProps) => {
 
   useEffect(() => {
     if (boardData.group_uuid !== boardId || isBoardLoading) {
-      console.log('update')
-      console.log('into kanban', boardData)
-
       setInitialBoardState(boardData)
     }
+  }, [boardData, boardId])
 
+  useEffect(() => {
     if (!isEqual(boardData.board, board)) {
       queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
       setIsBoardLoading({ state: true })

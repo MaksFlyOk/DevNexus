@@ -36,23 +36,35 @@ export const Layout: FC<LayoutProps> = ({
   }, [auth, isPending])
 
   return (
-    <div
-      className={`${
-        width <= 1440 ? 'container-fluid' : 'layout-container'
-      } vh-100`}
-    >
-      <WindowDimensionsView />
-      <SidebarMode
-        isUserPending={isPending}
-        isUserError={isError}
-        userData={data}
-        isGroupPending={isGroupPending}
-        isGroupError={isGroupError}
-        groupData={groupData}
-        sideBarMode={width <= 1200}
+    <>
+      {/* <div
+        className='position-absolute bottom-0 end-0'
+        style={{ zIndex: 100000 }}
       >
-        {children}
-      </SidebarMode>
-    </div>
+        <div className='pe-3 pb-4'>
+          <h1>3121212121212</h1>
+          <h1>3121212121212</h1>
+          <h1>3121212121212</h1>
+        </div>
+      </div> */}
+      <div
+        className={`${
+          width <= 1440 ? 'container-fluid' : 'layout-container'
+        } vh-100`}
+      >
+        <WindowDimensionsView />
+        <SidebarMode
+          isUserPending={isPending}
+          isUserError={isError}
+          userData={data}
+          isGroupPending={isGroupPending}
+          isGroupError={isGroupError}
+          groupData={groupData}
+          sideBarMode={width <= 1200}
+        >
+          {children}
+        </SidebarMode>
+      </div>
+    </>
   )
 }

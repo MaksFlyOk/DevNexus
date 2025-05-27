@@ -58,6 +58,7 @@ export const FieldSelectTagList = <T extends FieldValues>({
   const [searchTerm, setSearchTerm] = useState('')
   const [isInputStart, setIsInputStart] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [errorInput, setErrorInput] = useState('')
   const [filteredTags, setFilteredTags] = useState<TagType[] | null>(null)
 
   const searchInputRef = useRef<HTMLInputElement>(null)
@@ -80,6 +81,12 @@ export const FieldSelectTagList = <T extends FieldValues>({
       }
 
       setFilteredTags(filterTagFunction())
+    }
+
+    if (searchTerm.length > 20) {
+      setErrorInput('Максимальная длина 20')
+    } else {
+      setErrorInput('')
     }
   }, [tagList, searchTerm])
 
@@ -175,19 +182,24 @@ export const FieldSelectTagList = <T extends FieldValues>({
               >
                 <input
                   type='text'
-                  className='form-control mb-2'
+                  className={`${
+                    errorInput ? 'form-control is-invalid' : 'form-control mb-2'
+                  }`}
                   placeholder='Search...'
+                  id={'validationServer_' + name}
                   value={searchTerm}
                   onChange={e => setSearchTerm(e.target.value)}
                   onFocus={e => (e.target.value = '')}
                   ref={searchInputRef}
                 />
-                <div className='overflow-scroll' style={{ maxHeight: '50vh' }}>
+                <div className='invalid-feedback mb-2 ms-1'>{errorInput}</div>
+                <div className='overflow-scroll' style={{ maxHeight: '30vh' }}>
                   {tagList?.length === 0 || !tagList ? (
                     searchTerm ? (
                       <div className='p-1'>
                         <AddNewTagForm
                           groupId={groupId}
+                          disabled={errorInput !== ''}
                           createTagFunction={(
                             name: string,
                             color: AccentColorsType,
@@ -282,6 +294,7 @@ export const FieldSelectTagList = <T extends FieldValues>({
                     <div className='p-1'>
                       <AddNewTagForm
                         groupId={groupId}
+                        disabled={errorInput !== ''}
                         createTagFunction={(
                           name: string,
                           color: AccentColorsType,

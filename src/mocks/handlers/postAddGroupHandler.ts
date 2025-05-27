@@ -24,17 +24,17 @@ export const postAddGroupHandler = http.post<
     icon: null,
     members: [
       {
-        username: 'Павел Николаев',
-        email: 'p.nikovaev@devnexus.com',
-        description: 'Менеджер проектов с опытом работы в различных проектах.',
+        username: currentUserData.user.username,
+        email: currentUserData.user.email,
+        description: currentUserData.user.description,
         tags: []
       }
     ],
-    description: 'Основная группа разработки',
+    description: '',
     admin: {
-      username: 'Павел Николаев',
-      email: 'p.nikovaev@devnexus.com',
-      description: 'Менеджер проектов с опытом работы в различных проектах.'
+      username: currentUserData.user.username,
+      email: currentUserData.user.email,
+      description: currentUserData.user.description
     },
     board: {
       columns: []
@@ -53,6 +53,8 @@ export const postAddGroupHandler = http.post<
   currentUserData.groups.push(newGroupIntoUserData)
   groupCardTagsData.push({ group_uuid: newGroupUUID, tags: [] })
   groupTagsData.push({ group_uuid: newGroupUUID, tags: [] })
+
+  console.log(groupsData)
 
   return HttpResponse.json({ name: newGroupRequest.name })
 })

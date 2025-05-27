@@ -4,7 +4,7 @@ import { GroupList } from '@ui/group-list'
 import { Logo } from '@ui/logo'
 import { MemberList } from '@ui/member-list'
 import { UserProfileCard } from '@ui/user-profile-card'
-import { FC, ReactElement } from 'react'
+import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import './SidebarMode.scss'
 
 interface SideBarModeProps {
@@ -18,6 +18,23 @@ interface SideBarModeProps {
   children: ReactElement
 }
 
+function findAllElementsUpwards(
+  element: HTMLElement,
+  selector: string
+): HTMLElement[] {
+  const elements: HTMLElement[] = []
+  let current: HTMLElement | null = element
+
+  while (current) {
+    if (current.matches(selector)) {
+      elements.push(current)
+    }
+    current = current.parentElement
+  }
+
+  return elements
+}
+
 export const SidebarMode: FC<SideBarModeProps> = ({
   isUserPending,
   isUserError,
@@ -28,6 +45,31 @@ export const SidebarMode: FC<SideBarModeProps> = ({
   groupData,
   children
 }) => {
+  const sideBarContainer = useRef<HTMLDivElement>(null)
+
+  const [isShowSideBar, setIsShowSideBar] = useState<boolean | undefined>(
+    undefined
+  )
+
+  const handleClickOutside = (e: MouseEvent) => {
+    if (sideBarContainer.current && e.target) {
+      if (
+        findAllElementsUpwards(e.target as HTMLElement, '.custom-modal-hide')[0]
+      ) {
+        setIsShowSideBar(false)
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (sideBarContainer.current === null) {
+      setIsShowSideBar(undefined)
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [sideBarMode])
+
   // Decompose to components
   return !sideBarMode ? (
     <>
@@ -75,11 +117,22 @@ export const SidebarMode: FC<SideBarModeProps> = ({
     <>
       <div className='row position-relative main-container-with-sidebar'>
         <div
-          className='offcanvas offcanvas-start px-0 border-end border-2 border-primary overflow-x-hidden'
+          className={`${
+            isShowSideBar ? 'd-block' : 'd-none'
+          } position-fixed w-100 h-100 bg-dark-subtle opacity-50`}
+          style={{ zIndex: 1055 }}
+        ></div>
+        <div
+          className={`offcanvas offcanvas-start px-0 border-end border-2 border-primary overflow-x-hidden ${
+            isShowSideBar === undefined
+              ? 'hidden'
+              : isShowSideBar
+              ? 'show'
+              : 'hiding'
+          }`}
           tabIndex={-1}
-          id='sidebar'
           data-bs-keyboard
-          aria-labelledby='sidebarLabel'
+          ref={sideBarContainer}
         >
           <div className='offcanvas-header pt-1 pb-0'>
             <div className='d-flex align-items-center gap-2'>
@@ -91,7 +144,7 @@ export const SidebarMode: FC<SideBarModeProps> = ({
             <button
               type='button'
               className='btn-close'
-              data-bs-dismiss='offcanvas'
+              onClick={() => setIsShowSideBar(false)}
               aria-label='Закрыть'
             ></button>
           </div>
@@ -134,7 +187,7 @@ export const SidebarMode: FC<SideBarModeProps> = ({
         </div>
         <div className='col h-100 px-4 pt-3'>{children}</div>
         <div className='row position-relative mx-0 nav-container-with-sidebar'>
-          <Nav />
+          <Nav setIsShowSideBar={setIsShowSideBar} />
         </div>
       </div>
     </>

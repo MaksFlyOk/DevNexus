@@ -85,7 +85,7 @@ export const putUpdateCardColumnGroup = http.put<
 
             groupsData[currentGroupIndex].board.columns[
               newCardColumnIndex
-            ].tasks.unshift(newCardData)
+            ].tasks.push(newCardData)
           }
 
           return HttpResponse.json(newCardData)

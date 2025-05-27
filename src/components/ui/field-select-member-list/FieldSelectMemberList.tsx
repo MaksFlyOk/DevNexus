@@ -1,3 +1,7 @@
+import {
+  TagTypeWithPrimaryColor,
+  useMembersSearch
+} from '@hooks/useMembersSearch'
 import { UserType } from '@types'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useEffect, useRef, useState } from 'react'
@@ -10,7 +14,7 @@ import {
 } from 'react-hook-form'
 import { MemberCardSelect } from './member-card-select/MemberCardSelect'
 
-interface SelectMemberListProps<T extends FieldValues> {
+interface FieldSelectMemberListProps<T extends FieldValues> {
   name: Path<T>
   memberList: UserType[] | null
   label: string
@@ -32,26 +36,28 @@ export const FieldSelectMemberList = <T extends FieldValues>({
   error,
   control,
   defaultValue
-}: SelectMemberListProps<T>) => {
+}: FieldSelectMemberListProps<T>) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [isInputStart, setIsInputStart] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-  const [filteredMembers, setFilteredMembers] = useState<UserType[] | null>(
-    null
-  )
+  const [filteredMembers, setFilteredMembers] = useState<
+    (UserType & { tags: TagTypeWithPrimaryColor[] })[] | undefined
+  >(undefined)
 
   const searchInputRef = useRef<HTMLInputElement>(null)
   const dropdownRef = useRef<HTMLInputElement>(null)
 
+  const searchMembersFunction = useMembersSearch(false)
+
   useEffect(() => {
     if (memberList) {
-      const filterMembersFunction = () => {
-        return memberList.filter(member =>
-          member.username.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      }
+      console.log(searchMembersFunction(searchTerm, memberList))
 
-      setFilteredMembers(filterMembersFunction())
+      setFilteredMembers(
+        searchMembersFunction(searchTerm, memberList) as
+          | (UserType & { tags: TagTypeWithPrimaryColor[] })[]
+          | undefined
+      )
     }
   }, [memberList, searchTerm])
 
@@ -88,9 +94,13 @@ export const FieldSelectMemberList = <T extends FieldValues>({
       disabled={disabled}
       control={control}
       rules={{
-        required: mandatory
-          ? { value: true, message: 'Поле не может быть пустым' }
-          : false
+        validate: mandatory
+          ? fieldValue => {
+              if (fieldValue?.length === '') {
+                return `Поле не может быть пустым`
+              }
+            }
+          : undefined
       }}
       defaultValue={defaultValue}
       render={({ field }) => (
@@ -127,7 +137,7 @@ export const FieldSelectMemberList = <T extends FieldValues>({
                   onFocus={e => (e.target.value = '')}
                   ref={searchInputRef}
                 />
-                <div className='overflow-scroll' style={{ maxHeight: '40vh' }}>
+                <div className='overflow-scroll' style={{ maxHeight: '30vh' }}>
                   {memberList?.length === 0 || !memberList ? (
                     <button className='dropdown-item' type='button' disabled>
                       Здесь пока никого нет
@@ -143,7 +153,10 @@ export const FieldSelectMemberList = <T extends FieldValues>({
                           setIsOpen(false)
                         }}
                       >
-                        <MemberCardSelect name={member.username} />
+                        <MemberCardSelect
+                          name={member.username}
+                          tags={member.tags}
+                        />
                       </button>
                     ))
                   )}

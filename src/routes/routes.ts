@@ -13,7 +13,7 @@ export const ROUTES = [
     isAuth: true
   },
   {
-    path: '/user-profile/g/:group_id/u/:username',
+    path: '/user-profile/g/:group_id/a/:admin/u/:username/',
     component: CurrentUserProfile,
     isAuth: true
   },
