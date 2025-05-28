@@ -13,8 +13,6 @@ interface FieldPropsType<TFieldValues extends FieldValues> {
   type: string
 }
 
-const NotFocusedFieldsTypesArray = ['datetime-local']
-
 export const Field = <TFieldValues extends FieldValues>({
   register,
   name,
@@ -30,12 +28,10 @@ export const Field = <TFieldValues extends FieldValues>({
   const [isFocused, setIsFocused] = useState(false)
 
   useEffect(() => {
-    if (NotFocusedFieldsTypesArray.includes(type)) {
-      if (!isInputStart) setIsInputStart(prev => !prev)
-    } else {
-      if (!isInputStart && isFocused) setIsInputStart(prev => !prev)
-    }
+    if (!isInputStart && isFocused) setIsInputStart(prev => !prev)
   }, [error])
+
+  console.log(defaultValue)
 
   return (
     <div className='mb-3'>
@@ -56,9 +52,7 @@ export const Field = <TFieldValues extends FieldValues>({
         }
         id={'validationServer_' + name}
         placeholder={placeholder}
-        defaultValue={
-          NotFocusedFieldsTypesArray.includes(type) ? defaultValue : undefined
-        }
+        defaultValue={defaultValue}
         aria-describedby={'validationServer_' + name}
         required={false}
       />

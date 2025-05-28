@@ -17,9 +17,14 @@ export const useDeleteGroup = ({
 
   const { mutateAsync, isPending, isError, error } = useMutation({
     mutationFn: async () => {
-      return await groupService.deleteGroup(groupId)
+      const response = await groupService.deleteGroup(groupId)
+
+      console.log('response', response?.data)
+      return response
     },
     onError: error => {
+      console.log(error)
+
       addTimedNotification({ message: error.message, type: 'danger' })
     },
     onSuccess: () => {

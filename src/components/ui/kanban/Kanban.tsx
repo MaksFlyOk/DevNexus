@@ -36,9 +36,11 @@ const KanbanInner = ({ boardData }: KanbanProps) => {
 
       setInitialBoardState(boardData)
     }
-  }, [boardData, boardId])
+  }, [boardData, boardId, board, invalidateBoardData])
 
   useEffect(() => {
+    console.log(boardData.board, board)
+
     if (!isEqual(boardData.board, board)) {
       queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
       setIsBoardLoading({ state: true })
@@ -47,12 +49,12 @@ const KanbanInner = ({ boardData }: KanbanProps) => {
     if (!invalidateBoardData) {
       setIsBoardLoading({ state: false })
     }
-  }, [boardData, boardId, board, invalidateBoardData])
+  }, [boardData, boardId, invalidateBoardData])
 
   return (
     <div
       ref={scrollRef}
-      style={{ scrollSnapType: 'x mandatory' }}
+      // style={{ scrollSnapType: 'x mandatory' }}
       className='overflow-x-scroll d-flex flex-row gap-3 h-100 p-2'
     >
       {!board ? (

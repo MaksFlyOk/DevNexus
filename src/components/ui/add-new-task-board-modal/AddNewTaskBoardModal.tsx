@@ -11,6 +11,7 @@ import { FieldSelectMemberList } from '@ui/field-select-member-list'
 import { FieldSelectTagList } from '@ui/field-select-task-tags-list'
 import { FieldTextaria } from '@ui/field-textaria'
 import { Spinner } from '@ui/spinner'
+import { formatDateForDateTimeInput } from '@utils/formatDateForDateTimeInput'
 import { Dispatch, SetStateAction } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
@@ -28,6 +29,13 @@ type AddNewTaskParamsType = {
   tags: TagType[]
   start_date: string
   end_date: string
+}
+
+const setDateInput = () => {
+  const date = new Date(
+    new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000
+  ).toISOString()
+  return formatDateForDateTimeInput(date)
 }
 
 export const AddNewTaskBoardModal = ({
@@ -63,14 +71,12 @@ export const AddNewTaskBoardModal = ({
 
   const onSubmit: SubmitHandler<AddNewTaskParamsType> = data => {
     // TODO:
-    const defaultStartDate = new Date().toISOString()
-
     addTask({
       title: data.name,
       description: data.description,
       column: columnName,
       assignee: data.assignee,
-      start_date: data.start_date ? data.start_date : defaultStartDate,
+      start_date: data.start_date,
       end_date: data.end_date,
       tags: data.tags
     })
@@ -80,7 +86,7 @@ export const AddNewTaskBoardModal = ({
       description: data.description,
       column: columnName,
       assignee: data.assignee,
-      start_date: data.start_date ? data.start_date : defaultStartDate,
+      start_date: data.start_date,
       end_date: data.end_date,
       tags: data.tags?.map(tag => {
         return { name: tag.name, color: tag.color }
@@ -177,7 +183,7 @@ export const AddNewTaskBoardModal = ({
               name='assignee'
               label='Исполнитель'
               placeholder='Исполнитель'
-              mandatory
+              mandatory={true}
               error={errors?.assignee?.message}
               memberList={memberList}
               control={control}
@@ -187,6 +193,7 @@ export const AddNewTaskBoardModal = ({
               disabled={false}
               error={errors?.start_date?.message}
               name='start_date'
+              defaultValue={setDateInput()}
               type='datetime-local'
               label='Начальная дата'
             />
@@ -196,6 +203,7 @@ export const AddNewTaskBoardModal = ({
               error={errors?.end_date?.message}
               name='end_date'
               type='datetime-local'
+              defaultValue={setDateInput()}
               label='Дедлайн'
               options={{
                 required: { value: true, message: 'Выберите дату' }

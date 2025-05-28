@@ -1,6 +1,6 @@
 # DevNexus - Система совместной работы
 
-![DevNexus Preview](./src/assets/images/Logo.svg)
+[![DevNexus Preview](./src/assets/images/Logo.svg)](https://maksflyok.github.io/DevNexus/)
 
 DevNexus - это современная система управления проектами для команд разработчиков, предоставляющая все необходимые инструменты для эффективной совместной работы.
 
@@ -53,21 +53,21 @@ http://localhost:5173
 devnexus/
 ├── public/            # Статические файлы
 ├── src/
-│   ├── assets/        # Ресурсы (стили, изображения)
-│   ├── components/    # Компоненты
+    ├── assets/        # Ресурсы (стили, изображения)
+    ├── components/    # Компоненты
         ├── layout/    # Layout компоненты
         ├── screens/   # Экраны
-        ├── ui/        # UI компоненты
-│   ├── hooks/         # Кастомные хуки
+        └── ui/        # UI компоненты
+    ├── hooks/         # Кастомные хуки
         ├── mutations/ # Мутации
-        ├── queries/   # Запросы
-│   ├── mock/          # Данные для Mock Service Worker
-│   ├── redux/         # Redux store
+        └── queries/   # Запросы
+    ├── mock/          # Данные для Mock Service Worker
+    ├── redux/         # Redux store
     ├── services/      # Сервисы
-│   ├── types/         # Типы TypeScript
-│   ├── utils/         # Вспомогательные функции
-│   ├── api.tsx        # Экхемпляр Axios и интерсепторы
-│   └── main.tsx       # Точка входа
+    ├── types/         # Типы TypeScript
+    ├── utils/         # Вспомогательные функции
+    ├── api.tsx        # Экхемпляр Axios и интерсепторы
+    └── main.tsx       # Точка входа
 ├── .gitignore
 ├── .env
 ├── .prettierrc

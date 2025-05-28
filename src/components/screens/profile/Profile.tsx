@@ -43,7 +43,7 @@ export const Profile = () => {
           </h1>
         </div>
       ) : (
-        <div className='container-fluid profile-container py-4'>
+        <div className='profile-container py-4'>
           <Modal isShow={isShow} setIsShow={setIsShow}>
             {isPending ? (
               <div className='d-flex w-100 justify-content-center py-3'>

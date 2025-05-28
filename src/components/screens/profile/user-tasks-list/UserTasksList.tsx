@@ -3,6 +3,7 @@ import { Tag } from '@ui/tag'
 import { convertTextColor } from '@utils/convertTextColor'
 import { dateISOtoLocalString } from '@utils/dateISOtoLocalString'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface UserTasksListProps {
   groups: UserProfileType['groups']
@@ -18,6 +19,8 @@ export const UserTasksList = ({ groups }: UserTasksListProps) => {
       return acc
     }, {} as { [key: string]: boolean })
   )
+
+  const navigate = useNavigate()
 
   return (
     <div
@@ -61,6 +64,11 @@ export const UserTasksList = ({ groups }: UserTasksListProps) => {
                   group.cards?.map(card => (
                     <div
                       key={card.title + card.code}
+                      onClick={() =>
+                        navigate(
+                          `/card/g/${group.group_uuid}/c/${card.title}/${card.code}`
+                        )
+                      }
                       className='p-2 rounded-3 border border-2 bg-dark'
                     >
                       <div className='d-flex justify-content-between'>

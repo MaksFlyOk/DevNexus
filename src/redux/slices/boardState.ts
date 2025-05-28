@@ -40,6 +40,28 @@ const setMinimizeColumnsInfo = (board: BoardStateType['board']) => {
   return arr
 }
 
+const findTaskIndexesSafe = (
+  boardData: BoardType,
+  taskCode: string
+): { columnIndex: number; taskIndex: number } | null => {
+  if (!boardData?.columns) return null
+
+  for (
+    let columnIndex = 0;
+    columnIndex < boardData.columns.length;
+    columnIndex++
+  ) {
+    const tasks = boardData.columns[columnIndex]?.tasks || []
+
+    const taskIndex = tasks.findIndex(task => task.code === taskCode)
+    if (taskIndex !== -1) {
+      return { columnIndex, taskIndex }
+    }
+  }
+
+  return null
+}
+
 export const BoardStateSlice = createSlice({
   name: 'BoardState',
   initialState,
@@ -126,6 +148,29 @@ export const BoardStateSlice = createSlice({
           })
         }
       })
+    },
+    removeTask: (state, action: PayloadAction<{ taskCode: string }>) => {
+      state.prevBoard = { ...state.board }
+
+      const { taskCode } = action.payload
+      const indexes = findTaskIndexesSafe(state.board, taskCode)
+
+      console.log(indexes)
+
+      if (indexes && indexes.columnIndex !== -1 && indexes.taskIndex !== -1) {
+        console.log('remove')
+
+        state.board.columns.map((column, columnIndex) => {
+          if (columnIndex === indexes.columnIndex) {
+            return {
+              ...column,
+              tasks: column.tasks.filter(
+                (_, taskIndex) => taskIndex !== indexes.taskIndex
+              )
+            }
+          }
+        })
+      }
     },
     resetToStableState: state => {
       state.board = { ...state.prevBoard }
