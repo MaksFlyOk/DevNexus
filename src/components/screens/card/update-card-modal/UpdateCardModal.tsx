@@ -209,9 +209,6 @@ export const UpdateCardModal = ({
               type='datetime-local'
               defaultValue={placeholders.end_date}
               label='Дедлайн'
-              options={{
-                required: { value: true, message: 'Выберите дату' }
-              }}
             />
           </form>
         </div>

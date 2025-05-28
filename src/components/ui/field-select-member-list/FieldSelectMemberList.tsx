@@ -62,10 +62,6 @@ export const FieldSelectMemberList = <T extends FieldValues>({
   }, [memberList, searchTerm])
 
   useEffect(() => {
-    if (!isInputStart) setIsInputStart(prev => !prev)
-  }, [error])
-
-  useEffect(() => {
     if (isOpen && searchInputRef.current) {
       searchInputRef.current.focus()
     }
@@ -96,7 +92,9 @@ export const FieldSelectMemberList = <T extends FieldValues>({
       rules={{
         validate: mandatory
           ? fieldValue => {
-              if (fieldValue?.length === '') {
+              if (!isInputStart) setIsInputStart(prev => !prev)
+
+              if (fieldValue === '' || fieldValue === undefined) {
                 return `Поле не может быть пустым`
               }
             }

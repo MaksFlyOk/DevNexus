@@ -7,10 +7,10 @@ export const deleteGroupHandler = http.delete<PathParams, null, object, Path>(
     const { group_id } = params
 
     const currentGroupIndexGroupsData = groupsData.findIndex(
-      group => group.group_uuid !== group_id
+      group => group.group_uuid === group_id
     )
     const currentGroupIndexUserData = currentUserData.groups.findIndex(
-      group => group.group_uuid !== group_id
+      group => group.group_uuid === group_id
     )
 
     if (currentGroupIndexUserData !== -1 && currentGroupIndexUserData !== -1) {

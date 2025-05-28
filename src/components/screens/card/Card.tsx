@@ -1,5 +1,6 @@
 import { useDeleteCardColumnGroup } from '@hooks/mutations'
 import { useGetCard } from '@hooks/queries'
+import { useActions } from '@hooks/redux-hooks'
 import { DangerZone } from '@ui/danger-zone'
 import { Modal } from '@ui/modal'
 import { SecondaryNav } from '@ui/secondary-nav'
@@ -10,12 +11,14 @@ import { formatDateForDateTimeInput } from '@utils/formatDateForDateTimeInput'
 import { formatTimeRemaining } from '@utils/formatTimeRemaining'
 import { setPlaceholderFieldSelectTags } from '@utils/setPlaceholderFieldSelectTags'
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { To, useNavigate, useParams } from 'react-router-dom'
 import './Card.scss'
 import { UpdateCardModal } from './update-card-modal'
 
 export const Card = () => {
   const { group_id, card_title, card_code } = useParams()
+
+  const { removeTask } = useActions()
 
   const navigate = useNavigate()
 
@@ -46,7 +49,7 @@ export const Card = () => {
 
   return (
     <>
-      <SecondaryNav title={`Карточка - ${card_title}`} backLink={'/'} />
+      <SecondaryNav title={`Карточка - ${card_title}`} backLink={-1 as To} />
       {isPending ? (
         <div className='d-flex w-100 justify-content-center py-3'>
           <Spinner />
@@ -58,7 +61,7 @@ export const Card = () => {
           </h1>
         </div>
       ) : (
-        <div className='container-fluid card-container py-4'>
+        <div className='card-container py-4'>
           <Modal isShow={isShow} setIsShow={setIsShow}>
             {group_id && card_code ? (
               <UpdateCardModal
@@ -84,7 +87,7 @@ export const Card = () => {
               <span className='badge text-bg-danger'>Error</span>
             )}
           </Modal>
-          <div className='container-fluid pb-4'>
+          <div className='container-fluid card-container pb-4'>
             <div className='card'>
               <div className='card-header gap-4 gap-sm-2 d-flex flex-column flex-sm-row justify-content-sm-between align-items-center'>
                 <h2>{data.title}</h2>
@@ -156,7 +159,15 @@ export const Card = () => {
                 </div>
               </div>
               <div className='card-footer'>
-                <DangerZone buttonTitle='Delete' buttonFunction={mutateAsync} />
+                <DangerZone
+                  buttonTitle='Delete'
+                  buttonFunction={() => {
+                    if (card_code) {
+                      removeTask({ taskCode: card_code })
+                      mutateAsync()
+                    }
+                  }}
+                />
               </div>
             </div>
           </div>

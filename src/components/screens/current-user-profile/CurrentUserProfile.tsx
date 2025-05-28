@@ -8,12 +8,14 @@ import { convertTextColor } from '@utils/convertTextColor'
 import { dateISOtoLocalString } from '@utils/dateISOtoLocalString'
 import { hideEmailInfo } from '@utils/hideEmailInfo'
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import './CurrentUserProfile.scss'
 import { UpdateUserTagsModal } from './update-user-tags-modal'
 
 export const CurrentUserProfile = () => {
   const { group_id, username, admin } = useParams()
+
+  const navigate = useNavigate()
 
   const [isShow, setIsShow] = useState(false)
 
@@ -33,7 +35,7 @@ export const CurrentUserProfile = () => {
           </h1>
         </div>
       ) : (
-        <div className='container-fluid current-user-profile-container py-4'>
+        <div className='current-user-profile-container py-4'>
           <Modal isShow={isShow} setIsShow={setIsShow}>
             {group_id ? (
               <UpdateUserTagsModal
@@ -134,6 +136,11 @@ export const CurrentUserProfile = () => {
                     data.cards?.map(card => (
                       <div
                         key={card.title + card.code}
+                        onClick={() =>
+                          navigate(
+                            `/card/g/${group_id}/c/${card.title}/${card.code}`
+                          )
+                        }
                         className='p-2 rounded-3 border border-2 bg-dark'
                       >
                         <div className='d-flex justify-content-between'>

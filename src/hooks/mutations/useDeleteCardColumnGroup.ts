@@ -21,11 +21,11 @@ export const useDeleteCardColumnGroup = (
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`get board`, groupId] })
 
-      setIsBoardLoading({ state: true })
-
       if (optionFunction) {
         optionFunction()
       }
+
+      setIsBoardLoading({ state: true })
     }
   })
 

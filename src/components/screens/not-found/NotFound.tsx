@@ -1,5 +1,5 @@
 import { useTypedSelector } from '@hooks/redux-hooks'
-import meme from '@images/meme.webp'
+import meme from '@images/breakdance.webp'
 import { useLayoutEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -16,7 +16,7 @@ export const NotFound = () => {
   return (
     <div className='container-fluid d-flex justify-content-center vh-100'>
       <div className='col-sm-6 d-flex align-items-center justify-content-center'>
-        <div className='d-flex flex-column gap-3'>
+        <div className='col-6 d-flex flex-column gap-3'>
           <img
             className='img-fluid'
             src={meme}
